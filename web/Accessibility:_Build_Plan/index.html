@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="scope">Scope</h2>
+<p>A build plan for the Accessibility team's efforts in bringing accessibility to mono by implementing the managed UI Automation framework.</p>
+<h2 id="build-team">Build Team</h2>
+<p>Stephen Shaw (aka decriptor)<br />Ray Wang (aka Ray)<br /> <a href="http://localhost:4000/Accessibility:_Team" title="wikilink"> Full A11y team</a></p>
+<h2 id="build-meetings">Build Meetings</h2>
+<p>As needed on irc</p>
+<p>Where: #mono-a11y on irc.gimp.org<br /></p>
+<h2 id="outline">Outline</h2>
+<h4 id="deliverables"><u>Deliverables</u></h4>
+<h5 id="intervals">Intervals</h5>
+<ul>
+<li>svn builds (internal Novell site, mostly for sanity checks)</li>
+<li><a href="https://build.opensuse.org/project/show?project=Mono:UIA:Bleeding">nightly</a></li>
+<li><a href="https://build.opensuse.org/project/show?project=Mono:UIA">release builds</a> (target: Mono 2.6)</li>
+</ul>
+<ul>
+<li>Maybe disk images with everything pre-installed?</li>
+</ul>
+<h5 id="software">Software</h5>
+<p>Packages from our codebase:</p>
+<p>mono-uia</p>
+<ul>
+<li>UIAUtomationBridge.dll</li>
+<li>UIAutomationClient.dll</li>
+<li>UIAutomationProvider.dll</li>
+<li>UIAutomationSource.dll</li>
+<li>UIAutomationTypes.dll</li>
+</ul>
+<p>uiaatkbridge</p>
+<ul>
+<li>UiaAtkBridge.dll</li>
+<li>libbridge-glue.so</li>
+</ul>
+<p>uiautomationwinforms</p>
+<ul>
+<li>UIAutomationWinforms.dll</li>
+</ul>
+<p>uiadbus</p>
+<ul>
+<li>UiaDbus.dll</li>
+<li>UiaDbusBridge.dll</li>
+<li>UiaDbusSource.dll</li>
+</ul>
+<p>atspiuiasource</p>
+<ul>
+<li>AtspiUiaSource.dll</li>
+</ul>
+<p>Moonlight UIA</p>
+<ul>
+<li>novell-moonlight-a11y.xpi</li>
+</ul>
+<p>Note: This might change as this is still being developed.</p>
+<p>FAQ:</p>
+<ul>
+<li>Why not include UIAtomoationWinForms.dll in mono-uia.rpm? This layout would allow one user to install moonlight accessibility but not Windows.Forms accessibility (by installing uiaautomationmoonlight but not uiaautomationwinforms).</li>
+<li>Why not include UiaAtkBridge.dll in mono-uia.rpm? This layout would allow one user to install UIA without bridging to ATK technology (that is, using UIA Clients to inspect UIA Servers).</li>
+</ul>
+<h4 id="other-packages"><u>Other Packages</u></h4>
+<p>at-spi-sharp</p>
+<ul>
+<li>at-spi-sharp.dll</li>
+</ul>
+<h5 id="possible-packages">Possible Packages</h5>
+<ul>
+<li>iron python</li>
+</ul>
+<h4 id="packages-dependencies"><u>Packages Dependencies</u></h4>
+<ul>
+<li>libgdiplus-2.4</li>
+<li>mono-core-2.4</li>
+<li>mono-winforms</li>
+<li>mono-winfxcore (part of mono as of 2.6)</li>
+<li>gtksharp-2.12
+<ul>
+<li>gtksharp-2.12.7 for 0.9.1</li>
+<li>gtksharp-2.12.8 for 1.0.0</li>
+</ul></li>
+<li>at-spi2-core</li>
+<li>at-spi2-atk</li>
+</ul>
+<h4 id="current-build-systems"><u>Current Build Systems</u></h4>
+<p><a href="https://hudson.dev.java.net/">Hudson</a></p>
+<ul>
+<li>UIAutomation</li>
+<li>UiaAtkBridge</li>
+<li>UIAutomationWinforms</li>
+<li>mono/mcs</li>
+<li>gtk-sharp2</li>
+<li>moonlight</li>
+<li>moonatkbridge</li>
+<li>firefox</li>
+<li>at-spi2</li>
+<li>at-spi-sharp</li>
+</ul>
+<p><a href="http://build.opensuse.org">OBS</a></p>
+<p><code>   </code><a href="https://build.opensuse.org/project/show?project=Mono:UIA:Bleeding"><code>nightly</code> <code>builds</code></a><br /><code>   </code><a href="https://build.opensuse.org/project/show?project=Mono:UIA"><code>currenty</code> <code>released</code></a><br /><code> </code></p>
+<h4 id="build-distributions"><u>Build Distributions</u></h4>
+<p>Current</p>
+<ul>
+<li>openSUSE 11.1</li>
+<li>openSUSE 11.2</li>
+<li>SLE 11</li>
+<li>Fedora 12</li>
+<li>Ubuntu 9.10</li>
+</ul>
+<p>Future (definite)</p>
+<ul>
+<li>openSUSE 11.3</li>
+<li>Fedora 13</li>
+<li>Ubuntu 10.4</li>
+</ul>
+<p>Distros that have packaged it (or parts of it)</p>
+<ul>
+<li>Debian</li>
+<li>Mandriva</li>
+</ul>
+<h4 id="build-architectures"><u>Build Architectures</u></h4>
+<p>Current</p>
+<ul>
+<li>i586</li>
+<li>x86_64</li>
+</ul>
+<h4 id="build-risk-issues"><u>Build risk issues</u></h4>
+<p><em>This section describes any risks resulting from lack of time and/or resources.</em></p>
+<ul>
+<li>New deliverable files that aren't currently handled in the build file, ie. .spec</li>
+<li>Code that compiles with errors</li>
+<li>Missing dependencies</li>
+</ul>
+<h4 id="general-guidelines"><u>General Guidelines</u></h4>
+<ul>
+<li>All builders shall be on the team IRC channel (#mono-a11y on irc.gimp.org) during work hours.<br /><br /></li>
+<li>Builds shall be automated whenever possible. Time constraint is not a good excuse not to automate.<br /><br /></li>
+</ul>
+<h4 id="suspension-criteria-and-resumption-requirements"><u>Suspension criteria and Resumption requirements</u></h4>
+<p>Suspension criteria:</p>
+<ul>
+<li>Unavailability of external packages/dependencies</li>
+<li>Source Code no longer compiles</li>
+<li>A specific holiday shuts down both development and testing.</li>
+<li>Build servers become unavailable</li>
+</ul>
+<p>Resumption requirements:</p>
+<ul>
+<li>Consider building those dependencies</li>
+<li>Find out who was working on that code and contact them</li>
+<li>The holiday period ends.</li>
+<li>Building resources become available</li>
+</ul>
+<h4 id="build-preparation-and-setup"><u>Build preparation and setup</u></h4>
+<p><em>set of tasks necessary to prepare for and perform a build</em></p>
+<p>Individual Preparation:</p>
+<ul>
+<li>Have access to the build server</li>
+<li>Correct packaging files (spec/deb)</li>
+<li>Available jail for distro/arch</li>
+<li>RPMs for latest dependencies</li>
+</ul>
+<h4 id="environmental-needs"><u>Environmental needs</u></h4>
+<p><em>Hardware, software, data, interfaces, facilities, publications, other requirements that pertain to the testing effort</em></p>
+<p>Build Servers with root jails for each of the various architectures and distributions. This is largely taken care of by the build service and osc. osc creates jails on the fly.</p>
+<h5 id="hardware">Hardware:</h5>
+<p>Currently there are 2 build servers (build0 and build1) There are now several other machines</p>
+<h6 id="build0">Build0</h6>
+<ul>
+<li>openSUSE 11.2 32 bit</li>
+<li>hudson master</li>
+<li>osc tools</li>
+</ul>
+<h6 id="build1">Build1</h6>
+<ul>
+<li>openSUSE 11.2 64 bit</li>
+<li>hudson slave</li>
+<li>osc tools</li>
+<li>location of per rev svn snapshot rpm</li>
+</ul>
+<h5 id="architectures">Architectures</h5>
+<ul>
+<li>i586</li>
+<li>x86_64</li>
+</ul>
+<h5 id="software-1">Software:</h5>
+<ul>
+<li>Hudson</li>
+<li>OBS</li>
+<li>osc</li>
+<li>nunit</li>
+</ul>
+<h4 id="responsibilities"><u>Responsibilities</u></h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;"><p>Coordinate Build</p></th>
+<th style="text-align: left;"><p>Maintain Hudson</p></th>
+<th style="text-align: left;"><p>Maintain OBS</p></th>
+<th style="text-align: left;"><p>Maintain Patches</p></th>
+<th style="text-align: left;"><p>Nightly Builds</p></th>
+<th style="text-align: left;"><p>Weekly Builds</p></th>
+<th style="text-align: left;"><p>Release Builds</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Stephen Shaw (Build Engineer)</p></td>
+<td style="text-align: left;"><p>X</p></td>
+<td style="text-align: left;"><p>X</p></td>
+<td style="text-align: left;"><p>-</p></td>
+<td style="text-align: left;"><p>X</p></td>
+<td style="text-align: left;"><p>X</p></td>
+<td style="text-align: left;"><p>-</p></td>
+<td style="text-align: left;"><p>X</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Ray Wang (Build Engineer)</p></td>
+<td style="text-align: left;"><p>-</p></td>
+<td style="text-align: left;"><p>-</p></td>
+<td style="text-align: left;"><p>X</p></td>
+<td style="text-align: left;"><p>-</p></td>
+<td style="text-align: left;"><p>-</p></td>
+<td style="text-align: left;"><p>X</p></td>
+<td style="text-align: left;"><p>X</p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h4 id="staffing-needs"><u>Staffing needs</u></h4>
+<ul>
+<li>Build Engineers
+<ul>
+<li>Programming experience with C#, Python, and bash</li>
+<li>Build Engineer experience</li>
+<li>Autotools experience</li>
+<li>Build system experience</li>
+<li>Solid Linux experience in the command line (CLI)</li>
+<li>Writing rpm and/or deb build files experience</li>
+</ul></li>
+</ul>
+<p>Anyone interested in learn/helping with build is welcome to join our team.</p>
+<h4 id="schedule"><u>Schedule</u></h4>
+<p><em>Built around the <a href="http://localhost:4000/Accessibility:_Roadmap" title="wikilink">roadmap</a></em></p>
+<p>Based on Q2 in roadmap, our initial testing schedule is below:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Start Time</p></th>
+<th style="text-align: left;"><p>End Time</p></th>
+<th style="text-align: left;"><p>Percent complete</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Update/Maintain build page on A11y pages</p></td>
+<td style="text-align: left;"><p>July</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Stephen &amp; Ray</p></td>
+<td style="text-align: left;"><p>Ongoing</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Design build plan</p></td>
+<td style="text-align: left;"><p>July</p></td>
+<td style="text-align: left;"><p>July</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Stephen &amp; Ray</p></td>
+<td style="text-align: left;"><p>Stephen needs to inform Ray of this page :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Build Initial RPMs and Make sure they work!</p></td>
+<td style="text-align: left;"><p>June</p></td>
+<td style="text-align: left;"><p>July</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Stephen &amp; Ray</p></td>
+<td style="text-align: left;"><p>done, moved to continuous builds</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Install Build servers</p></td>
+<td style="text-align: left;"><p>June</p></td>
+<td style="text-align: left;"><p>July</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Stephen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Set up build environments</p></td>
+<td style="text-align: left;"><p>July</p></td>
+<td style="text-align: left;"><p>July</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Stephen &amp; Ray</p></td>
+<td style="text-align: left;"><p>Build0 is the hudson master and Build1 is the slave</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Get full build server access to Ray</p></td>
+<td style="text-align: left;"><p>July</p></td>
+<td style="text-align: left;"><p>July</p></td>
+<td style="text-align: left;"><p>100%</p></td>
+<td style="text-align: left;"><p>Stephen</p></td>
+<td style="text-align: left;"><p>Depends on servers being installed</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>First Release</p></td>
+<td style="text-align: left;"><p>Dec 2008</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>100%</p></td>
+<td style="text-align: left;"><p>Stephen &amp; Ray</p></td>
+<td style="text-align: left;"><p>Provider</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Next Release</p></td>
+<td style="text-align: left;"><p>2009</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>100%</p></td>
+<td style="text-align: left;"><p>Stephen &amp; Ray</p></td>
+<td style="text-align: left;"><p>On hold until 0.9 is ready for release</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Build 1.0</p></td>
+<td style="text-align: left;"><p>2009</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>100%</p></td>
+<td style="text-align: left;"><p>Stephen &amp; Ray</p></td>
+<td style="text-align: left;"><p>On hold until 1.0 is ready for release</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Post 1.0 work</p></td>
+<td style="text-align: left;"><p>2009</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>0%</p></td>
+<td style="text-align: left;"><p>Stephen &amp; Ray</p></td>
+<td style="text-align: left;"><p>Anything that comes after 1.0</p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h4 id="ongoing-tasks"><u>Ongoing tasks</u></h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Maintain Mono Accessibility wiki build pages</p></td>
+<td style="text-align: left;"><p>A11y build team</p></td>
+<td style="text-align: left;"><p>As new information or decisions come about</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Adjust for patches and new packages</p></td>
+<td style="text-align: left;"><p>A11y build team</p></td>
+<td style="text-align: left;"><p>When other packages require them</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>...</p></td>
+<td style="text-align: left;"><p>A11y build team</p></td>
+<td style="text-align: left;"><p>...</p></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h4 id="risks-and-contingencies"><u>Risks and contingencies</u></h4>
+<p><em>Any activity that jeopardizes the building schedule is a planning risk</em></p>
+<ul>
+<li>Any major changes in development (causing delays)</li>
+</ul>
+<h2 id="references">References</h2>
+<p>The <a href="http://www.mono-project.com/Accessibility:_Roadmap">Product roadmap</a><br />The <a href="http://www.mono-project.com/Accessibility#Architecture">Architecture overview</a><br /><a href="http://www.novell.com/news/press/microsoft-and-novell-celebrate-year-of-interoperability-expand-collaboration-agreement">The Novell &amp; Microsoft announcement</a> to create cross-platform accessibility framework</p>
+<h3 id="build-systems">Build Systems</h3>
+<p><a href="http://www.mono-project.com/BuildSystem/MonoBuild">http://www.mono-project.com/BuildSystem/MonoBuild</a> MonoBuild---The current mono build system. We have tied into this for the time being.<br /><br /><a href="https://build.opensuse.org/">https://build.opensuse.org/</a> OBS---This is a really cool build system that can handle several different distributions and architectures<br /><br /></p>
+<h2 id="build-plan-identifier">Build plan identifier</h2>
+<p>Build Plan versions</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>ID</p></th>
+<th style="text-align: left;"><p>Level</p></th>
+<th style="text-align: left;"><p>Software Version</p></th>
+<th style="text-align: left;"><p>Modify Time</p></th>
+<th style="text-align: left;"><p>Author</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Accessibility-BP-V0.1</p></td>
+<td style="text-align: left;"><p>Draft</p></td>
+<td style="text-align: left;"><p>N/A</p></td>
+<td style="text-align: left;"><p>07-03-2008</p></td>
+<td style="text-align: left;"><p>Decriptor</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Accessibility-BP-V0.9</p></td>
+<td style="text-align: left;"><p>Draft</p></td>
+<td style="text-align: left;"><p>N/A</p></td>
+<td style="text-align: left;"><p>02-12-2009</p></td>
+<td style="text-align: left;"><p>Decriptor</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Accessibility-BP-V1.0</p></td>
+<td style="text-align: left;"><p>Draft</p></td>
+<td style="text-align: left;"><p>N/A</p></td>
+<td style="text-align: left;"><p>01-06-2010</p></td>
+<td style="text-align: left;"><p>Decriptor</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Accessibility-BP-V1.1</p></td>
+<td style="text-align: left;"><p>Draft</p></td>
+<td style="text-align: left;"><p>N/A</p></td>
+<td style="text-align: left;"><p>05-06-2010</p></td>
+<td style="text-align: left;"><p>Decriptor</p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+</body>
+</html>

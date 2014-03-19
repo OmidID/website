@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="references">References</h2>
+<p><a href="http://localhost:4000/Accessibility:_Test_Plan" title="wikilink">Product Test Case Plan</a><br /><a href="http://localhost:4000/Accessibility:_Test_Case_Specification" title="wikilink">Product Test Case Specification</a><br /><a href="http://localhost:4000/Accessibility:_Test_Log" title="wikilink">Product Test Log</a><br /><a href="http://localhost:4000/Accessibility:_Test_Summary" title="wikilink">Product Test Summary</a><br /><a href="http://localhost:4000/Accessibility:_Bug_Template" title="wikilink">Product Bug Specification</a> (current page)<br /><a href="http://localhost:4000/Accessibility" title="wikilink">Product Home</a><br />==Definitions== FCS Release---(F)inal (C)ustomer (S)hipping Release</p>
+<h2 id="bug-specification">Bug Specification</h2>
+<h3 id="purpose">Purpose</h3>
+<p>This is the template that should be used for all bugs when they are entered into Bugzilla. Here is an <a href="https://bugzilla.novell.com/show_bug.cgi?id=459153">example</a>.</p>
+<h3 id="remember">Remember</h3>
+<p>Whenever you log a bug, please remember to add a comment with a <a href="Accessibility:_Testing_Howto#http://localhost:4000/Bug_References" title="wikilink">bug reference</a> (e.g., BUG459153) where the bug occurs in your test. You must use the syntax BUG[0-9][0-9][0-9][0-9][0-9][0-9] so it can be easily found when regressing bugs.</p>
+<h3 id="bug-template">Bug Template</h3>
+<hr />
+<h4 id="problem-statement">PROBLEM STATEMENT:</h4>
+<p><em>More detailed expansion of summary. (The summary is a very abstract description of the problem required by Bugzilla to create a bug.)</em><br /><br />====REPRO:==== <em>Detailed step-by-step instructions that instruct the reader how to reproduce the bug. The instructions should be detailed and clear enough that anyone (developer, community member, new employee) can reproduce the bug. Remember to include any special setup steps.</em><br /><br />====RESULTS:==== <em>What happens what the REPRO steps are followed</em><br /><br />====EXPECTED RESULTS:==== <em>What *should* happen when the REPRO steps are followed</em><br /><br />====COMMENTS:==== <em>Any additional information</em></p>
+<hr />
+<h3 id="definitions">Definitions</h3>
+<p>Here are some definitions to keep in mind when submitting a bug in Bugzilla:</p>
+<h4 id="severity">SEVERITY</h4>
+<p>Define defect severity value by Bugzilla default severity definition. The severity describes the impact of a bug.</p>
+<ul>
+<li>Blocker: Prevents developers or testers from performing their jobs. Impacts the development process.</li>
+<li>Critical: Crash, loss of data, corruption of data, severe memory leak.</li>
+<li>Major: Major loss of function, as specified in the product requirements for this release, or existing in the current</li>
+<li>Normal: Non-major loss of function.</li>
+<li>Minor: Issue that can be viewed as trivial (e.g. cosmetic, UI, easily documented).</li>
+<li>Enhancement: Request for software enhancement, or any non-defect task or work item.</li>
+</ul>
+<h4 id="priority">PRIORITY</h4>
+<p>Define defect priority value by Bugzilla default priority definition. The priority specifies the level of urgency to be resolved for the defect.</p>
+<ul>
+<li>P1-Urgent: Defects are urgent issues. Developers should try to fix P1 issues as soon as possible during the current iteration.</li>
+<li>P2-High: Defects must be resolved in this release. Developers should try to fix P2 issues during the next iteration.</li>
+<li>P3-Medium: Defects would like to be fix, but won't hold shipment for them.</li>
+<li>P4-Low: Defects are not as strong as desirable.</li>
+</ul>
+<p>Bugzilla has many fields that provide additional information (e.g., environment details, found in version, etc.). Please provide as much information as possible when logging bugs.</p>
+</body>
+</html>

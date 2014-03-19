@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="the-developer-regression-test-list-drtlist">The Developer Regression Test List (drtlist)</h2>
+<p>Tests are specified in an XML file called a drtlist. The drtlist should contain a <DRTList> root element and each test should be specified with the <Test> element. The following attributes can be set on a test. Any other attributes will be ignored.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>id</p></td>
+<td style="text-align: left;"><p>A readable name to identify the test</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>inputFile</p></td>
+<td style="text-align: left;"><p>Mandatory: The test file, either a .xaml or .htm(l) file</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>masterFile masterFile10 or masterFile11</p></td>
+<td style="text-align: left;"><p>Mandatory: The master image that the result file will be compared to. If the test does not need an image comparison use &quot;None&quot; as the value for masterFile. Only one of masterFile, masterFile10 and masterFile11 should be specified. In the future, multiple master files will be allowed to test multiple versions of Moonlight.</p>
+<p>Master files can be either PNGs or TIFFs. PNGs should be used for simgle image capture tests and TIFFs should be used when multiple images are captured. Each capture will be saved as another layer in the TIFF.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>codebehind</p></td>
+<td style="text-align: left;"><p>A C# codebehind file can be specified for the the 2.0 tests in the format <c sharp file>[, dll name]. For example codebehind=&quot;nested-canvas.cs&quot; or codebehind=&quot;nested-canvas.cs, mylib.dll&quot;</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>categories</p></td>
+<td style="text-align: left;"><p>A comma separated list of categories that the test is a member of. Categories are explained further in the Running Tests section.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>expectedError</p></td>
+<td style="text-align: left;"><p>The ErrorType of ErrorArgs passed to the error handler when an error is encountered in the test. If the error does not occur, or the error is of the wrong type the test will fail. This attribute will only work for xaml tests, since the error handling functionality is built into the html template generated for the .xaml tests.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>knownFailure</p></td>
+<td style="text-align: left;"><p>Tests the implement a feature that is known to be broken or not implemented should be marked as a known failure. Marking tests as a known failure makes it easier to differentiate between failures that are regression and failures that are known.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>failureReason</p></td>
+<td style="text-align: left;"><p>Failure reasons should be given for all knownFailures. This allows people triaging tests to easily understand why tests are failing.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>ignore</p></td>
+<td style="text-align: left;"><p>Tests that may hang or crash the test harness should be marked as ignore. These tests will not be run during a test run.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>ignoreReason</p></td>
+<td style="text-align: left;"><p>Tests that are marked as ignored should have a reason assigned to them.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>captureSpecifier</p></td>
+<td style="text-align: left;"><p>A capture specifier is normally used for taking multiple screenshots. The capture specifier is a compacted method of setting the captureInterval maxImagesToCapture and initialDelay.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>captureInterval</p></td>
+<td style="text-align: left;"><p>When taking multiple screenshots the captureInterval is the time to wait inbetween captures.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>maxImagesToCapture</p></td>
+<td style="text-align: left;"><p>The total number of screenshots that should be captured.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>initialDelay</p></td>
+<td style="text-align: left;"><p>The time to wait before beginning image capture.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>captureWidth</p></td>
+<td style="text-align: left;"><p>The width of the image to capture.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>captureHeight</p></td>
+<td style="text-align: left;"><p>The height of the image to capture.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>imageCompareTolerance</p></td>
+<td style="text-align: left;"><p>The tolerance for image comparisons can be overriden with this attribute. The default tolerance is two percent. To make the comparison 1% you would use imageCompareTolerance=&quot;0.01&quot;.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>xspExecDir</p></td>
+<td style="text-align: left;"><p>Some tests may want to have xsp running in the background. For example tests that attempt to connect to special web handlers or need to interact with an aspx page. The xspExecDirectory is the directory that xsp should be run from.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>remote</p></td>
+<td style="text-align: left;"><p>Some tests may reside on remote file systems / on the web. This flag (valid value is 'True') tells the test harness that it shouldn't try to modify the test to make it run correctly, nor try to resolve any paths, prepend current directory, etc, which would otherwise be done.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-run-tests">How to run tests</h2>
+<p>If you are running the test harness from the moon/test directory there are a couple of make targets you can use:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>make run-tests</p></td>
+<td style="text-align: left;"><p>This will run all of the tests in moon/test/xaml/drtlist.xml that are not marked as ignore or knownFailure.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>make run-all-tests</p></td>
+<td style="text-align: left;"><p>This will run all of the tests in moon/test/xaml/drtlist.xml that are not marked as ignore.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>make list-known-failures</p></td>
+<td style="text-align: left;"><p>This will list all of the tests marked as knownFailure in moon/test/xaml/drtlist.xml and their reason for failing.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>make run-drtlist</p></td>
+<td style="text-align: left;"><p>This will run the drtlist specified in the environment variable DRTLIST, otherwise it'll work as 'make run-tests'</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>make run-valgrind</p></td>
+<td style="text-align: left;"><p>This will run the drtlist specified in the environment variable DRTLIST with valgrind, otherwise it'll work as 'make run-tests'</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>make run-gdb</p></td>
+<td style="text-align: left;"><p>This will run the drtlist specified in the environment variable DRTLIST with gdb, otherwise it'll work as 'make run-tests'</p></td>
+</tr>
+</tbody>
+</table>
+<p>If you are running the test harness outside of the make targets, these options are available to you:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>-v, -verbose</p></td>
+<td style="text-align: left;"><p>Increase the verbosity level.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>--fixture=, -fixtures=</p></td>
+<td style="text-align: left;"><p>Specify one or a list of fixtures to run.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>-categories=</p></td>
+<td style="text-align: left;"><p>Specify one or a list of categories to run.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>-drtlist=</p></td>
+<td style="text-align: left;"><p>Specify the path to the drtlist. If the drtlist is not specified, the test runner will attempt to load drtlist.xml from the current directory.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>-agviewer=</p></td>
+<td style="text-align: left;"><p>Specify the path to the agviewer binary. If the agviewer binary is not specified, the harness will attempt to find agviewer by searching recursively down from the current directory and using the PATH environment variable.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>-no-console-report</p></td>
+<td style="text-align: left;"><p>Disable reporting results to the terminal</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>-html-report, -generate-html-report</p></td>
+<td style="text-align: left;"><p>Create an HTML report for the test run</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>-run-known-failures</p></td>
+<td style="text-align: left;"><p>Run tests marked as known failures</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>-list-known-failures</p></td>
+<td style="text-align: left;"><p>List tests marked as known failure and their reason for failing.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>-compare-to-moon</p></td>
+<td style="text-align: left;"><p>Compare to the moon master files instead of the master files specified in the drtlist.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>-valgrind</p></td>
+<td style="text-align: left;"><p>Execute moonlight with valgrind. Valgrind will be executed with --tool=memcheck, unless MOONLIGHT_VALGRIND_OPTIONS is set, in which case it will be executed with that value.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>-gdb</p></td>
+<td style="text-align: left;"><p>Execute moonlight with gdb. There is currently no way to pass options to gdb. If -valgrind is specified, this flag is ignored.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>-generate-master-files</p></td>
+<td style="text-align: left;"><p>Generate master files to be used with the compare-to-moon option.</p></td>
+</tr>
+</tbody>
+</table>
+<p>There are two ways of running a subset of the drtlist.xml tests. You can use categories or specify the tests you would like to use:</p>
+<h3 id="categories">Categories</h3>
+<p>Test categories are specified in the drtlist.xml with the categories=&quot;<cat one>,<cat two>,<cat three>,....&quot; attribute. If a test was both a text test and a brushes test, it's XML would look like this:</p>
+<p><code>    </code><Test id="MyTest"
+          inputFile="MyTest.xaml"
+          masterFile="MyTestMaster.png"
+          categories="text,brushes"
+      /></p>
+<p>Category names are case sensitive strings. A new category can be created by adding it's name to the categories attribute. Currently these categories are used in our tests:</p>
+<ul>
+<li>text</li>
+<li>animation</li>
+<li>brushes</li>
+<li>parser</li>
+</ul>
+<p>There are two ways of running category tests. If you are using the make targets mentioned above, the easiest way is to specify the categories with the MOON_DRT_CATEGORIES=<cat name>,<cat name>,... environment variable. To run the text and animation tests using this variable your command line would look like this:</p>
+<p><code>   $ MOON_DRT_CATEGORIES=text,animation make run-tests</code></p>
+<p>If you are not using the make targets you can specify the categories you would like to run on the command line with the -categories flag:</p>
+<p><code>   $ mono test-runner.exe -categories=text,animation</code></p>
+<p>You can also exclude categories, if you want to run all tests except text and brushes tests, you could do:</p>
+<p><code>   $ MOON_DRT_EXCLUDE_CATEGORIES=text,brushes make run-tests</code></p>
+<h3 id="specifying-tests">Specifying tests</h3>
+<p>If you would like to limit a test run to just a single test, or a small set of tests, that aren't in the same category, you can specify the tests to run. If you are using the make targets listed above, the easiest way to specify a single or set of tests to run is with the MOON_DRT_FIXTURE=<test id> and MOON_DRT_FIXTURES=<test id>,<test id>,<test id>,... environment variables. To run tests 2 and 5 using this method your command line would look like this:</p>
+<p><code>    $ MOON_DRT_FIXTURES=2,5 make run-tests</code></p>
+<p>If you aren't using the make targets you can specify the tests on the command line with the -fixture or -fixtures flags:</p>
+<p><code>    $ mono test-runner.exe -fixtures=2,5</code></p>
+<p>Id's are specified in the drtlist.xml with the id attribute:</p>
+<p><code>    </code><Test id="2"
+          inputFile="MyTest.xaml"
+          masterFile="MyTestMaster.png"
+          categories="text,brushes"
+     /></p>
+<p>You can also specify a different drtlist.xml, this will run the drtlist in media/video/drtlist.xml:</p>
+<p><code>    $ DRTLIST=media/video/drtlist.xml make run-drtlist</code></p>
+<h3 id="using-xvfb">Using Xvfb</h3>
+<p>When running the test suite, you may be interested in using Xvfb. Xvfb is a virtual buffer that can be used for screen captures instead of your screen. This allows you to continue working while the test suite is running in the back ground. Setup the virtual buffer like so:</p>
+<pre><code>     $ Xvfb -fp /usr/share/fonts/misc -ac -screen 0 1024x1024x24 -nolisten tcp :3</code></pre>
+<p>Then in another terminal, run the test suite and redirect the display to the virtual buffer.</p>
+<pre><code>     $ DISPLAY=:3 make run-tests</code></pre>
+<h2 id="while-the-tests-are-running">While the tests are running</h2>
+<p>Depending on the verbosity level and the reporting options, test results will print out on the console as they are completed. The following legend is for the default verbose level and reporting options:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>.</p></td>
+<td style="text-align: left;"><p>The test passed</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>F</p></td>
+<td style="text-align: left;"><p>The test failed</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>K</p></td>
+<td style="text-align: left;"><p>The test was marked as a known failure.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>I</p></td>
+<td style="text-align: left;"><p>The test was ignored, either because the master file couldn't be found, or because it was marked as ignore in the drtlist.</p></td>
+</tr>
+</tbody>
+</table>
+<p>If you would like to abort a test run, press the Escape key while a test is running. This will signal the test harness to stop the run once this test has completed. If you press the escape key again, it will cause the currently running test to abort.</p>
+<h2 id="when-the-test-has-finished">When the test has finished</h2>
+<p>Generally any test will shutdown the browser when it has finished (the test harness waits for the browser to shut down before executing the next test). However, there may be times when you don't want the browser to shut down when the test has finished (to inspect state, you have other tabs open, etc). In this case you can use the MOONLIGHT_SHOCKER_DONT_DIE flag, which will prevent the browser from shutting down:</p>
+<p><code>   $ MOONLIGHT_SHOCKER_DONT_DIE=1 make run-tests</code></p>
+<h2 id="reading-test-output">Reading test output</h2>
+<p>By default the tests will output a summary of the test run on stdout. The verbosity level will effect the amount of data in the summary. The verbosity levels are:</p>
+<ol>
+<li>Show data from the test plugin</li>
+<li>Show data printed to stderr during the test run</li>
+<li>Show data printed to stdout during the test run</li>
+</ol>
+<p>If the -html-report option is used (our make targets use this option) there will also be an html_report/ directory created with an html report and all of the master files, result files and image comparison files. Multiple image capture which are normally saved as tiffs will be converted into a png mosaic of all of the layers of the tiff.</p>
+</body>
+</html>

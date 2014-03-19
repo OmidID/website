@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="mono-for-debian">Mono for Debian</h1>
+<h2 id="official-packages">Official Packages</h2>
+<p>The following official versions are available in the standard Debian repositories:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Debian 6.0 (Squeeze):</p></td>
+<td style="text-align: left;"><p><a href="http://packages.debian.org/squeeze/mono-runtime">2.6.7</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Debian 7.0 (Wheezy):</p></td>
+<td style="text-align: left;"><p><a href="http://packages.debian.org/squeeze/mono-runtime">2.10.8.1</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Debian Jessie (testing):</p></td>
+<td style="text-align: left;"><p><a href="http://packages.debian.org/testing/mono-runtime">2.10.8.1</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Debian Sid (unstable):</p></td>
+<td style="text-align: left;"><p><a href="http://packages.debian.org/unstable/mono-runtime">3.0.6</a></p></td>
+</tr>
+</tbody>
+</table>
+<p>Dependencies are automatically tracked for applications in the archive such as Tomboy and F-Spot.</p>
+<p>To compile your own software, install <strong>mono-devel</strong> on Squeeze (6.0), Wheezy (testing), Sid (unstable), or Experimental.</p>
+<p>For a complete Mono, install <strong>mono-complete</strong> on Squeeze (6.0), Wheezy (testing), Sid (unstable), or Experimental.</p>
+<h2 id="backport-packages">Backport Packages</h2>
+<h2 id="unofficial-packages-mono-3.0">Unofficial Packages (Mono 3.0)</h2>
+<p>Users of Debian Unstable (Sid) and Testing (Wheezy) can use this APT repository to install Mono and related packages that are not yet uploaded or accepted in Debian.</p>
+<p>The following unofficial versions are available in <a href="https://www.meebey.net/">Mirco Bauer's</a> (<a href="http://qa.debian.org/developer.php?login=meebey@debian.org">meebey@debian.org</a>) APT repository:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Debian Wheezy (testing):</p></td>
+<td style="text-align: left;"><p><a href="http://debian.meebey.net/experimental/mono">3.0.6</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Debian Sid (unstable):</p></td>
+<td style="text-align: left;"><p><a href="http://debian.meebey.net/experimental/mono">3.0.6</a></p></td>
+</tr>
+</tbody>
+</table>
+<p>Add this line to your /etc/apt/sources.list file:</p>
+<pre><code>deb http://debian.meebey.net/experimental/mono /</code></pre>
+<p>Now update the APT database and install mono-complete from that repository:</p>
+<pre><code>apt-get update
+apt-get install mono-complete</code></pre>
+<h2 id="further-links">Further Links</h2>
+<ul>
+<li>The Debian Mono Group can be contacted via IRC: <a href="irc://irc.oftc.net/#debian-cli">1</a></li>
+<li>The Debian Mono Group can be contacted via their mailing list, <a href="http://lists.alioth.debian.org/mailman/listinfo/pkg-mono-devel">pkg-mono-devel@lists.alioth.debian.org</a> - general questions relating to Mono on Debian should go to the end-user mailing list <a href="http://lists.debian.org/debian-cli/">debian-cli@lists.debian.org</a></li>
+<li>The Debian Mono Group has a website on <a href="http://pkg-mono.alioth.debian.org/">Alioth</a></li>
+</ul>
+</body>
+</html>

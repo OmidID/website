@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>-!- sandy changed the topic of #mono-a11y to: Accessibility &amp; Mono | http://www.mono-project.com/Accessibilit y | Iteration Meeting in progress</p></td>
+<td style="text-align: left;"><p>07:03</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>so last iteration we were distracted with a whole lot of things</p></td>
+<td style="text-align: left;"><p>07:04</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>* sandy </strong></p></td>
+<td style="text-align: left;"><p>wants a gold star</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>bugs from QA</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>test breakages, etc</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but we need to take steps to avoid distractions if at all possible</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so that we can make our deadlines</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so if there's anything at all that is bothering you, or that we could be doing better to avoid issues like this</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>please let me know</p></td>
+<td style="text-align: left;"><p>07:05</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I thought it was helpful when you suggested we push off QA bugs until next iteration...made me better able to focus, at least</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>as far as bugs coming in from QA, they'll be only marking as p1 issues that break the build, or otherwise make it very difficult to get anything done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy: yeah, that will hopefully help</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>other bugs, p2 and lower, will be put off until the next iteration</p></td>
+<td style="text-align: left;"><p>07:06</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so that developers can focus</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>lets see, other than that, we have the 0.9.1 tag happening on friday</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so please backport anything that meets the critera I mentioned earlier</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>moving on, this sprint will be 3 weeks so that we can accomodate various holiday vacations</p></td>
+<td style="text-align: left;"><p>07:07</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: Do you know yet what time on Friday we'll tag for 0.9.1?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>so our next meeting will be on the 30th</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>mgorse: that depends on decriptor mainly</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>mgorse: I'd imagine around 12 MST, but I'll send the details out later</p></td>
+<td style="text-align: left;"><p>07:08</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so for developers, the priorities for this next iteration are as follows</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>high priority open bugs (p1), features for 0.9, backporting, open bugs, and 1.0 architecture stuff</p></td>
+<td style="text-align: left;"><p>07:09</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and then new features</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>for 1.0</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I have a wiki page prepared that should help a bit</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>http://mono-project.com/Accessibility:_S print_4</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so when assigning work, please pick from this page first</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>some of them are assigned to Andres, so please only select #444686 and #428614 from him</p></td>
+<td style="text-align: left;"><p>07:10</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>any questions before we move on?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bgmerrell: do you mind giving a quick recap of QA's deadlines coming up so that the developers are aware?</p></td>
+<td style="text-align: left;"><p>07:11</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bgmerrell: or maybe delegate that to someone with a better keyboard?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>haha</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>hmm, he doesn't seem to be responding</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>calen: could you fill us in on your deadlines?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>is there a wiki page with the QA schedule?</p></td>
+<td style="text-align: left;"><p>07:12</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes almost to odffice</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: heh, okay.. we can give you a bit of time</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: hi</p></td>
+<td style="text-align: left;"><p>07:13</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: hello</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes, we have a google doc in http://spreadsheets.google.com/ccc?key=p wydy7S3XPTBTRS9n_oBjJA&amp;hl=zh_CN</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>brad, can you set bug456343 to high priority?</p></td>
+<td style="text-align: left;"><p>07:14</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>it would be really great if you guys could write a wiki doc at a very high level for us</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>calen: let me look</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>ahh, much better</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>calen: it's already a p1 and already mentioned on the wiki page</p></td>
+<td style="text-align: left;"><p>07:15</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>calen: what else would you like me to do?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, oh sorry, i didn't saw it. thanks!</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>calen: sure, no problem</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bgmerrell: the floor is yours</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>okay, so basically Jared has asked QA to be very diligent in getting all of the controls that made it in 0.9 tested before Dec 17</p></td>
+<td style="text-align: left;"><p>07:16</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so Ray, Calen and I have all been working only on Strongwind tests for the last few weeks</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>each Wednesday we have deadlines set so that we can have all the controls tested by the 17th</p></td>
+<td style="text-align: left;"><p>07:17</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>like Calen said, the deadlines are shown in the google spreadsheet, but we can create a higher level wiki based on that</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>that would be great, thank you bgmerrell</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>alright, anything else before we start assignments?</p></td>
+<td style="text-align: left;"><p>07:18</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>cool. go ahead and start assigning work... please pick around 5 hours per day for as many days as you'll be in town. Max 20 days</p></td>
+<td style="text-align: left;"><p>07:19</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>so the only Novell holidays are Dec 25 and Jan 1, right?</p></td>
+<td style="text-align: left;"><p>07:21</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>(in the US)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>right</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>* bgmerrell </strong></p></td>
+<td style="text-align: left;"><p>waves his fist at the brad</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: not my fault you're too slow...</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>!</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>oh no you di'int</p></td>
+<td style="text-align: left;"><p>07:22</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>our iteration ends on teh 29th</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I count 14 days</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>(not including weekends)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ah, I was counting weekends... my bad</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>yes, so max 14 days :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>* brad </strong></p></td>
+<td style="text-align: left;"><p>sends sandy a gold star sticker</p></td>
+<td style="text-align: left;"><p>07:23</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: our next meeting will be on Tuesday(30th)? not Wednesday(31st)?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: correct</p></td>
+<td style="text-align: left;"><p>07:24</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>right, maybe in that meeting there's a lot of people missing</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: some people in the US take the 31st off</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>i see thanks</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: I think that's fine... if people are missing, they can catch up when they return</p></td>
+<td style="text-align: left;"><p>07:25</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, thanks for letting us know</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: no problem</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>most people take the 30th off too, brad</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok because I was thinking to take FTO that whole week</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>generally Provo is empty from the 24th-1st inclusive</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>by a show of hands, how many people are thinking about being on FTO?</p></td>
+<td style="text-align: left;"><p>07:26</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>during that week</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>* bgmerrell </strong></p></td>
+<td style="text-align: left;"><p>shows his hands</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>* sandy </strong></p></td>
+<td style="text-align: left;"><p>is planning on ITO</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>* knocte </strong></p></td>
+<td style="text-align: left;"><p>shows his hands as well</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>me too.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>alright lets see</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>maybe we move it to the 5th?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>does that sound good for everyone?</p></td>
+<td style="text-align: left;"><p>07:27</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>why not 24th? let's ask how many people will be here on that day</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>I</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>Brad won't</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>oh</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'll be on FTO</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>:-P</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>I</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>I won't be on FTO until 29th</p></td>
+<td style="text-align: left;"><p>07:28</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>well, let's go back to the 5th... will anyone be gone then?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>FYI, we China guys will be on Holiday 1st-3rd, and 4th is back to work :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>I think 6th is better for me</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: isn't the 4th a Sunday?</p></td>
+<td style="text-align: left;"><p>07:29</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>alright, jan 6th, going once, going twice...</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: yeah, but it's a switch day</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: hmm, how does that work?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'm taking FTO on 6th</p></td>
+<td style="text-align: left;"><p>07:30</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>what about 7?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>x)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: it's a switch day for 2nd</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>if anyone says they're taking FTO on the 7th, we'll have the meeting at their house</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>* bgmerrell </strong></p></td>
+<td style="text-align: left;"><p>is thinking about getting a pool table for Christmas</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- peteb_ [~ptbrunet@cpe-70-122-57-22.austin.res.r r.com] has quit [ChatZilla 0.9.84-rdmsoft [XULRunner 1.8.0.9/2006120508]]</p></td>
+<td style="text-align: left;"><p>07:31</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>woohoo, let's fly to china!</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>* brad </strong></p></td>
+<td style="text-align: left;"><p>is thinking about being in front of bgmerrell's house on christmas day with pool cues</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>:(</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, 4th will be a swap day for 2th</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: ah, I see</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>okay, done. the 7th it is.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>can everyone please send me schedules of their FTO as soon as they know? thanks</p></td>
+<td style="text-align: left;"><p>07:32</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte, that will be cool :)</p></td>
+<td style="text-align: left;"><p>07:33</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>;)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>everybody, refresh http://mono-project.com/Accessibility:_S print_4</p></td>
+<td style="text-align: left;"><p>07:34</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: you are going to get too much practice in</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, BTW, today we filed some new bugs, i think they didn't in Sprint wiki, do you like assign them for next iteration?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>* decriptor </strong></p></td>
+<td style="text-align: left;"><p>is going to end up losing everytime instead of most of the time</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>calen: are they high priority?</p></td>
+<td style="text-align: left;"><p>07:35</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy: you're a wonderful man</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, P2 and P3</p></td>
+<td style="text-align: left;"><p>07:36</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>many people praise me for inventing regular expression find/replace</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but not enough</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: you are awesome</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy, woo</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>;-)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>a pool table is a pretty big decision</p></td>
+<td style="text-align: left;"><p>07:37</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and by big i mean physically</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>it takes up a lot of space</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>calen: hmm, which bug #s?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bgmerrell: the question you must ask yourself is, do you really need a dining room table?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>hehe</p></td>
+<td style="text-align: left;"><p>07:38</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell, why don't you change you mind to have a virtual game instead of a physical one :P</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>because it's pool!</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>we could just be the clampetts</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>hehe</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>* bgmerrell </strong></p></td>
+<td style="text-align: left;"><p>watches the joke fly over everyone's heads and feels old</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: 457990, 457939,457925,457846, 457845</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: I got it, no worries</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- peteb [~ptbrunet@cpe-70-122-57-22.austin.res.r r.com] has joined #mono-a11y</p></td>
+<td style="text-align: left;"><p>07:39</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: Would you like me to take 456341 (ComboBoxDropDown selection not implemented completely)? It is currently unassigned</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>hugh, I just assigned it to me, but let me check something</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh, you must have done it 10 seconds before I messaged :)</p></td>
+<td style="text-align: left;"><p>07:40</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>yep x)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I thought that bug was part of some feature missing/untested, but now that I look more into it, it should be working</p></td>
+<td style="text-align: left;"><p>07:41</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>calen: ok, they look likek they're all assigned out now</p></td>
+<td style="text-align: left;"><p>07:43</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario: i do not agree that 457830 is a duplicate of 457846</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, thanks :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: I agree with you, however in the bridge, you care about HelpTextProperty, and HelpTextProperty is set either by AccessibleDescription or Tooltip</p></td>
+<td style="text-align: left;"><p>07:44</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario: we're trying to make bugs as atomic as possible. it seems like it would be realistic that one of those bugs be fixed while the other is open, which means it is a good candidate for two separate bugs.</p></td>
+<td style="text-align: left;"><p>07:46</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>in my view anyway. :)</p></td>
+<td style="text-align: left;"><p>07:48</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: go ahead and reopen the bug, however it will be the same fix for both.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>as far as new controls, I'll take ToolStripButton, DateTimePicker and FlowLayoutPanel</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: you unassigned me in 447851 :-(</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>* decriptor </strong></p></td>
+<td style="text-align: left;"><p>steps out for a minute</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario: oops</p></td>
+<td style="text-align: left;"><p>07:49</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>mario: really? I don't see you assigned</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>mario: alright, I'll give it back</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario: are 457845 and 457846 both resolved?</p></td>
+<td style="text-align: left;"><p>07:50</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: missing bridge-side</p></td>
+<td style="text-align: left;"><p>07:51</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario: oh, right, thanks</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>now my assigned bugs aren't assigned any more</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario: what happened?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>so, bugzilla usually says something about a previous change before you commit yours.</p></td>
+<td style="text-align: left;"><p>07:52</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario: it seems like your comment #2 in 457830 might be important to whoever fixes 457846 on the bridge side</p></td>
+<td style="text-align: left;"><p>07:53</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: yep, copying and pasting.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: I have a bug I added to berserk, and it won't show up in my planning page (though it shows up for me on the main page)</p></td>
+<td style="text-align: left;"><p>07:54</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>brad: https://bugzilla.novell.com/show_bug.cgi ?id=456598</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: so did you get an error when you tried to add it?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: calen: #mono-a11y-qa?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: only the second time</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: because it said it already existed?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>(said it was already part of the iteration, and when I checked to see who had it, it was me)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>hmm, weird</p></td>
+<td style="text-align: left;"><p>07:55</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy: did that come from last iteration?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>no</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I created the bug last iteration</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but it's a regular P4 enhancement</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>weird</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'll look at it in a minute</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell, sure</p></td>
+<td style="text-align: left;"><p>07:56</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>okay, so if our next iteration meeting is the 7th now...</p></td>
+<td style="text-align: left;"><p>07:58</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>...that means this iteration is 18 days</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>are you sure it isn't 20?</p></td>
+<td style="text-align: left;"><p>07:59</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>minus 2 holidays</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>wow, berserk is going berserk</p></td>
+<td style="text-align: left;"><p>08:02</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>heh</p></td>
+<td style="text-align: left;"><p>08:03</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>i'm hungry</p></td>
+<td style="text-align: left;"><p>08:04</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>well guys, I think we're done, so if the folks in China want to log off if you haven't already, please go ahead</p></td>
+<td style="text-align: left;"><p>08:08</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: Are you finished working on TreeView?</p></td>
+<td style="text-align: left;"><p>08:11</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: No, there are two bugs I'm only starting on this iteration: ExpandCollapse support and Value support for editing node names</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>mgorse: also, I need to patch MWF to have events when nodes are added/removed</p></td>
+<td style="text-align: left;"><p>08:12</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>there should be enough to get started on the bridge side, but it might be easier to wait until next iteration</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok</p></td>
+<td style="text-align: left;"><p>08:14</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>http://monoport.com/38713</p></td>
+<td style="text-align: left;"><p>08:16</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'm getting a build fail on uiautomationwinforms 64bit only</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>last known good rev is 121170, failed on 121217</p></td>
+<td style="text-align: left;"><p>08:17</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>*** glibc detected *** /usr/bin/mono: free(): invalid pointer: 0x00000000010fd9e8 ***</p></td>
+<td style="text-align: left;"><p>08:18</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>decriptor: can you re-run it and see if it's consistent?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>yeah</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I saw something weird like this periodically when building UIAutomationWinforms lately</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>Everything on the sprint 4 page has been assigned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'll pastebin it next time, I don't recall the exact errors</p></td>
+<td style="text-align: left;"><p>08:19</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>32 bit built find</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>fine</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: cool, feel free to take on other new feature work</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>decriptor: I just had a run-in with your doppelganger</p></td>
+<td style="text-align: left;"><p>08:20</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>well, except for this one: https://bugzilla.novell.com/show_bug.cgi ?id=443937</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: ?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: https://bugzilla.novell.com/show_bug.cgi ?id=444289</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: Steve Shaw</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>nevermind, that one's fixed</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: I marked that fixed</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>thanks mgorse, I was slow to catch up on that one :-)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: I'm stephen shaw</p></td>
+<td style="text-align: left;"><p>08:21</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>this one, though, is still unassigned: https://bugzilla.novell.com/show_bug.cgi ?id=447852</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'd fixed it a while, then bgmerrell re-opened it but later filed another bug for what wasn't fixed, and the original bug was never re-marked fixed</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: I know, thus your doppelganger</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: there is stephen shaw, steve shaw, and steven shaw here in provo :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>*sigh* I was mentally blocking that one out. I guess I should take it.</p></td>
+<td style="text-align: left;"><p>08:22</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, do you know is it correct if panel has &quot;resizable&quot; state?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>steve and I both do build stuff</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>the other guy is in sales</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: I guess it depends on the panel</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ray: if the panel can be resized by a user, then yes. otherwise no</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, do you mean resize panel from UI?</p></td>
+<td style="text-align: left;"><p>08:23</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: correct</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, ok, that makes clear, thanks ;)</p></td>
+<td style="text-align: left;"><p>08:24</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- sandy changed the topic of #mono-a11y to: Accessibility &amp; Mono | http://www.mono-project.com/Accessibilit y | Latest release is 0.9.0</p></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+</body>
+</html>

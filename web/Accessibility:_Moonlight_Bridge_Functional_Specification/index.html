@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>Unlike the approach that was taken for the System.Windows.Forms ATK Bridge (where controls mapped by hand from UIAutomation to ATK), the Moonlight Bridge uses an automatic system for generating ATK adapters. The system relies on a set of base Pattern Implementors which map one or many UIAutomation Control Patterns to one or many ATK interfaces, assembling them into a complete Adapter for use by ATK.</p>
+<h1 id="mapping-between-controls-and-uiautomation-patterns">Mapping between Controls and UIAutomation Patterns</h1>
+<p>To understand how a control should look in ATK, you must first understand two things: what is the control's UIAutomation Control Type, and what patterns does it implement. The table below shows both for all the Silverlight 2 controls.</p>
+<figure>
+<img src="http://localhost:4000/files/Control-to-pattern.png" title="Silverlight 2 Control to UIAutomation Control Pattern mapping; for the original OpenOffice Calc document, see 1. " alt="Silverlight 2 Control to UIAutomation Control Pattern mapping; for the original OpenOffice Calc document, see 1. " /><figcaption>Silverlight 2 Control to UIAutomation Control Pattern mapping; for the original OpenOffice Calc document, see <a href="http://www.mono-a11y.org/documentation/control-to-pattern.ods">1</a>. </figcaption>
+</figure>
+<h1 id="mapping-control-types-to-atk-roles">Mapping Control Types to ATK Roles</h1>
+<p>Once you know the UIAutomation Control Type, map it to the appropriate ATK Role using the table below.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>ControlType</p></th>
+<th style="text-align: left;"><p>ATK Role</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Button</p></td>
+<td style="text-align: left;"><p>PushButton</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Calendar</p></td>
+<td style="text-align: left;"><p>Calendar</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>CheckBox</p></td>
+<td style="text-align: left;"><p>CheckBox</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>ComboBox</p></td>
+<td style="text-align: left;"><p>ComboBox</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Edit</p></td>
+<td style="text-align: left;"><p>Text</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Hyperlink</p></td>
+<td style="text-align: left;"><p>Label</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Image</p></td>
+<td style="text-align: left;"><p>Image</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>ListItem</p></td>
+<td style="text-align: left;"><p>ListItem</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>List</p></td>
+<td style="text-align: left;"><p>List</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Menu</p></td>
+<td style="text-align: left;"><p>Menu</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>MenuBar</p></td>
+<td style="text-align: left;"><p>MenuBar</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>MenuItem</p></td>
+<td style="text-align: left;"><p>MenuItem</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>ProgressBar</p></td>
+<td style="text-align: left;"><p>ProgressBar</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>RadioButton</p></td>
+<td style="text-align: left;"><p>RadioButton</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>ScrollBar</p></td>
+<td style="text-align: left;"><p>ScrollBar</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Slider</p></td>
+<td style="text-align: left;"><p>Slider</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Spinner</p></td>
+<td style="text-align: left;"><p>SpinButton</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>StatusBar</p></td>
+<td style="text-align: left;"><p>Statusbar</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Tab</p></td>
+<td style="text-align: left;"><p>PageTabList</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>TabItem</p></td>
+<td style="text-align: left;"><p>PageTab</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Text</p></td>
+<td style="text-align: left;"><p>Label</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>ToolBar</p></td>
+<td style="text-align: left;"><p>ToolBar</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>ToolTip</p></td>
+<td style="text-align: left;"><p>ToolTip</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Tree</p></td>
+<td style="text-align: left;"><p>Table</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>TableItem</p></td>
+<td style="text-align: left;"><p>TableCell</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Custom</p></td>
+<td style="text-align: left;"><p>Unknown</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Group</p></td>
+<td style="text-align: left;"><p>LayeredPane</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Thumb</p></td>
+<td style="text-align: left;"><p>PushButton</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>DataGrid</p></td>
+<td style="text-align: left;"><p>Table</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>DataItem</p></td>
+<td style="text-align: left;"><p>TableCell</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Document</p></td>
+<td style="text-align: left;"><p>Panel</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>SplitButton</p></td>
+<td style="text-align: left;"><p>PushButton</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Window</p></td>
+<td style="text-align: left;"><p>Filler</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Pane</p></td>
+<td style="text-align: left;"><p>Panel</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Header</p></td>
+<td style="text-align: left;"><p>TableRowHeader</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>HeaderItem</p></td>
+<td style="text-align: left;"><p>TableCell</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Table</p></td>
+<td style="text-align: left;"><p>Table</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>TitleBar</p></td>
+<td style="text-align: left;"><p>MenuBar</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Separator</p></td>
+<td style="text-align: left;"><p>Separator</p></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h1 id="mapping-uiautomation-control-patterns-to-atk-interfaces">Mapping UIAutomation Control Patterns to ATK interfaces</h1>
+<p>Then, map the UIA Control Patterns to a Pattern Implementor to understand the behavior of a given control.</p>
+<h2 id="generic-adapter">Generic Adapter</h2>
+<p>All adapters inherit from the base Adapter class which provides an implementation of the Atk.Component interface. In particular, the following members are expected to be implemented:</p>
+<h3 id="properties">Properties</h3>
+<ul>
+<li>description (Description): Should return AutomationElementIdentifiers.HelpText.</li>
+</ul>
+<ul>
+<li>getAlpha (Alpha): Always returns 1. (This could be implemented, but I don't think any current ATs will announce it)</li>
+<li>getLayer (Layer): Always returns Atk.Layer.Widget</li>
+<li>getMDIZOrder (MdiZorder): Always returns 0 as Silverlight doesn't support MDI</li>
+</ul>
+<h3 id="methods-to-expect-gtkgail-like-behavior">Methods to expect GTK/GAIL like behavior</h3>
+<ul>
+<li>contains (Contains)</li>
+<li>getExtents (GetExtents)</li>
+<li>getPosition (GetPosition)</li>
+<li>getSize (GetSize)</li>
+<li>grabFocus (GrabFocus)</li>
+<li>refAccessibleAtPoint (RefAccessibleAtPoint)</li>
+<li>setExtents (SetExtents) - Only if control provides TransformPattern, <code>CanMove = true</code> and <code>CanResize = true</code></li>
+<li>setPosition (SetPosition) - Only if control provides TransformPattern and <code>CanMove = true</code></li>
+<li>setSize (SetSize) - Only if control provides TransformPattern and <code>CanResize = true</code></li>
+</ul>
+<h3 id="states">States</h3>
+<h4 id="default-states">Default states</h4>
+<ul>
+<li>If the control is on screen:
+<ul>
+<li>Atk.StateType.Showing</li>
+<li>Atk.StateType.Visible</li>
+</ul></li>
+<li>If the control is Enabled:
+<ul>
+<li>Atk.StateType.Sensitive</li>
+<li>Atk.StateType.Enabled</li>
+</ul></li>
+<li>If the control is keyboard focusable:
+<ul>
+<li>Atk.StateType.Focusable</li>
+</ul></li>
+<li>If the control has keyboard focus:
+<ul>
+<li>Atk.StateType.Focused</li>
+</ul></li>
+<li>If the control is rendered horizontally:
+<ul>
+<li>Atk.StateType.Horizontal</li>
+</ul></li>
+<li>If the control is rendered vertically:
+<ul>
+<li>Atk.StateType.Vertical</li>
+</ul></li>
+</ul>
+<h4 id="pattern-specific-states">Pattern-specific States</h4>
+<ul>
+<li>If the control supports SelectionItem:
+<ul>
+<li>Atk.StateType.Selectable</li>
+</ul></li>
+<li>If the control supports SelectionItem and is selected:
+<ul>
+<li>Atk.StateType.Selected</li>
+</ul></li>
+<li>If the control supports Toggle, and is toggled:
+<ul>
+<li>Atk.StateType.Checked</li>
+</ul></li>
+<li>If the control supports Value and displays only one line
+<ul>
+<li>Atk.StateType.SingleLine</li>
+</ul></li>
+<li>If the control supports Value and displays more than one line
+<ul>
+<li>Atk.StateType.MultiLine</li>
+</ul></li>
+<li>If the control supports Value and is editable
+<ul>
+<li>Atk.StateType.Editable</li>
+</ul></li>
+<li>If the control supports ExpandCollapse
+<ul>
+<li>Atk.StateType.Expandable</li>
+</ul></li>
+<li>If the control supports ExpandCollapse and is expanded
+<ul>
+<li>Atk.StateType.Expanded</li>
+</ul></li>
+<li>If the control supports Transform and <code>CanResize = true</code>
+<ul>
+<li>Atk.StateType.Resizable</li>
+</ul></li>
+<li>If the control supports Invoke or Toggle, the following state will be raised when calling their main doAction:
+<ul>
+<li>Atk.StateType.Armed</li>
+</ul></li>
+</ul>
+<p>(TODO: determine if moon supports raising the state on click before <strong>release</strong> happens. If yes, Armed state will be lost when the user releases the button. If not, Armed state will be ON and immediately OFF when the action is triggered).</p>
+<h3 id="relations">Relations</h3>
+<ul>
+<li>Atk.RelationType.LabelledBy: Set if AutomationElementIdentifiers.LabeledBy is set.</li>
+<li>Atk.RelationType.NodeChildOf: Set for treenodes that are children of other higher-level treenodes (and for the highest-level treenodes pointing to the TreeTable parent).</li>
+<li>Atk.RelationType.MemberOf: Set for radiobuttons of the same group.</li>
+</ul>
+<h3 id="events">Events</h3>
+<ul>
+<li>When control's accessible name changes:
+<ul>
+<li><code>object:accessible-name</code></li>
+</ul></li>
+<li>When control's visibility changes:
+<ul>
+<li><code>object:state-changed:visible</code></li>
+</ul></li>
+<li>When control's sensitivity changes:
+<ul>
+<li><code>object:state-changed:sensitive</code></li>
+</ul></li>
+<li>When control receives focus:
+<ul>
+<li><code>object:state-changed:focused</code></li>
+<li><code>focus_event</code></li>
+</ul></li>
+<li>When focus leaves control:
+<ul>
+<li><code>object:state-changed:focused</code></li>
+</ul></li>
+<li>When control's bounds are changed:
+<ul>
+<li><code>bounds_changed</code></li>
+</ul></li>
+</ul>
+<h2 id="expandcollapseinvoketoggle-pattern-implementor">ExpandCollapse/Invoke/Toggle Pattern Implementor</h2>
+<ul>
+<li>Implements: Atk.Action</li>
+<li>Description: Maps ExpandCollpasePattern<a href="http://msdn.microsoft.com/en-us/library/system.windows.automation.provider.iexpandcollapseprovider_members.aspx">2</a>, InvokePattern<a href="http://msdn.microsoft.com/en-us/library/system.windows.automation.provider.iinvokeprovider_members.aspx">3</a> and TogglePattern<a href="http://msdn.microsoft.com/en-us/library/system.windows.automation.provider.itoggleprovider_members.aspx">4</a> to Atk.Action.</li>
+</ul>
+<p>The Pattern Implementor maps the three patterns as the individual actions listed below:</p>
+<ul>
+<li>ExpandCollapsePattern: &quot;expand or collapse&quot;</li>
+<li>Invoke: &quot;click&quot;</li>
+<li>Toggle: &quot;click&quot;</li>
+</ul>
+<p>If both Invoke and Toggle patterns are implemented, the Toggle pattern's actions will take precedence.</p>
+<h3 id="methods-to-expect-gtkgail-like-behavior-1">Methods to expect GTK/GAIL like behavior</h3>
+<ul>
+<li>nActions (NActions)</li>
+<li>doAction (DoAction)</li>
+<li>getDescription (GetDescription)</li>
+<li>getKeyBinding (GetKeybinding)</li>
+<li>getName (GetName)</li>
+<li>getLocalizedName (GetLocalizedName)</li>
+<li>setDescription (SetDescription)</li>
+</ul>
+<h3 id="methods-that-cannot-be-implemented">Methods that cannot be implemented</h3>
+<p>None</p>
+<h3 id="events-1">Events</h3>
+<ul>
+<li>When control is expanded or collapsed:
+<ul>
+<li><code>visible_data_changed</code></li>
+</ul></li>
+</ul>
+<h2 id="gridtable-pattern-implementor">Grid/Table Pattern Implementor</h2>
+<ul>
+<li>Implements: Atk.Table</li>
+<li>Description: Maps Grid<a href="http://msdn.microsoft.com/en-us/library/system.windows.automation.provider.igridprovider.aspx">5</a> and Table<a href="http://msdn.microsoft.com/en-us/library/system.windows.automation.provider.itableprovider.aspx">6</a> to Atk.Table.</li>
+</ul>
+<p>IGrid is a subset of ITable, so every ITable provider will implement IGrid (but not the other way around).</p>
+<h3 id="methods-to-expect-gtkgail-like-behavior-2">Methods to expect GTK/GAIL like behavior</h3>
+<ul>
+<li>refAt (RefAt)</li>
+<li>getColumnDescription (GetColumnDescription)</li>
+<li>addRowSelection (AddRowSelection)</li>
+<li>removeRowSelection (RemoveRowSelection)</li>
+<li>getRowDescription (GetRowDescription)</li>
+<li>getRowHeader (GetRowHeader)</li>
+<li>getIndexAt (GetIndexAt)</li>
+<li>getColumnAtIndex (GetColumnAtIndex)</li>
+<li>getRowAtIndex (GetRowAtIndex)</li>
+<li>getColumnExtentAt (GetColumnExtentAt)</li>
+<li>getRowExtentAt (GetRowExtentAt)</li>
+<li>getSelectedRows (GetSelectedRows)</li>
+<li>isRowSelected (IsRowSelected)</li>
+<li>isSelected (IsSelected)</li>
+<li>nColumns (NColumns)</li>
+<li>nRows (NRows)</li>
+</ul>
+<h3 id="methods-to-expect-similar-gtkgail-like-behavior">Methods to expect similar GTK/GAIL like behavior</h3>
+<ul>
+<li>caption (Caption)</li>
+<li>summary (Summary)</li>
+</ul>
+<p>(Both will return the information that may be previously set.)</p>
+<h3 id="methods-that-cannot-be-implemented-1">Methods that cannot be implemented</h3>
+<ul>
+<li>setRowDescription (SetRowDescription)</li>
+<li>setRowHeader (SetRowHeader)</li>
+<li>setDescription (SetDescription)</li>
+<li>setColumnDescription (SetColumnDescription)</li>
+<li>setColumnHeader (SetColumnHeader)</li>
+<li>getSelectedColumns (GetSelectedColumns)</li>
+<li>isColumnSelected (IsColumnSelected)</li>
+<li>addColumnSelection (AddColumnSelection)</li>
+<li>removeColumnSelection (RemoveColumnSelection)</li>
+</ul>
+<h3 id="events-2">Events</h3>
+<ul>
+<li>When rows are inserted:
+<ul>
+<li><code>row_inserted(row, n_inserted)</code></li>
+</ul></li>
+<li>When rows are deleted:
+<ul>
+<li><code>row_deleted(row, n_children_deleted)</code></li>
+</ul></li>
+</ul>
+<h2 id="rangevalue-pattern-implementor">RangeValue Pattern Implementor</h2>
+<ul>
+<li>Implements: Atk.Value</li>
+<li>Description: Maps RangeValuePattern<a href="http://msdn.microsoft.com/en-us/library/system.windows.automation.provider.irangevalueprovider_members.aspx">7</a> to Atk.Value. Should be able to map API roughly 1:1.</li>
+</ul>
+<h3 id="methods-to-expect-gtkgail-like-behavior-3">Methods to expect GTK/GAIL like behavior</h3>
+<ul>
+<li>minimumValue (GetMinimumValue)</li>
+<li>maximumValue (GetMaximumValue)</li>
+<li>minimumIncrement (GetMinimumIncrement)</li>
+<li>currentValue (GetCurrentValue)</li>
+<li>currentValue (SetCurrentValue)</li>
+</ul>
+<h3 id="methods-that-cannot-be-implemented-2">Methods that cannot be implemented</h3>
+<p>None</p>
+<h3 id="events-3">Events</h3>
+<ul>
+<li>When control's value changes:
+<ul>
+<li><code>object:accessible-value</code></li>
+</ul></li>
+</ul>
+<h2 id="selection-pattern-implementor">Selection Pattern Implementor</h2>
+<ul>
+<li>Implements: Atk.Selection</li>
+<li>Description: Maps SelectionPattern<a href="http://msdn.microsoft.com/en-us/library/system.windows.automation.provider.iselectionprovider_members.aspx">8</a> and SelectionItemPattern<a href="http://msdn.microsoft.com/en-us/library/system.windows.automation.provider.iselectionitemprovider_members.aspx">9</a> to Atk.Selection. Unlike UIAutomation, selection in ATK is done in the parent container instead of the container's children. This Pattern Implementor maps the various selection methods from the children to the parent.</li>
+</ul>
+<h3 id="methods-to-expect-gtkgail-like-behavior-4">Methods to expect GTK/GAIL like behavior</h3>
+<ul>
+<li>nSelectedChildren (SelectionCount)</li>
+<li>selectChild (AddSelection)</li>
+<li>clearSelection (ClearSelection)</li>
+<li>isChildSelected (IsChildSelected)</li>
+<li>getSelectedChild (RefSelection)</li>
+<li>deselectChild (RemoveSelection)</li>
+<li>selectAll (SelectAllSelection)</li>
+</ul>
+<h3 id="methods-that-cannot-be-implemented-3">Methods that cannot be implemented</h3>
+<p>None</p>
+<h3 id="events-4">Events</h3>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="selectionitem-pattern-implementor">SelectionItem Pattern Implementor</h2>
+<h3 id="events-5">Events</h3>
+<ul>
+<li>When an object gains or loses selection:
+<ul>
+<li><code>object:state-changed:selected</code></li>
+<li><code>selection_changed</code></li>
+</ul></li>
+</ul>
+<h2 id="value-pattern-implementor">Value Pattern Implementor</h2>
+<ul>
+<li>Implements: Atk.Text</li>
+<li>Description: Maps ValuePattern<a href="http://msdn.microsoft.com/en-us/library/system.windows.automation.provider.ivalueprovider_members.aspx">10</a> to Atk.Text. Can only retrieve and set the value of the control, but cannot control or retrieve things like selection, caret and text attributes.</li>
+</ul>
+<h3 id="methods-to-expect-gtkgail-like-behavior-5">Methods to expect GTK/GAIL like behavior</h3>
+<ul>
+<li>getCharacterAtOffset (GetCharacterAtOffset)</li>
+<li>getCharacterExtents (GetCharacterExtents)</li>
+<li>getRangeExtents (GetRangeExtents)</li>
+<li>getText (GetText)</li>
+<li>getTextAfterOffset (GetTextAfterOffset)</li>
+<li>getTextAtOffset (GetTextAtOffset)</li>
+<li>getTextBeforeOffset (GetTextBeforeOffset)</li>
+<li>characterCount (CharacterCount)</li>
+</ul>
+<h3 id="methods-that-cannot-be-implemented-4">Methods that cannot be implemented</h3>
+<ul>
+<li>addSelection (AddSelection)</li>
+<li>getBoundedRanges (GetBoundedRanges)</li>
+<li>getOffsetAtPoint (GetOffsetAtPoint)</li>
+<li>getAttributeRun (GetRunAttributes)</li>
+<li>getDefaultAttributes (DefaultAttributes)</li>
+<li>getNSelections (GetNSelections)</li>
+<li>getAttributes (GetAttributes)</li>
+<li>removeSelection (RemoveSelection)</li>
+<li>getSelection (GetSelection)</li>
+<li>setSelection (SetSelection)</li>
+<li>setCaretOffset (SetCaretOffset)</li>
+<li>caretOffset (CaretOffset)</li>
+</ul>
+<h3 id="events-6">Events</h3>
+<ul>
+<li>When the value changes:
+<ul>
+<li><code>visible_data_changed</code></li>
+</ul></li>
+</ul>
+<h2 id="exceptions">Exceptions</h2>
+<ul>
+<li>GridSplitter: Implements Transform pattern (which is usually accessed in ATK via SetPosition) but Orca (TODO: check this) expects Atk.Value to be implemented instead. The feasibility of altering this in our design will have to be estimated by development.</li>
+<li>TODO: Possible exception for Tables and Table-like controls.</li>
+</ul>
+</body>
+</html>

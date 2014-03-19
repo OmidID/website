@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>Mono versions up to Mono 2.6 shipped a provider for the Firebird database. As of Mono 2.8, this provider is no longer distributed by Mono since the code in Mono's source tree was never updated by the Firebird maintainers.</p>
+<p>Recent versions of Firebird bundle an up-to-date version of the database provider, and we strongly recommend developers to use that provider instead of using the bundled provider, even on versions 2.4 and 2.6 of Mono.</p>
+<h2 id="info">Info</h2>
+<ul>
+<li>Fully Managed ADO.NET Data Provider for Firebird and Interbase databases</li>
+</ul>
+<ul>
+<li>The <a href="http://firebird.sourceforge.net/index.php">Firebird Relational Database</a> is is an independent project which uses source code based on the Interbase source code released by Borland under the Interbase Public License</li>
+</ul>
+<ul>
+<li>Both the Firebird Relational Database and the Firebird .NET Data Provider can be downloaded from <a href="http://sourceforge.net/projects/firebird/">here</a></li>
+</ul>
+<ul>
+<li>Does not require an unmanaged client library to use.</li>
+</ul>
+<h2 id="support">Support</h2>
+<ul>
+<li>You can get support from the mailing list <a href="http://lists.sourceforge.net/lists/listinfo/firebird-net-provider">firebird-net-provider</a>. Please use this list for any questions that you may have about the provider</li>
+</ul>
+<h2 id="using">Using</h2>
+<p><b>Prerequisites</b></p>
+<ul>
+<li>Need a working mono and mcs</li>
+</ul>
+<ul>
+<li>Need access to a Firebird Relational Database or you can download it from <a href="http://firebird.sourceforge.net">here</a></li>
+</ul>
+<ul>
+<li>Get the Firebird .NET data provider from here as <a href="http://lists.sourceforge.net/lists/listinfo/firebird-net-provider">firebird-net-provider</a>. Make sure the Firebird .NET data provider binary assembly FirebirdSql.Data.Firebird.dll is installed in the same place as the mono class libraries.</li>
+</ul>
+<ul>
+<li>Connection String format:</li>
+</ul>
+<pre><code>Database=databasefile.gdb;User=user;Password=pass;Dialect=3;Server=hostname</code></pre>
+<ul>
+<li>Connection String Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Parameter Definition</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+<th style="text-align: left;"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Server</p></td>
+<td style="text-align: left;"><p>hostname or network address of the Firebird SQL server</p></td>
+<td style="text-align: left;"><p>Server=localhost</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Database</p></td>
+<td style="text-align: left;"><p>name of Firebird database file in which to connect</p></td>
+<td style="text-align: left;"><p>Database=C:\PROGRAM FILES\FIREBIRD\EXAMPLES\EMPLOYEE.GDB;</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>User</p></td>
+<td style="text-align: left;"><p>name of Firebird database user</p></td>
+<td style="text-align: left;"><p>User=SYSDBA</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Password</p></td>
+<td style="text-align: left;"><p>password for Firebird database user</p></td>
+<td style="text-align: left;"><p>Password=masterkey</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Dialect</p></td>
+<td style="text-align: left;"><p>Not sure. See Firebird net provider docs.</p></td>
+<td style="text-align: left;"><p>Dialect=3</p></td>
+</tr>
+</tbody>
+</table>
+<p><b>C# Example</b></p>
+<div class="csharp">
+<pre><code>&lt;code&gt;using System; 
+using System.Data; 
+using FirebirdSql.Data.Firebird;
+
+public class Test {
+    public static void Main(string[] args) {
+        string connectionString = 
+            &quot;Database=C:\\PROGRAM FILES\\FIREBIRD\\EXAMPLES\\EMPLOYEE.GDB;&quot; + 
+            &quot;User=SYSDBA;&quot; + &quot;Password=masterkey;&quot; + 
+            &quot;Dialect=3;&quot; + &quot;Server=localhost&quot;;
+
+        IDbConnection dbcon = new FbConnection(connectionString); 
+        dbcon.Open(); 
+        IDbCommand dbcmd = dbcon.CreateCommand(); 
+        string sql = &quot;SELECT * FROM employee&quot;; 
+        dbcmd.CommandText = sql; 
+        IDataReader reader = dbcmd.ExecuteReader(); 
+        while(reader.Read()) {
+            object dataValue = reader.GetValue(0); 
+            string sValue = dataValue.ToString(); 
+            Console.WriteLine(&quot;Value: &quot; + sValue);
+        } 
+        
+        // clean up 
+        reader.Close(); 
+        reader = null; 
+        dbcmd.Dispose(); 
+        dbcmd = null; 
+        dbcon.Close(); 
+        dbcon = null;
+    }
+} &lt;/code&gt;</code></pre>
+</div>
+<ul>
+<li>Building C# Example:</li>
+</ul>
+<ul>
+<li>Save the example to a file, such as, TestExample.cs</li>
+</ul>
+<ul>
+<li>Build using Mono C# compiler:</li>
+</ul>
+<pre><code> mcs TestExample.cs -r System.Data.dll -r FirebirdSql.Data.Firebird.dll</code></pre>
+<ul>
+<li>Running the Example:</li>
+</ul>
+<pre><code> mono TestExample.exe </code></pre>
+<p><a href="http://localhost:4000/Category:Developer Resource" title="wikilink">Category:Developer Resource</a> <a href="http://localhost:4000/Category:ADO.NET" title="wikilink">Category:ADO.NET</a></p>
+</body>
+</html>

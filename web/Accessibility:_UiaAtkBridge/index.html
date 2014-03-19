@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="introduction">Introduction</h2>
+<p>This bridge is going to be implemented to allow existing AT applications using open source technologies (Atk, AT-SPI) access accessibility information from programs that implement their Accessibility features using Microsoft UIAutomation API.</p>
+<h2 id="scope">Scope</h2>
+<p>We will split the work in different phases:</p>
+<ul>
+<li>System.Windows.Forms applications.</li>
+<li>Moonlight applications</li>
+</ul>
+<h2 id="approach">Approach</h2>
+<p>Existing technologies that use Atk and AT-SPI currently use the following components:</p>
+<ul>
+<li>Atk: a C library which contains all the accessibility API's and infrastructure.</li>
+<li>Atk-bridge: which is a C module (launched by demand depending if it's enabled in the environment variable GTK_MODULES) that connects the Atk domain model to the AT-SPI daemon.</li>
+<li>AT-SPI: which runs on Bonobo (CORBA) but is likely to be migrated to DBUS.</li>
+</ul>
+<p>These components represent the server side of the accessibility technology. For a screen reader or inspector (such as ORCA or Accerciser) to connect to these components, they need to use an AT-SPI connector (for example, Python applications use the library <a href="http://live.gnome.org/GAP/PythonATSPI">pyatspi</a>).</p>
+<p>Then, we need to implement a bridge which receives accessibility information from a .NET application (through a UIA provider) to the Atk component and send it via the Atk-bridge. The implementation will be coded in the managed world, so the translator between the unmanaged and managed layers will be held by a binding called Atk# (AtkSharp).</p>
+<p>The bridge will be in its own assembly, which will talk to Atk# directly and will receive information from the provider it's connected to, either directly from it or via the UIA Core.</p>
+<figure>
+<img src="http://localhost:4000/files/Uia-atk_bridge.png" title="http://localhost:4000/files/Uia-atk_bridge.png" alt="http://localhost:4000/files/Uia-atk_bridge.png" /><figcaption>http://localhost:4000/files/Uia-atk_bridge.png</figcaption>
+</figure>
+<h2 id="mapping-infrastructure">Mapping infrastructure</h2>
+<p>We will need to map UIA structures to ATK structures. More info:</p>
+<ul>
+<li>ATK roles: Refer to our <a href="Accessibility:_Mapping_UIA_to_ATK#http://localhost:4000/Roles" title="wikilink">table of Atk.Roles</a>, or directly from the <a href="http://svn.gnome.org/viewvc/atk/trunk/atk/atkobject.h?view=markup">ATK sources</a>.</li>
+<li><a href="http://localhost:4000/Accessibility: Mapping UIA to ATK" title="wikilink">Mapping UIA to ATK</a>: <a href="Accessibility:_Mapping_UIA_to_ATK#http://localhost:4000/UIA_Control_Types" title="wikilink">UiaControlType-&gt;Atk mapping draft</a>.</li>
+<li><a href="http://localhost:4000/Accessibility:_Control_Status" title="wikilink">MWF-&gt;UiaControlType-&gt;UiaProvider mappings</a>.</li>
+<li>From the GTK Case study: <a href="#http://localhost:4000/Case_study:_GTK" title="wikilink">Gtk-&gt;Gail-&gt;Atk-&gt;UiaControlType</a>.</li>
+<li>For historic reference: <a href="http://developer.mozilla.org/en/docs/ARIA_UA_Best_Practices#11.3.5_Role">Mapping MSAA to ATK</a>.</li>
+</ul>
+<p>NOTE!: All this work may be mergeable in a general-purpose table that wraps GtkClass-&gt;GailClass-&gt;AtkUsage(Role,GInterface,State)-&gt;BridgeClass-&gt;UiaProvider-&gt;UiaControlType-&gt;MwfClass|MoonlightWidget??</p>
+<h2 id="acceptance-tests">Acceptance tests</h2>
+<p>We have a Q1 deadline (March the 31st) in which we should have a basic test of the bridge working. We can show the progress here by just passing these acceptance tests:</p>
+<ol>
+<li>Have accerciser see an unmanaged test application that uses Atk: <strong>PASSED</strong>.</li>
+<li>Have accerciser see a managed test application that uses Atk#: <strong>PASSED</strong>.</li>
+<li>Have accerciser see an unmanaged test application that uses Atk with at least a children component: <strong>PASSED</strong>.</li>
+<li>Have accerciser see a managed test application that uses Atk# with at least a children component: <strong>PASSED</strong>.</li>
+<li>Have a minimal Bridge that exposes this functionality with public methods: <strong>FINISHED</strong></li>
+<li>Have a basic MWF application (which holds just a window) that, thanks to the UIAProvider now, is seen by accerciser as an application and a window child (GOAL for Q1): <strong>PASSED</strong></li>
+</ol>
+<p>The list of steps to make this work is:</p>
+<ul>
+<li>Create a folder in your computer for downloading code, e.g. /home/me/code</li>
+<li>Place yourself there in a console and download Gtk#/Glib#/Atk# bindings:</li>
+</ul>
+<p><code>svn co </code><a href="svn://anonsvn.mono-project.com/source/trunk/gtk-sharp/"><code>svn://anonsvn.mono-project.com/source/trunk/gtk-sharp/</code></a></p>
+<ul>
+<li>Now download uia2atk module:</li>
+</ul>
+<p><code>svn co </code><a href="svn://anonsvn.mono-project.com/source/trunk/uia2atk/"><code>svn://anonsvn.mono-project.com/source/trunk/uia2atk/</code></a></p>
+<ul>
+<li>Change to Atk# dir:</li>
+</ul>
+<p><code>cd gtk-sharp/</code></p>
+<ul>
+<li>Compile the bindings:</li>
+</ul>
+<p><code>./bootstrap-2.12</code><br /><code>make</code></p>
+<ul>
+<li>Ok, now we have some bleeding edge DLLs in our gtk-sharp dir, let's go back:</li>
+</ul>
+<p><code>cd ..</code></p>
+<ul>
+<li>Open a MonoDevelop solution (yeah we could use <strong>mdtool</strong> but I'm not sure the whole solution builds, and we need only a very small part):</li>
+</ul>
+<p><code>monodevelop uia2atk/Uia2Atk.mds &amp;</code></p>
+<ul>
+<li>Try to build the project Uia2Atk&gt;tests&gt;ManagedTests&gt;TestUiaAtkBridge: you will get a compilation error telling you that you're missing glib-sharp.dll in a directory (wierd MonoDevelop bug because it's already referenced).</li>
+<li>Go back to the console and copy the dll in the same dir as atkSharp:</li>
+</ul>
+<p><code>cp gtk-sharp/glib/glib-sharp.dll gtk-sharp/atk/</code></p>
+<ul>
+<li>Try to compile again and you will get a brand new exe.</li>
+<li>Now copy the atk-bridge native lib into the path that will be our LD_LIBRARY_PATH:</li>
+</ul>
+<p><code>cp /usr/lib/gtk-2.0/modules/libatk-bridge.so gtk-sharp/atk/glue/.libs/</code></p>
+<ul>
+<li>Now we can launch our managed test:</li>
+</ul>
+<p><code>cd uia2atk/UiaAtkBridge/samples/managed/TestUiaAtkBridge/bin/Debug/</code><br /><code>LD_LIBRARY_PATH=/path/to/our/own/gtk-sharp/atk/glue/.libs/ mono TestUiaAtkBridge.exe</code></p>
+<ul>
+<li>Now run accerciser in a separate thread (for example press CTRL+SHIFT+T and launch it), and you will see a beautiful toplevel element called TestUiaAtkBridge.exe, with two windows below it.</li>
+</ul>
+<p>We are now working on:</p>
+<ul>
+<li>Have Mono.UIAutomation.Winforms assembly link to the UiaAtkBridge (maybe you will have to do the same thing about missing managed and unmanaged libs, but with other projects).</li>
+<li>Have current Mono WindowsForms codebase call this provider by Reflection in order to get the bridge notified and complete whole chain.</li>
+</ul>
+<h2 id="case-study-gtk">Case study: GTK</h2>
+<p>GTK is a toolkit which is already mapped to ATK by the Gail module. We will maintain here a list of mappings for the GTK widgets as an example for our implementation for MWF widgets:</p>
+<table>
+<col style="width: 10%" /><col style="width: 10%" /><col style="width: 10%" /><col style="width: 20%" /><col style="width: 10%" /><col style="width: 10%" /><col style="width: 10%" /><col style="width: 10%" /><col style="width: 10%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Gtk class</p></th>
+<th style="text-align: left;"><p>Gail class</p></th>
+<th style="text-align: left;"><p>Atk usage</p></th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;"><p>UiaAtkBridge class</p></th>
+<th style="text-align: left;"><p>UIA Provider</p></th>
+<th style="text-align: left;"><p><a href="Accessibility: Mapping UIA to ATK#http://localhost:4000/UIA_Control_Types" title="wikilink">UiaControlType</a></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Hierarchy (children?)</p></td>
+<td style="text-align: left;"><p>Role</p></td>
+<td style="text-align: left;"><p>GInterfaces</p></td>
+<td style="text-align: left;"><p>States</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>[Gtk# only]Application</p></td>
+<td style="text-align: left;"><p>Toplevel (:AtkObject)</p></td>
+<td style="text-align: left;"><p>Parent of all</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_APPLICATION</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>ComboBox (:Bin)</p></td>
+<td style="text-align: left;"><p>ComboBox (:Container)</p></td>
+<td style="text-align: left;"><p>Contains a child with a menu role</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_COMBO_BOX</p></td>
+<td style="text-align: left;"><p>Action, Selection, (Inherited:) Component</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ComboBoxProvider (ISelectionProvider)</p></td>
+<td style="text-align: left;"><p>?? (a comboBox with DropDownStyle == DropDownList)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>ComboBoxEntry (:ComboBox)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>contains two children: a menu role, and a text role</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_COMBO_BOX</p></td>
+<td style="text-align: left;"><p>Action, Selection, (Inherited:) Component</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ComboBoxProvider (ISelectionProvider, IValueProvider)</p></td>
+<td style="text-align: left;"><p>?? (a comboBox with DropDownStyle == DropDown)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Combo (:HBox)</p></td>
+<td style="text-align: left;"><p>Combo (:Container)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_COMBO_BOX</p></td>
+<td style="text-align: left;"><p>Action, Selection, (Inherited:) Component</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>?? (maybe a comboBox with DropDownStyle == Single?)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>HBox (:Box)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>VBox (:Box)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Window (:Bin)</p></td>
+<td style="text-align: left;"><p>Window (:Container)</p></td>
+<td style="text-align: left;"><p>contains all the children widgets</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_FRAME</p></td>
+<td style="text-align: left;"><p>Component</p></td>
+<td style="text-align: left;"><p>ATK_STATE_SHOWING, ATK_STATE_ACTIVE, ATK_STATE_ICONIFIED, ATK_STATE_MODAL, ATK_STATE_RESIZABLE</p></td>
+<td style="text-align: left;"><p>Window</p></td>
+<td style="text-align: left;"><p>WindowProvider (IRawElementProviderSimple)</p></td>
+<td style="text-align: left;"><p>Window</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Label (:Misc)</p></td>
+<td style="text-align: left;"><p>Label (:Widget)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_LABEL or ATK_ROLE_ACCEL_LABEL</p></td>
+<td style="text-align: left;"><p>Component, Text</p></td>
+<td style="text-align: left;"><p>ATK_STATE_MULTI_LINE</p></td>
+<td style="text-align: left;"><p>TextLabel</p></td>
+<td style="text-align: left;"><p>LabelProvider (IRawElementProviderSimple)</p></td>
+<td style="text-align: left;"><p>Text</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Button (:Bin)</p></td>
+<td style="text-align: left;"><p>Button (:Container)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_PUSH_BUTTON</p></td>
+<td style="text-align: left;"><p>Action, Component, Image, Text</p></td>
+<td style="text-align: left;"><p>ATK_STATE_ARMED, ATK_STATE_SELECTABLE</p></td>
+<td style="text-align: left;"><p>Button</p></td>
+<td style="text-align: left;"><p>ButtonProvider (IInvokeProvider)</p></td>
+<td style="text-align: left;"><p>Button</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>CheckButton (:ToggleButton)</p></td>
+<td style="text-align: left;"><p>ToggleButton (:Button)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_CHECK_BOX</p></td>
+<td style="text-align: left;"><p>(Inherited:) Action, Component, Image, Text</p></td>
+<td style="text-align: left;"><p>ATK_STATE_CHECKED, ATK_STATE_ENABLED</p></td>
+<td style="text-align: left;"><p>CheckBox</p></td>
+<td style="text-align: left;"><p>CheckBoxProvider (IToggleProvider)</p></td>
+<td style="text-align: left;"><p>CheckBox</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>ToggleButton (:Button)</p></td>
+<td style="text-align: left;"><p>ToggleButton (:Button)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_TOGGLE_BUTTON</p></td>
+<td style="text-align: left;"><p>(Inherited:) Action, Component, Image, Text</p></td>
+<td style="text-align: left;"><p>ATK_STATE_CHECKED, ATK_STATE_ENABLED</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>(IToggleProvider)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>RadioButton (:CheckButton)</p></td>
+<td style="text-align: left;"><p>RadioButton (:ToggleButton)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_RADIO_BUTTON</p></td>
+<td style="text-align: left;"><p>(Inherited: Action, Component, Image, Text)</p></td>
+<td style="text-align: left;"><p>(Inherited?:) ATK_STATE_CHECKED, ATK_STATE_ENABLED</p></td>
+<td style="text-align: left;"><p>RadioButton</p></td>
+<td style="text-align: left;"><p>RadioButtonProvider (ISelectionItemProvider)</p></td>
+<td style="text-align: left;"><p>RadioButton</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Statusbar (:HBox)</p></td>
+<td style="text-align: left;"><p>Statusbar (:Container)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_STATUSBAR</p></td>
+<td style="text-align: left;"><p>Text</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>StatusBar</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>SpinButton (:Entry)</p></td>
+<td style="text-align: left;"><p>SpinButton (:Entry)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_SPIN_BUTTON</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>Spinner</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Image (:Misc)</p></td>
+<td style="text-align: left;"><p>Image (:Widget)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_ICON</p></td>
+<td style="text-align: left;"><p>Image</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>Image</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Entry (:Widget)</p></td>
+<td style="text-align: left;"><p>Entry (:Widget)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_TEXT or ATK_ROLE_PASSWORD_TEXT</p></td>
+<td style="text-align: left;"><p>Action, Text, EditableText</p></td>
+<td style="text-align: left;"><p>ATK_STATE_EDITABLE, ATK_STATE_SINGLE_LINE</p></td>
+<td style="text-align: left;"><p>EditableTextBoxEntry</p></td>
+<td style="text-align: left;"><p>TextBoxProvider</p></td>
+<td style="text-align: left;"><p>Edit</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>MenuBar (:MenuShell)</p></td>
+<td style="text-align: left;"><p>MenuShell (:Container)</p></td>
+<td style="text-align: left;"><p>container of menu role children</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_MENU_BAR or ATK_ROLE_UNKNOWN</p></td>
+<td style="text-align: left;"><p>Selection</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>MenuBar</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Menu (:MenuShell)</p></td>
+<td style="text-align: left;"><p>Menu (:MenuShell)</p></td>
+<td style="text-align: left;"><p>container of children roles: a tear off menu item, and n menu items</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_MENU</p></td>
+<td style="text-align: left;"><p>Selection</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>Menu</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>ImageMenuItem (:Menuitem)</p></td>
+<td style="text-align: left;"><p>SubMenuItem (:MenuItem)</p></td>
+<td style="text-align: left;"><p>container of children roles: a tear off menu item, and n menu items</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_MENU</p></td>
+<td style="text-align: left;"><p>Selection</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>Menu</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Menuitem (:Item)</p></td>
+<td style="text-align: left;"><p>MenuItem (:Item) (note the difference between Menuitem and MenuItem!)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_TEAR_OFF_MENU_ITEM or ATK_ROLE_SEPARATOR or ATK_ROLE_MENU_ITEM</p></td>
+<td style="text-align: left;"><p>Action</p></td>
+<td style="text-align: left;"><p>ATK_STATE_SELECTED</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>MenuItem</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>HSeparator (:Separator)</p></td>
+<td style="text-align: left;"><p>Separator (:Widget)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_SEPARATOR</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>ATK_STATE_HORIZONTAL</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>VSeparator (:Separator)</p></td>
+<td style="text-align: left;"><p>Separator (:Widget)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_SEPARATOR</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>ATK_STATE_VERTICAL</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Expander (:Bin)</p></td>
+<td style="text-align: left;"><p>Expander (:Container)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_TOGGLE_BUTTON</p></td>
+<td style="text-align: left;"><p>Action, Text</p></td>
+<td style="text-align: left;"><p>ATK_STATE_CHECKED, ATK_STATE_EXPANDED</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Frame (:Bin)</p></td>
+<td style="text-align: left;"><p>Frame (:Container)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_PANEL</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>ATK_STATE_DEFUNCT, ATK_STATE_VISIBLE, ATK_STATE_SHOWING</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GtkHtml?</p></td>
+<td style="text-align: left;"><p>HtmlBox (:AtkGObject)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_UNKNOWN</p></td>
+<td style="text-align: left;"><p>Component</p></td>
+<td style="text-align: left;"><p>ATK_STATE_DEFUNCT, ATK_STATE_VISIBLE, ATK_STATE_SHOWING</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>WebControl??</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>ViewPort (:Bin)</p></td>
+<td style="text-align: left;"><p>Container (:Widget)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_VIEWPORT</p></td>
+<td style="text-align: left;"><p>(Inherited:) Component</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>ToolBar (:Container)</p></td>
+<td style="text-align: left;"><p>Container (:Widget)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_TOOL_BAR</p></td>
+<td style="text-align: left;"><p>(Inherited:) Component</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ToolBar??</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>[abs] Item (:Bin)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>[abs] MenuShell (:Container)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>[abs] Bin (:Container)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>[abs] Box (:Container)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>[abs] Separator (:Widget)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>[abs] Misc (:Widget)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>[abs] Accessible (:AtkObject)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>[abs] Container (:Widget)</p></td>
+<td style="text-align: left;"><p>Container (:Widget)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_PANEL</p></td>
+<td style="text-align: left;"><p>(Inherited:) Component</p></td>
+<td style="text-align: left;"><p>n/a</p></td>
+<td style="text-align: left;"><p>ParentAdapter</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>[abs] Widget (:Object)</p></td>
+<td style="text-align: left;"><p>Widget (:GtkAccessible)</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>ATK_ROLE_UNKNOWN</p></td>
+<td style="text-align: left;"><p>Component</p></td>
+<td style="text-align: left;"><p>ATK_STATE_DEFUNCT, ATK_STATE_SENSITIVE, ATK_STATE_ENABLED, ATK_STATE_FOCUSABLE, ATK_STATE_VISIBLE, ATK_STATE_SHOWING, ATK_STATE_FOCUSED, ATK_STATE_DEFAULT</p></td>
+<td style="text-align: left;"><p>Adapter</p></td>
+<td style="text-align: left;"><p>??</p></td>
+<td style="text-align: left;"><p>??</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="problems-found">Problems found</h2>
+<ol>
+<li>It would be interesting to change the C API of ATK to reflect interfaces with the 'I' prefix to mimic the managed notation. Not sure if the unmanaged community will want this change (but if yes, anyway it will take time because it breaks API). <strong>Severity: Minor</strong></li>
+<li>Many ATK documentation states that it exposes (along with AT-SPI) a set of interfaces that are toolkit independent (<a href="http://blogs.sun.com/wwalker/entry/gail_migrated_into_gtk">example</a>). As a result, we should push changes in these frameworks that remove magic keywords or specific names from GTK or Gnome. These changes may have some impact (because some may break API/ABI) but should be pushed upstream in order to drop the barrier for other vendors/toolkit to use these components. <strong>Severity: Minor</strong> Examples:
+<ol>
+<li>Since GTK# is a non desirable dependency (because you may launch a MWF application from KDE) it's contradictory to have the atk-bridge module inside a path that belongs to Gtk (/usr/lib/gtk-2.0/modules) and to have it specified in an environment variable called GTK_MODULES. We should push the change of the name of this variable to G_MODULES(?) and use other path for the installation, upstream.</li>
+<li>Module atk-bridge should not have an external symbol with the name <em>gnome_accessibility_module_init</em>, but rather something without the name 'gnome' in it. The source code of atk-bridge is part of <a href="http://svn.gnome.org/svn/at-spi/trunk/">AT-SPI SVN</a>.</li>
+</ol></li>
+<li>According to Atk philosophy, each widget type (class) is associated with a particular custom AtkObject, and both types must derive from GLib.Object (GObject) to be GType's, so maybe we'll have some incompatibility between this concept and the current MWF implementation: should we modify the base class of MWF widgets to be Glib.Object? <strong>Severity: Minor (for now)</strong></li>
+<li>To prevent breaking API we currently haven't done these interesting changes in ATK#:
+<ol>
+<li>Change virtual methods to abstract methods (OnGetNChildren and OnRefChild).</li>
+<li>Make both methods OnGetNChildren and OnRefChild be implemented in just one property that is more managed-friendly: Atk.Object[] Children.</li>
+</ol></li>
+<li>Accerciser has a tab called 'Interfaces View' in which you can see the interfaces (<strong>atk interfaces</strong>) that a particular object (selected on the left pane) implements. In ATK terminology, there are two kinds of concept: interfaces and roles. And it's somewhat confusing to see the 'Application' interface in that tab while, in ATK, Application is a role. It turns out that on AT-SPI the name 'Application' is also an interface. We should change this overlap upstream if possible (use Program in replace to Application?).</li>
+<li>The system of using properties setters for stablishing the AtkUtil handlers like GetRoot/GetToolkitName/GetToolkitVersion is comfortable but:
+<ol>
+<li>It's a different way as the one used in the unmanaged world (different API), where you have to subclass AtkUtil and implement their methods.</li>
+<li>Following the subclassing methods, we could make the overriding mandatory (by abstract methods) in order to prevent crashes (for example if someone stablishes GetRoot method without stablishing GetToolkit* methods, accerciser will crash when navigating through the application).</li>
+</ol></li>
+<li>We call the atk-bridge unmanaged module from the UiaAtkBridge managed library. Maybe it's better to put this call in Atk# in order for other people to benefit from it. In the end, who is going to use ATK without GTK and without calling this module?</li>
+<li>The unmanaged module atk-bridge seems to call n times the function hello_util_add_global_event_listener (well, the equivalent to gail_util_add_global_event_listener in Gail) with parameters that include the keyword &quot;Gtk&quot; in the event_type (examples: Gtk:AtkHypertext:link-selected, Gtk:AtkObject:children-changed, Gtk:AtkComponent:bounds-changed...). This should be changed to a toolkit-agnostic methodology.</li>
+</ol>
+</body>
+</html>

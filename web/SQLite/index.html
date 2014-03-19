@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>The Mono.Data.SqliteClient assembly contains an ADO.NET data provider for the <a href="http://www.sqlite.org/">SQLite</a> embeddable database engine (both version 2 and version 3).</p>
+<p>SQLite has a notable oddity: table cell data does not retain what kind of data it was. Everything is stored as either a long, double, string, or blob. And in SQLite version 2, everything is stored as a string. So you need to be careful about avoiding casting values returned by SQLite without checking the type of the value returned. See below for notes on storing DateTimes.</p>
+<p>(The last maintainer of Mono.Data.SqliteClient was <a href="http://razor.occams.info">Josh Tauberer</a>.)</p>
+<h2 id="new-style-assembly-shipped-with-mono-1.2.4">New style assembly shipped with Mono 1.2.4</h2>
+<p>Starting with the 1.2.4 release, Mono ships a second SQLite assembly - Mono.Data.Sqlite. The new assembly provides support '''only for SQLite version 3 '''and is not 100% binary and API compatible with the older assembly. The new assembly is based on code by Robert Simpson from <a href="http://sqlite.phxsoftware.com/">http://sqlite.phxsoftware.com/</a> and provides full ADO.NET 2.0 API interface. Code from the old binary is contained in the new one but is available <strong>only in the 1.1 profile</strong>. The 2.0 profile can no longer access the old code when referencing the new assembly. We have chosen this way as means to provide a migration path for developers using SQLite in their .NET applications - both assemblies will be shipped with several future releases of Mono, and at some (yet undetermined) point the old one will be removed from the distribution. All the developers are encouraged to start transitioning their code to the new assembly - for both 1.1 and 2.0 profiles.</p>
+<p>One disadvantage of the new assembly is its binary incompatibility in the data format. That is, if your application uses SQLite database v2 format you <strong>will not</strong> be able to access your data with the new assembly. To solve this problem you must dump your data using sqlite v2 utilities and then restore it using sqlite v3 utilities.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>If you do not have <a href="http://www.sqlite.org/">SQLite</a>, download it. There are binaries for Windows and Linux. You can put the .dll or .so along side your application binaries, or in a system-wide library path.</p>
+<h2 id="connection-string-format">Connection String Format</h2>
+<p>The format of the connection string is:</p>
+<p><code>[1.1 profile and the old assembly]</code><br /><code>URI=</code><a href="file:/path/to/file"><code>file:/path/to/file</code></a><code> </code></p>
+<p><code>[2.0 profile in the new assembly]</code><br /><code>Data Source=</code><a href="file:/path/to/file"><code>file:/path/to/file</code></a><br /><code>Data Source=|DataDirectory|filename</code></p>
+<p>The latter case for the 2.0 profile references the App_Data directory (or any other directory that's configured to contain data files for an ASP.NET 2.0 application)</p>
+<p>As an example:</p>
+<p><code>[1.1 and the old assembly]</code><br /><code>URI=</code><a href="file:SqliteTest.db"><code>file:SqliteTest.db</code></a><code> </code></p>
+<p><code>[2.0 and the new assembly]</code><br /><code>Data Source=</code><a href="file:SqliteTest.db"><code>file:SqliteTest.db</code></a></p>
+<p>That will use the database SqliteTest.db in the current directory. It will be created if it does not exist.</p>
+<p>Or you prefer to use SQLite as an in memory database</p>
+<p><code>URI=</code><a href="file::memory"><code>file::memory</code></a><code>:,version=3</code></p>
+<p>The <code>version=3</code> is supported, but not necessary with the new assembly.</p>
+<p>With the old assembly, the ADO.NET adapter will use SQLite version 2 by default, but if version 2 is not found and version 3 is available, it will fallback to version 3. You can force the adapter to use version 3 by adding &quot;version=3&quot; to the connection string:</p>
+<p><code>URI=</code><a href="file:SqliteTest.db,version=3"><code>file:SqliteTest.db,version=3</code></a></p>
+<p>The new assembly, as described above, uses only database format version 3.</p>
+<ul>
+<li>Connection String Parameters:</li>
+</ul>
+<p><strong>For the 1.1 profile and the old assembly</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Parameter Definition</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+<th style="text-align: left;"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>URI</p></td>
+<td style="text-align: left;"><p>a file Universal Resource Identifier</p></td>
+<td style="text-align: left;"><p>URI=<a href="file:SqliteTest.db">file:SqliteTest.db</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>version</p></td>
+<td style="text-align: left;"><p>version of SQL Lite to use: version 2 or 3</p></td>
+<td style="text-align: left;"><p>version=3</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>busy_timeout</p></td>
+<td style="text-align: left;"><p>a timeout, in milliseconds, to wait when the database is locked before throwing a SqliteBusyException (since Mono 1.1.14)</p></td>
+<td style="text-align: left;"><p>busy_timeout=3000</p></td>
+</tr>
+</tbody>
+</table>
+<p>The busy_timeout parameter is implemented as a call to <a href="http://sqlite.org/capi3ref.html#sqlite3_busy_timeout">sqlite(3)_busy_timeout</a>. The default value is 0, which means to throw a SqliteBusyException immediately if the database is locked.</p>
+<p><strong>For the 2.0 profile in the new assembly</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Parameter Definition</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+<th style="text-align: left;"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Data Source</p></td>
+<td style="text-align: left;"><p>a file Universal Resource Identifier</p></td>
+<td style="text-align: left;"><p>Data Source=<a href="file:SqliteTest.db">file:SqliteTest.db</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>version</p></td>
+<td style="text-align: left;"><p>version of SQL Lite to use: version 3</p></td>
+<td style="text-align: left;"><p>version=3</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="storing-datetimes">Storing DateTimes</h2>
+<p>The way DateTimes are stored and retrieved from Sqlite databases depends on a lot, unfortunately, because Sqlite doesn't have a way of storing datetimes natively. Further, there are two versions of Sqlite (2 and 3) which are treated differently when it comes to DateTimes. The recommended way of using DateTimes with Sqlite is to encode/decode them yourself to/from some particular integer string format that you decide, and <em>not</em> putting them into a DATE or DATETIME column.</p>
+<p>Sqlite2 only has strings internally. No matter what the column was declared as, DateTimes are just going to be converted into strings. If you use parameters, for instance, DateTimes will be converted in a culture-sensitive format. When reading back the data, there's no way to know that it was originally a DateTime and not a string, so Mono.Data.SqliteClient returns the string. Using Sqlite2, you really can't use DateTimes without encoding them yourself.</p>
+<p>If you explicitly are targetting Sqlite3, or using the new assembly (in which case you should be providing the version parameter in the connection string, unless you are using the new assembly), you can rely on the particular behavior used when connecting to a Sqlite3 database. Sqlite3 has string, integer (64bit), real, and blob internal storage types. When putting a DateTime into the database using parameters, Mono.Data.SqliteClient will encode the DateTime as an integer using ToFileTime(). But this doesn't help when reading the data back to determine that a value was originally a DateTime. Sqlite3 also exposes the names of the types of the columns as the table was created with. If a column is declared as a DATE or DATETIME, SqliteDataReader will try to turn the value back into a DateTime. If it finds an integer value, it uses DateTime.FromFileTime, which is the reverse of how it encodes DateTimes if you insert a DateTime via parameters. If it finds a string value, it uses DateTime.Parse, but note that Parse is a very slow operation. So with Sqlite3, DateTimes should be put into DATE or DATETIME columns in the database either through parameters or by turning it into a long with ToFileTime yourself, and then they will be read back as DateTimes.</p>
+<h2 id="character-encodings">Character Encodings</h2>
+<p>The Sqlite client treats character encodings differently for version 2 and version 3 because of the way Sqlite2 and 3 treat strings.</p>
+<p>In Sqlite3, the Sqlite client communicates with Sqlite in Unicode. Therefore, you should be able to read and write any characters from the database, but note that if you write Unicode characters to a database, you may not be able to read them back in other applications if the application does not communicate with Sqlite using Unicode.</p>
+<p>In Sqlite2, the client by default communicates with Sqlite using the UTF-8 encoding, which means you can read and write any character. But you must beware of two things. The first is that since non-ASCII characters are encoded as multi-byte characters in UTF-8, and Sqlite2 doesn't recognize multibyte characters (unless it was compiled specifically with UTF-8 support), LIKE, GLOB, LENGTH, and SUBSTR will behave oddly. The second caveat is that other applications using the database must be using UTF-8 as well.</p>
+<p>When using Sqlite2, you can force Mono.Data.SqliteClient to use a different encoding instead of UTF-8 by adding &quot;;encoding=ASCII&quot; for instance to the connection string. It must be an encoding that ends with a single null terminator, however.</p>
+<h2 id="c-example-1.1-profile-of-the-new-assembly-and-the-old-assembly">C# Example (1.1 profile of the new assembly and the old assembly)</h2>
+<div class="csharp">
+<pre><code>&lt;code&gt; using System;
+ using System.Data;
+ using Mono.Data.SqliteClient;
+
+ public class Test
+ {
+    public static void Main(string[] args)
+    {
+       string connectionString = &quot;URI=file:SqliteTest.db&quot;;
+       IDbConnection dbcon;
+       dbcon = (IDbConnection) new SqliteConnection(connectionString);
+       dbcon.Open();
+       IDbCommand dbcmd = dbcon.CreateCommand();
+       // requires a table to be created named employee
+       // with columns firstname and lastname
+       // such as,
+       //        CREATE TABLE employee (
+       //           firstname varchar(32),
+       //           lastname varchar(32));
+       string sql =
+          &quot;SELECT firstname, lastname &quot; +
+          &quot;FROM employee&quot;;
+       dbcmd.CommandText = sql;
+       IDataReader reader = dbcmd.ExecuteReader();
+       while(reader.Read()) {
+            string FirstName = reader.GetString (0);
+            string LastName = reader.GetString (1);
+            Console.WriteLine(&quot;Name: &quot; +
+                FirstName + &quot; &quot; + LastName);
+       }
+       // clean up
+       reader.Close();
+       reader = null;
+       dbcmd.Dispose();
+       dbcmd = null;
+       dbcon.Close();
+       dbcon = null;
+    }
+ }
+
+&lt;/code&gt;</code></pre>
+</div>
+<p>To build the example:</p>
+<ul>
+<li>Save the example to a file, such as, TestExample.cs</li>
+<li>Build using Mono C# compiler:</li>
+</ul>
+<p><code>mcs TestExample.cs -r:System.Data.dll -r:Mono.Data.SqliteClient.dll</code></p>
+<p>To run the example:</p>
+<p><code>mono TestExample.exe</code></p>
+<p><a href="http://localhost:4000/Category:Developer Resource" title="wikilink">Category:Developer Resource</a> <a href="http://localhost:4000/Category:ADO.NET" title="wikilink">Category:ADO.NET</a></p>
+</body>
+</html>

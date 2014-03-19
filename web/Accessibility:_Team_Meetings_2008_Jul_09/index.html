@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>-!- Calen changed the topic of #mono-a11y to: :Accessibility team Iteration 8 meeting</p></td>
+<td style="text-align: left;"><p>07:00</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: hello</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>Hello!</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>hello jpallen</p></td>
+<td style="text-align: left;"><p>07:01</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>i think everybody is here now except Calvin and Andres. they can't attend this meeting so Jared asked me to run it.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>my system not very strong it always log out automatically, so if i lost the link sandy please help continue running this meeting, thanks :)</p></td>
+<td style="text-align: left;"><p>07:02</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>Go for it Calen</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>np</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>let's get started. we will run as usual,</p></td>
+<td style="text-align: left;"><p>07:03</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>first tell what you have done in Iteration7 then tell what you will do in Iteration8, after that remember say 'done' :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>also you can put forward any question you have, if it's a complex question someone can discuss it after the meeting, otherwise someone can answer it after he done ^ ^</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>we will follow the Iteration7 list.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy: would you please go first?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>sure thing</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: please</p></td>
+<td style="text-align: left;"><p>07:04</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>okay, so I talked to Miguel again about this outstanding olive patch, and he asked me to re-send it...then he ran off to GUADEC so I doubt there will be any resolution this until next week</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>decriptor alerted me to some issues with how the UiaAtkBridge package was installed</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and I fixed that, but I've been struggling to have the makefiles work in a 64-bit environment</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>it simple makefile stuff that I'm just having trouble learning</p></td>
+<td style="text-align: left;"><p>07:05</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so once again an iteration where I didn't get to coding</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but since nobody here is running 64-bit besides knocte...</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'm going to ignore the problem for now so I can make some more measurable progress</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so next iteration...</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'll finish all of my testing tasks that are listed</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and I should pick up a new provider, or at least ask mario where current providers need work</p></td>
+<td style="text-align: left;"><p>07:06</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: good! thanks</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy: i know you have finished so many hard job, do you have wiki page done can share for other person?</p></td>
+<td style="text-align: left;"><p>07:07</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>Calen: I didn't have time to update it, I will have to do it after the meeting</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>Calen: i really hope can study from you :) thanks in advance..</p></td>
+<td style="text-align: left;"><p>07:08</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>Calen: oh, you mean you want me to document the makefiles stuff on the wiki?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>okay, I can do that</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- mgorse_ [~mgorse@c-65-96-135-104.hsd1.ma.comcast .net] has joined #mono-a11y</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; mgorse_&gt; </strong></p></td>
+<td style="text-align: left;"><p>Sorry about that</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: thanks</p></td>
+<td style="text-align: left;"><p>07:09</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>now turn next, Mario: please go:)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>Ok.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>This iteration was about Navigation, so ComboBox, ListBox, ScrollBar and other Controls that doesn't have children now are supporting navigation</p></td>
+<td style="text-align: left;"><p>07:11</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>however, I still need to test with Vista, because seems that when children are removed/added the tree is rebuild, meaning that each leaf has new runtimeId, you know, new instances</p></td>
+<td style="text-align: left;"><p>07:12</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- mgorse [~mgorse@c-65-96-135-104.hsd1.ma.comcast .net] has quit [Ping timeout: 600 seconds]</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>so, Navigation is working, but more tests are needed.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>next iteration: navigation and more tests.</p></td>
+<td style="text-align: left;"><p>07:13</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario: thanks:)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Ngao: go ahead please</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>in the last iteration, I set up the parallel mono environment, and could compile the codes in it.</p></td>
+<td style="text-align: left;"><p>07:14</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I read some codes of Behavior, and write StatusBarGridProviderBehavior.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>for StatusBar, I think the properties of Grid control pattern shouldn't always return the default value, but I'm not very sure which provider is to be implemented.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>in the next iteration, I would deeply understand the logic, especially Navigation, and try to figure out if another provider should be done for StatusBar.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: thanks, so will you work with mario or sandy?</p></td>
+<td style="text-align: left;"><p>07:15</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>Calen: yes</p></td>
+<td style="text-align: left;"><p>07:16</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Calen: both</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: nice</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>okay, let's jump over Calvin and Andres</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>next turn mgorse_, please go</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- mgorse_ is now known as mgorse</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Last iteration I added a couple of missing pieces to atspi-dbus (the .po and .pc files, and coded a login-helper interface but haven't tested it)</p></td>
+<td style="text-align: left;"><p>07:17</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and I patched gok to build against the new cspi but haven't done anything with the patch so far</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>also looked a bit at an a11y bug affecting OpenSUSE, but that's unrelated to anything</p></td>
+<td style="text-align: left;"><p>07:18</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>My plan from here on out is to only work on at-spi-dbus on an as-needed basis and to also work on other things, probably the UIA Atk bridge</p></td>
+<td style="text-align: left;"><p>07:19</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I've asked Andres what he thought I should work on. He briefly wrote and suggested that ther emight be an infinite loop in the combobox constructor that I could look at. He said that he'd write again later</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>at the moment I'm updating my Mono installation, and I installed ironpython this morning, since I figure it might help me test things as I'm coding</p></td>
+<td style="text-align: left;"><p>07:20</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'm also moving this weekend, so I'm planning to take FTO on Friday</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>might know better later on today what I'll be doing this iteration, so I'll update the wiki then</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: cool job, thanks</p></td>
+<td style="text-align: left;"><p>07:21</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bgmerrell: are you here? now turn you to report :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>I am here</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>This iteration I reviewed the code of all of our WinForms sample applications that we have been writing. I made some notes and sent them to Ray, who is maintaining those for us.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I also did some work with Tooltip and TreeView widgets in Gtk to get a better idea of how we can test them effectively in WinForms.</p></td>
+<td style="text-align: left;"><p>07:22</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>And I finished working with Calen on a couple of Gtk Strongwind tests and added them to our Gtk test suite. Calen is a Strongwind expert now :D This should all make the WinForms testing go a lot smoother.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: lol</p></td>
+<td style="text-align: left;"><p>07:23</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>This next iteration hopefully we will start working against WinForms. I need to update the Fedora and Ubuntu VMs with our test environment if there is time, finish writing docs and a tutorial for our testing methods, and start looking at Orca tests.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- jpallen [~jpallen@ariadne.provo.novell.com] has quit [used jmIrc]</p></td>
+<td style="text-align: left;"><p>07:24</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>whatever is possible/most important</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- jpallen [~jpallen@137.65.133.36] has joined #mono-a11y</p></td>
+<td style="text-align: left;"><p>07:25</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: thanks very much</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>BTW, developers, would you like try our winforms application those we have finished?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'm sure they'll be helpful to us</p></td>
+<td style="text-align: left;"><p>07:26</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>Calen, sure, which one?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>i hope you can give us any suggestion ^ ^</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>mario: you can find them from SVN</p></td>
+<td style="text-align: left;"><p>07:27</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>mario: we put them in uia2atk/test/samples/</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>are the ipython apps?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario: yes</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario, ironpython, not ipython, :D</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>* sandy </strong></p></td>
+<td style="text-align: left;"><p>likes to say FePy</p></td>
+<td style="text-align: left;"><p>07:28</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario: oh sorry,yeah ironpython</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Ray: thanks Ray</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario, ipython is a interactive python shell i think</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>fyi, the suse package for Iron Python is IPCE</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>in <a href="http://www.mono-project.com/Accessibilit">http://www.mono-project.com/Accessibilit</a> y:_Test_Plan_WinForms_Controls you can find which control link to which application</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>Ok, I'll try the samples.</p></td>
+<td style="text-align: left;"><p>07:29</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario, and give the feedback, please :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>Ray, sure</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><dl>
+
+<dd>)
+</dd>
+</dl></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario, thank you so much</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>also, sandy discovered that you have to run &quot;mono /usr/lib/IPCE/ipy/ipy.exe uia2atk/test/samples/foo.py&quot;</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>Okay, Ray please go your report</p></td>
+<td style="text-align: left;"><p>07:30</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>Calen, will you ahead of me? behind of bgmerrell ?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok, my turn.</p></td>
+<td style="text-align: left;"><p>07:31</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>Ray: you ahead of me in the list :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>in iteration 7, it's a BIG thanks to bgmerrel who spends so much time to review the samples i have written,</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and i have followed up what bgmerrel suggested, starting to improve the samples.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>now i have finished half of them, but more difficult samples are left,</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so i should spend a lilttle time to finish the rest. on the other hand, i haven't implemented new samples. hope to have some finished in next cycle.</p></td>
+<td style="text-align: left;"><p>07:32</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>addtionally, a BIG thanks to decriptor as well, because of his valuable efforts of our building stuff, i haven't much time to spend on it.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>thank you so much, decriptor.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so, in next iteration, continue to improve the rest samples, and hope to start new samples.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+<td style="text-align: left;"><p>07:33</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>Ray: don't worry the difficult samples, we trust you can do it well. thanks you improve some of my samples:)</p></td>
+<td style="text-align: left;"><p>07:34</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>now turn me to say</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i have finished a practice of strongwind test script for statusbar, menubar/menuitem, toolbar, pagetab, scrollbar.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i wrote all of those tests in one test script by runing gedit as practice application because gedit have many controls can be run.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i posted my strongwind study information in my blog i hope it will helpful and i will update it in real time when i implement new control.</p></td>
+<td style="text-align: left;"><p>07:35</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>thanks bgmerrell responded to my blog, you give me a big help :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>oh, i have finished radiobutton without name with bgmerrell's help, but still have a problem in tooltip</p></td>
+<td style="text-align: left;"><p>07:36</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i can't do findToolTip() it will return me search error</p></td>
+<td style="text-align: left;"><p>07:37</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>in next iteration i hope i can implement more controls, but now i haven't exact plan for what controls i will implement in next coming week maybe 'FileDialog, FontDialog, OpenFileDialog'. done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>decriptor: how about you? plese go your report :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>Calen: ok</p></td>
+<td style="text-align: left;"><p>07:38</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so this last iteration I worked on the build plan (http://www.mono-project.com/Accessibili ty:_Build_Plan) so if anyone has any comments on that let me know. I also implemented OBS on build0 to an extent. Hopefully we can get that fully up and running. Possibly trying to patch a bug there. Started to put monobuild on build1.</p></td>
+<td style="text-align: left;"><p>07:40</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>this iteration, hopefully get OBS fully up and running. Hoping get monobuild up on the other machine. Start working with the mono team and seeing where we can help each other with the build stuff</p></td>
+<td style="text-align: left;"><p>07:41</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: thanks!</p></td>
+<td style="text-align: left;"><p>07:43</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>decriptor: i didn't see your name in schedule list:)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>did i miss anybody? does any else topic we should talk?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>i would like to add a few things</p></td>
+<td style="text-align: left;"><p>07:44</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: please</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>first of all, good job everyone on another iteration. We're continuing to make a lot of progress</p></td>
+<td style="text-align: left;"><p>07:45</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>as we report our efforts and what we plan on doing for the next iteration there is something missing</p></td>
+<td style="text-align: left;"><p>07:46</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>that is -- how are we tracking against our schedule</p></td>
+<td style="text-align: left;"><p>07:47</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so, i have asked Andres to take a closer look at that</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>he sent me a preliminary analysis before he left for GUADEC</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i will be working with him on this when he returns</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>as a result, we hope to have a better understanding of where we're at in regard to phase 1 of the project</p></td>
+<td style="text-align: left;"><p>07:48</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>in other words, overall, are we currently 30% complete, or 45% complete, etc.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>this will allow is to manage our efforts a little bit tighter</p></td>
+<td style="text-align: left;"><p>07:49</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so, stay tuned for some good stuff coming from Andres :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: When is he going to return?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>he is out all week</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>he will be back monday or tuesday next week</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: I think he said Tuesday</p></td>
+<td style="text-align: left;"><p>07:50</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>also, i don't think last week's meeting log got posted to the wiki</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>who was going to do that?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: perhaps I forgot to link it, but it's up</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'll fix that</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: i posted it</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p><a href="http://mono-project.com/index.php?title">http://mono-project.com/index.php?title</a>= Accessibility:_Team_Meetings_2008_Jul_02</p></td>
+<td style="text-align: left;"><p>07:51</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>ah</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i see it now</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>thanks</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: please help post this meeting log, and give a link in Team wiki page. thanks:)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>will do</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>i will be in the cambridge office at the beginning of next week</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i will be doing some interviewing</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>for our team?</p></td>
+<td style="text-align: left;"><p>07:52</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>mario: we'll sit down and chat for a bit while i'm there</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i also plan on being in Beijing in October</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen, ok</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen, that's good :)</p></td>
+<td style="text-align: left;"><p>07:53</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>Calen: Ray: ngao: any good candidates for our developer positions in Beijing?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>not yet,</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: i havn't :(</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: not yet.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>Calen: Ray: ngao: a recommendation from any of you would be highly valuable</p></td>
+<td style="text-align: left;"><p>07:54</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen, sure, we will try to find before you come. :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>that would be great</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i don't want to wait until i get there</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i would like to fill those slots now</p></td>
+<td style="text-align: left;"><p>07:55</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so, if you have any past associates that you think would be a good fit, please let me know</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: if we find we will send you their resume first:)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>certainly</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: ok</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>great</p></td>
+<td style="text-align: left;"><p>07:56</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok. that's all from me. i've got to jump into another meeting now. thanks again, everyone, for all of your hard work and dedication. keep it up! :-)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: thank! see you</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen, we will, thank you, jpallen</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>bye</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: thanks</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>Okay, thanks for everyone. don't forget update status in schedule page.</p></td>
+<td style="text-align: left;"><p>07:57</p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+</body>
+</html>

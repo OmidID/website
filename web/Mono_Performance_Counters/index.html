@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="mono-performance-counters">Mono performance counters</h1>
+<p>This page lists the performance counters currently implemented in the Mono runtime.</p>
+<p><strong>Note:</strong> despite being implemented and present in the runtime, not all counters are being updated as of the time of this writing (April 16 2010).</p>
+<p>The list is based on the trunk version of the runtime, so not all of them might be present in your version of Mono.</p>
+<p>Each category is listed in a section of its own, to facilitate navigation.</p>
+<h2 id="category-processor">Category: Processor</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>% User Time</p></td>
+<td style="text-align: left;"><p>Timer 100ns</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>% Privileged Time</p></td>
+<td style="text-align: left;"><p>Timer 100ns</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>% Interrupt Time</p></td>
+<td style="text-align: left;"><p>Timer 100ns</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>% DCP Time</p></td>
+<td style="text-align: left;"><p>Timer 100ns</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>% Processor Time</p></td>
+<td style="text-align: left;"><p>Timer 100ns inverse</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h2 id="category-process">Category: Process</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>% User Time</p></td>
+<td style="text-align: left;"><p>Timer 100ns</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>% Privileged Time</p></td>
+<td style="text-align: left;"><p>Timer 100ns</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>% Processor Time</p></td>
+<td style="text-align: left;"><p>Timer 100ns</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Thread Count</p></td>
+<td style="text-align: left;"><p>Number of items, 64bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Virtual Bytes</p></td>
+<td style="text-align: left;"><p>Number of items, 64bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Working Set</p></td>
+<td style="text-align: left;"><p>Number of items, 64bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Private Bytes</p></td>
+<td style="text-align: left;"><p>Number of items, 64bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="category-mono-memory">Category: Mono Memory</h2>
+<p>This category is Mono-specific</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Allocated Objects</p></td>
+<td style="text-align: left;"><p>Number of items, 64bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Total Physical Memory</p></td>
+<td style="text-align: left;"><p>Number of items, 64bit</p></td>
+<td style="text-align: left;"><p>Physical memory installed in the machine, in bytes</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="category-asp.net">Category: ASP.NET</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Requests Queued</p></td>
+<td style="text-align: left;"><p>Number of items, 64bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Requests Total</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Requests/Sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="category-.net-clr-jit">Category: .NET CLR JIT</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>of IL Bytes JITted</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>of IL Methods JITted</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>% Time in JIT</p></td>
+<td style="text-align: left;"><p>Raw fraction</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>IL Bytes Jitted/Sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Standard Jit Failures</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h2 id="category-.net-clr-exceptions">Category: .NET CLR Exceptions</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>of Exceps Thrown</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>of Exceps Thrown/Sec</li>
+</ol></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>of Filters/Sec</li>
+</ol></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>of Finallys/Sec</li>
+</ol></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Throw to Catch Depth/Sec</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="category-.net-clr-memory">Category: .NET CLR Memory</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>Gen 0 Collections</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>Gen 1 Collections</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>Gen 2 Collections</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Promoted Memory from Gen 0</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Promoted Memory from Gen 1</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Gen 0 Promoted Bytes/Sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Gen 1 Promoted Bytes/Sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Promoted Finalization-Memory from Gen 0</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Gen 0 heap size</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Gen 1 heap size</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Gen 2 heap size</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Large Object Heap size</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Finalization Survivors</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>GC Handles</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Allocated Bytes/sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>Induced GC</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>% Time in GC</p></td>
+<td style="text-align: left;"><p>Raw fraction</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>Bytes in all Heaps</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>Total committed Bytes</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>Total reserved Bytes</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>of Pinned Objects</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>of Sink Blocks in use</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="category-.net-clr-remoting">Category: .NET CLR Remoting</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Remote Calls/sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Total Remote Calls</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Channels</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Context Proxies</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Context-Bound Classes Loaded</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Context-Bound Objects Alloc / sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Contexts</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="category-.net-clr-loading">Category: .NET CLR Loading</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Current Classes Loaded</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Total Classes Loaded</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Rate of Classes Loaded</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Current appdomains</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Total Appdomains</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Rate of appdomains</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Current Assemblies</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Total Assemblies</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Rate of Assemblies</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Total # of Load Failures</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Rate of Load Failures</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Bytes in Loader Heap</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Total appdomains unloaded</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Rate of appdomains unloaded</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="category-.net-clr-locksandthreads">Category: .NET CLR LocksAndThreads</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Total # of Contentions</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Contention Rate / sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Current Queue Length</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Queue Length Peak</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Queue Length / sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>of current logical Threads</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>of current physical Threads</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>of current recognized threads</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>of total recognized threads</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>rate of recognized threads / sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="category-.net-clr-interop">Category: .NET CLR Interop</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>of CCWs</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>of Stubs</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>of marshalling</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="category-.net-clr-security">Category: .NET CLR Security</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Total Runtime Checks</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>Link Time Checks</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>% Time in RT checks</p></td>
+<td style="text-align: left;"><p>Raw fraction</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Stack Walk Depth</p></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="category-mono-threadpool">Category: Mono Threadpool</h2>
+<p>This category is Mono-specific</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Work Items Added</p></td>
+<td style="text-align: left;"><p>Number of items, 64bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Work Items Added/Sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>IO Work Items Added</p></td>
+<td style="text-align: left;"><p>Number of items, 64bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>IO Work Items Added/Sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><ol>
+<li>of Threads</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><ol>
+<li>of IO Threads</li>
+</ol></td>
+<td style="text-align: left;"><p>Number of items, 32bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="category-network-interface">Category: Network Interface</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Name</p></th>
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Bytes Received/sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 64bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Bytes Sent/sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 64bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Bytes Total/sec</p></td>
+<td style="text-align: left;"><p>Rate of counts per second, 64bit</p></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h1 id="accessing-performance-counters">Accessing performance counters</h1>
+<p>The code snippet below shows you how to read a counter from the current process. Note that the <strong>Mono Memory</strong> category name will throw an exception on .NET since that category doesn't exist there - replace it with any other non-Mono specific category+counter name pair and it will work:</p>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+using System;
+using System.Diagnostics;
+
+class app
+{
+   static void Main (string[] args)
+   {
+       string categoryName;
+       string counterName;
+
+       if (args.Length &gt;= 2) {
+           categoryName = args [0];
+           counterName = args [1];
+       } else {
+           categoryName = &quot;Mono Memory&quot;;
+           counterName = &quot;Total Physical Memory&quot;;
+       }
+       
+       try {
+           var pc = new PerformanceCounter (categoryName, counterName);
+           Console.WriteLine (&quot;Value of performance counter &#39;{0}/{1}&#39;: {2}&quot;,
+                      categoryName,
+                      counterName,
+                      pc.RawValue);
+       } catch (InvalidOperationException ex) {
+           Console.WriteLine (&quot;Category name &#39;{0}&#39; does not exist. {1}&quot;, categoryName, ex.Message);
+       }
+   }
+}
+&lt;/code&gt;</code></pre>
+</div>
+<p><a href="http://localhost:4000/Category: Documentation" title="wikilink">Category: Documentation</a> <a href="http://localhost:4000/Category: Developer Resource" title="wikilink">Category: Developer Resource</a> <a href="http://localhost:4000/Category: Mono Framework" title="wikilink">Category: Mono Framework</a></p>
+</body>
+</html>

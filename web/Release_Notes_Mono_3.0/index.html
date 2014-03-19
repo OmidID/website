@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>Mono 3.0 is a portable and open source implementation of the .NET framework for Unix, Windows, MacOS and other operating systems.</p>
+<p>Mono 3.0 is an update to <a href="Release Notes Mono 2.10" title="wikilink">Mono 2.10</a> based on the master branch of github, it is not a minor upgrade to 2.10. Mono 3.0 was released on October 18th 2012.</p>
+<p>We will continue to bug fix and update Mono 2.10 for another six months for users that can not upgrade to Mono 3.0.</p>
+<h1 id="x-series-release-notes">3.0.x Series Release Notes</h1>
+<ul>
+<li><a href="#New_in_Mono_3.0" title="wikilink">New in 3.0</a></li>
+<li><a href="#New_in_Mono_3.0.2" title="wikilink">New in 3.0.2</a></li>
+<li><a href="#New_in_Mono_3.0.3" title="wikilink">New in 3.0.3</a></li>
+<li><a href="#New_in_Mono_3.0.4" title="wikilink">New in 3.0.4</a></li>
+<li><a href="#New_in_Mono_3.0.5" title="wikilink">New in 3.0.5</a></li>
+<li><a href="#New_in_Mono_3.0.6" title="wikilink">New in 3.0.6</a></li>
+<li><a href="#New_in_Mono_3.0.7" title="wikilink">New in 3.0.7</a></li>
+<li><a href="#New_in_Mono_3.0.8" title="wikilink">New in 3.0.8</a></li>
+<li><a href="#New_in_Mono_3.0.9" title="wikilink">New in 3.0.9</a></li>
+<li><a href="#New_in_Mono_3.0.10" title="wikilink">New in 3.0.10</a></li>
+<li><a href="#New_in_Mono_3.0.12" title="wikilink">New in 3.0.12</a></li>
+<li><a href="#New_in_Mono_3.1.1" title="wikilink">New in 3.1.1</a></li>
+<li><a href="#New_in_Mono_3.1.2" title="wikilink">New in 3.1.2</a></li>
+</ul>
+<h1 id="new-in-mono-3.1.2">New in Mono 3.1.2</h1>
+<p>This is a bugfix only release.</p>
+<h2 id="bugs">Bugs</h2>
+<p>10782 - Emit additional sequence points for call entry when needed.</p>
+<p>12989 - Loading of nested type of missing type needs to create another missing type.</p>
+<p>13110 - Equality structural comparer needs to do recursive comparisons.</p>
+<p>13197 - Allow async for explicitly implemented interface methods.</p>
+<p>13200 - Implement webrequest cancellation.</p>
+<p>13202 - Prefer user operators over predefined operators for binary enum operations too.</p>
+<h1 id="new-in-mono-3.1.1">New in Mono 3.1.1</h1>
+<h2 id="whats-new">What's new</h2>
+<p>Mono now defaults to sgen</p>
+<p>Fixed AOT on OSX 10.9</p>
+<p>Update Mono.Cairo to include APIs from cairo 1.10</p>
+<p>Update the LLVM used from Nov-2012 to Jul-2013</p>
+<p>Several optimizations to improve string performance, exposed by a naive implementation of Sudoku:</p>
+<ul>
+<li>Enable managed allocation using gsharing</li>
+<li>Implemented the string allocator for SGen</li>
+<li>Fixed String.Contains, as it is not supposed to be culture aware (Mono was, so we took a big perf hit, and were wrong)</li>
+</ul>
+<p>Added a dummy implementation of System.Net.Http.WebRequestHandler</p>
+<p>On iOS, managed-to-native wrappers now follow the native ABI and can be unwinded.</p>
+<p>Better FreeBSD support, sgen and dtrace can now be enabled</p>
+<h2 id="bug-fixes">Bug fixes</h2>
+<ul>
+<li>3324 - Make WebClient report an error when the download aborted prematurely.</li>
+</ul>
+<ul>
+<li>12457 - Add [Serializable] to X509Certificate2 (added in .NET 4.0)</li>
+</ul>
+<ul>
+<li>12544 - Fix order of capturing of this inside switch statement.</li>
+</ul>
+<ul>
+<li>12608 - Rewrite lifted binary operators to match C# spec more closely.</li>
+</ul>
+<ul>
+<li>12638 - Fix MethodImplOptions argument checks.</li>
+</ul>
+<ul>
+<li>12640 - Make ServicePointManager hash on the proxy as well as uri and use_connect</li>
+</ul>
+<ul>
+<li>12731 - Emit dwarf line number info using .file/.loc assembler directives on osx.</li>
+</ul>
+<ul>
+<li>12741 - Fix register allocation for hw remainder opcodes on armv7s.</li>
+</ul>
+<ul>
+<li>12745 - Block task awaiter until task completes.</li>
+</ul>
+<ul>
+<li>12762 - Use directly captured this instead of parent reference for nested state machine inside another state machine without anonymous storey.</li>
+</ul>
+<ul>
+<li>12786 - When unloading domains, free dynamic assemblies first.</li>
+</ul>
+<ul>
+<li>12799 - Mutate generic catch block type when needed.</li>
+</ul>
+<ul>
+<li>12856 - Fix MethodInfo::ToString () to properly format generic structs.</li>
+</ul>
+<ul>
+<li>12889 - Recover more from invalid throw statement.</li>
+</ul>
+<ul>
+<li>12892 - Path.GetFullPath() may return incorrect relative path under Windows</li>
+</ul>
+<ul>
+<li>12898 - Verify if the catch type is valid under the method context.</li>
+</ul>
+<ul>
+<li>12949 - Call correct ApplyToExtraTarget base override.</li>
+</ul>
+<ul>
+<li>12991 - Do system.object type scan after all references are loaded.</li>
+</ul>
+<h1 id="new-in-mono-3.0.12">New in Mono 3.0.12</h1>
+<h2 id="whats-new-1">What's new</h2>
+<p>Added PCL support to xbuild, mono's MSBuild implementation.</p>
+<p>Fixed multiple hangs that happen during shutdown or appdomain unload</p>
+<p>Merged most of the ARM support for NaCl</p>
+<p>mkbundle now uses IKVM.Reflection</p>
+<p>Mono is now compatible with OSX 10.9</p>
+<h2 id="bugs-1">Bugs</h2>
+<ul>
+<li>5904 - Fix incorrect end-of-stream with null callback.</li>
+</ul>
+<ul>
+<li>10887 - Handle shifts by multiple of 32 correctly.</li>
+</ul>
+<ul>
+<li>11945 - Better handle default value BigInteger.</li>
+</ul>
+<ul>
+<li>12329 - Properly handle csc when AOT code using the async keyword</li>
+</ul>
+<ul>
+<li>12342 - Implement Task::AsyncWaitHandle</li>
+</ul>
+<ul>
+<li>12349 - Keep cancellation token for all running requests.</li>
+</ul>
+<ul>
+<li>12361 - Resolve unreachable block with correct flow settings.</li>
+</ul>
+<ul>
+<li>12394 - Older versions of iOS don't have pthread_mutexattr_setpolicy_np</li>
+</ul>
+<ul>
+<li>12412 - Fix support for dynamic methods in collect_method_images ().</li>
+</ul>
+<ul>
+<li>12429 - Use a different function for emitting write barriers for gsharedvt types which can handle reference types too.</li>
+</ul>
+<ul>
+<li>12446 - Run YieldAwaitable tests on default synchronization context.</li>
+</ul>
+<ul>
+<li>12461 - Make sure the behavior between GetFiles and EnumerateFiles are the same regarding symlinks.</li>
+</ul>
+<ul>
+<li>12493 - Fix random unit test failures on the bots</li>
+</ul>
+<ul>
+<li>12494 - Keep the exception object alive during debugger suspensions.</li>
+</ul>
+<ul>
+<li>12509 - Clear ss_invoke_addr when stopping single stepping so runtime invokes don't stop single stepping.</li>
+</ul>
+<ul>
+<li>12541 - Use the proper value to calculate whenever to do a near call on amd64.</li>
+</ul>
+<ul>
+<li>12549 - Keep hoisted this when lambda parent is async lambda.</li>
+</ul>
+<ul>
+<li>12568 - Check class level type parameters used in explicit delegate parameters conversion.</li>
+</ul>
+<ul>
+<li>12572 - Correct encoding transformation flags for type arguments arrays without dynamic element.</li>
+</ul>
+<ul>
+<li>12583 - Resolve switch cases without look aheah look-up.</li>
+</ul>
+<ul>
+<li>12611 - Mark MonoCMethod (runtime subclass of ConstructorInfo) as serializable.</li>
+</ul>
+<ul>
+<li>12655 - Make the MONO_DISABLE_SHARED_AREA env variable actually work.</li>
+</ul>
+<h1 id="new-in-mono-3.0.10">New in Mono 3.0.10</h1>
+<p>A hot-fix release.</p>
+<p>Reverted parallel mkbundle.</p>
+<p>Fixed duplicated debug symbol problem in the compiler.</p>
+<h1 id="new-in-mono-3.0.9">New in Mono 3.0.9</h1>
+<p>Fix gtk+ copy &amp; paste.</p>
+<p>Fix debugger support for custom attributes.</p>
+<p>Proper stack bounds calculation on windows.</p>
+<p>Add partial generic methods to our C# compiler.</p>
+<p>NaCL support for ARM.</p>
+<p>Fix LLVM loading on OSX.</p>
+<h1 id="new-in-mono-3.0.8">New in Mono 3.0.8</h1>
+<p>Multiple improvements to the BCL to reduce usage of non generic collections and use faster string comparisons.</p>
+<p>Optimize large object cloning and boxing.</p>
+<p>Multiple changes to bring mono closer to full PCL compatibility.</p>
+<p>Add System.WeakReference<T></p>
+<p>Sgen can now return memory to the system for</p>
+<p>Many compiler fixes for async.</p>
+<p>Improved FullAOT support for async.</p>
+<p>NaCl build fixes and improvements.</p>
+<p>WCF now has cookie support in .net 4.0.</p>
+<p>Optimize Marshal.Read/Write methods to avoid a trip to unmanaged when needed.</p>
+<p>Optimize LINQ with arrays.</p>
+<p>Multiple fixes to the sgen's concurrent collector.</p>
+<h1 id="new-in-mono-3.0.7">New in Mono 3.0.7</h1>
+<p>Multiple fixes to the sgen's concurrent collector.</p>
+<p>Performance improvements in primitive types parsing.</p>
+<p>Add a configuration time option to disable remoting.</p>
+<p>Optimize tls lookups on full-aot + arm.</p>
+<p>Add a configuration option to disable remoting.</p>
+<p>Multiple improvements and bug fixes in culture related code.</p>
+<p>Runtime assembly mapping for PCL.</p>
+<p>Fix Binder primitive conversion to make .net.</p>
+<p>Optimize Activator.CreateInstance ().</p>
+<p>Optimize icalls in FullAOT code.</p>
+<p>Implement Volatile.Read/Write<T> and Interlocked.MemoryBarrier ().</p>
+<p>Optimized unmanaged to managed string conversion.</p>
+<h1 id="new-in-mono-3.0.6">New in Mono 3.0.6</h1>
+<p>This is another hotfix release. It reverses the visibility change made to Mono.Runtime.GetDisplayName.</p>
+<h1 id="new-in-mono-3.0.5">New in Mono 3.0.5</h1>
+<p>This is a hot-fix release. It fixes a crash in the runtime support for generics, which could be triggered by Xamarin Studio.</p>
+<h1 id="new-in-mono-3.0.4">New in Mono 3.0.4</h1>
+<h2 id="garbage-collector">Garbage Collector</h2>
+<p>Many changes went into our GC implementation. We added long links support to our traditional Boehm collector. As for SGen, it is finally a true concurrent GC, with cementing support. We also fixed several bugs, such as #9928 pointer free deadlock problem and bugs in mono_gc_weak_link_get.</p>
+<h2 id="async">Async</h2>
+<p>Rewrite of async StreamReader/StreamWritter operations to not fail on subsequent async call. Fixes #9761</p>
+<h2 id="asp.net">ASP.NET</h2>
+<p>Updated encoding support.</p>
+<p>Some minor bug fixes.</p>
+<h2 id="other-improvements">Other improvements</h2>
+<p>New MONO_DISABLE_SHARED_AREA environment variable lets you turn of the use of shared memory in Mono (used by performance counters and optionally by the io-layer).</p>
+<p>Updated EntityFramework version that ships with Mono.</p>
+<p>Support for ConnectionLifetime parameter in SqlClient (contributed by 7digital).</p>
+<p>Fixed C# Evaluator Terse reader with loops</p>
+<p>Don't report user operator error during probing user conversions. Fixes #10170.</p>
+<p>Add explicit interface GetType implementation to avoid object::GetType become proxy. (C# compiler fix)</p>
+<p>Implement use of __refvalue as an lvalue. Fixes #10034.</p>
+<h2 id="packaging">Packaging</h2>
+<p>We no longer install a /usr/bin/pkg-config on OSX, to stop clashing with Homebrew.</p>
+<h1 id="new-in-mono-3.0.3">New in Mono 3.0.3</h1>
+<p>Mono garbage collectors now feature multiple dtrace probes for users on MacOS and Solaris.</p>
+<p>Many stability improvements and performance work on Mono's Async support.</p>
+<h2 id="garbage-collector-1">Garbage Collector</h2>
+<p>Sgen now has a concurrent GC that can significantly reduce max pauses. This is an experimental feature that is been continuously developed. Click <a href="http://schani.wordpress.com/2012/12/21/sgen-concurrent-mark">here</a> for more details.</p>
+<h2 id="bug-fixes-1">Bug Fixes</h2>
+<p><a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8401">#8401</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=9247">#9247</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8903">#8903</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=9087">#9087</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=9225">#9225</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=9186">#9186</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=9118">#9118</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=9137">#9137</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=9133">#9133</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=9116">#9116</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=1446">#1446</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=2246">#2246</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=6918">#6918</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8904">#8904</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8927">#8927</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=2907">#2907</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8829">#8829</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8786">#8786</a></p>
+<h1 id="new-in-mono-3.0.2">New in Mono 3.0.2</h1>
+<p>We are now on a cadence to deliver new Mono features and updates on a regular basis. A month after our last release we are now bringing some 363 commits, with 3055 files changed, 171240 insertions(+), 179104 deletions(-)</p>
+<h2 id="major-features">Major Features</h2>
+<p><em>'Reactive Extensions':</em> Mono now bundles the open sourced Microsoft's <a href="http://rx.codeplex.com/">Reactive Extensions</a></p>
+<p><strong>F# 3.0:</strong> We have updated the bundled F# compiler on OSX to version 3.0 (tag 3.0.22 from the open source fsharp repository).</p>
+<p><strong>SGen Garbage Collector:</strong> new lazy sweep strategy in Mono's new GC that reduces the GC times for major collections significantly. We have also tuned and improved the collector.</p>
+<p><strong>System.Json:</strong> We reverted System.Json to Mono's version, as it was lighter and tolerates more input than Microsoft's one. We ship System.Json.Microsoft as well for users that want to use the Microsoft stack.</p>
+<p><strong>Runtime:</strong> Many improvements to Mono, better x86 and ARM support across the board.</p>
+<p><strong>NTLM:</strong> Large upgrade to our NTLM stack.</p>
+<p><strong>clang:</strong> Mono now builds with Clang.</p>
+<p><strong>monodoc:</strong> vast improvements to our documentation infrastructure.</p>
+<h2 id="bug-fixes-in-3.0.2">Bug fixes in 3.0.2</h2>
+<p><a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8566">#8566</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8565">#8565</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8549">#8549</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8646">#8646</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8592">#8592</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8561">#8561</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8559">#8559</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8557">#8557</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8553">#8553</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8533">#8533</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8502">#8502</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8468">#8468</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8449">#8449</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8448">#8448</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8414">#8414</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8399">#8399</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8385">#8385</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8384">#8384</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8383">#8383</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8366">#8366</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8334">#8334</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8320">#8320</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8312">#8312</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8285">#8285</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8283">#8283</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8263">#8263</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8232">#8232</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8156">#8156</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=8037">#8037</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=7965">#7965</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=6650">#6650</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=5760">#5760</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=4587">#4587</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=3582">#3582</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=3275">#3275</a>, <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=2471">#2471</a> and <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=2190">#2190</a></p>
+<h1 id="new-in-mono-3.0">New in Mono 3.0</h1>
+<h1 id="major-highlights">Major Highlights</h1>
+<h2 id="c-compiler">C# Compiler</h2>
+<p>Mono now has a complete C# 5.0 compiler with <a href="http://msdn.microsoft.com/en-us/vstudio/async.aspx">asynchronous programming support</a>.</p>
+<p>Our C# compiler has now completed its migration from using System.Reflection.Emit as its code generation backend to use the IKVM.Reflection API. This functionality was previewed in Mono 2.10 and is now the default. With this functionality, developers can use any mscorlib that they want (for example the MicroFramework one, or a custom one) without having to build a custom compiler. We were able to eliminate the multiple executables for the compiler, and unify all the compilers into one as well as reducing our build times significantly.</p>
+<p><strong>gmcs</strong>, <strong>dmcs</strong> and <strong>smcs</strong> are now merely aliases to call the <strong>mcs</strong> compiler with the proper -sdk flag.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Tool/Library</p></td>
+<td style="text-align: left;"><p>Purpose</p></td>
+<td style="text-align: left;"><p>Profile</p></td>
+<td style="text-align: left;"><p>New Backend</p></td>
+<td style="text-align: left;"><p>2.10 Backend |+</p></td>
+<td style="text-align: left;"><p><strong>gmcs</strong></p></td>
+<td style="text-align: left;"><p>C# Compiler</p></td>
+<td style="text-align: left;"><p>2.0</p></td>
+<td style="text-align: left;"><p>IKVM.Reflection</p></td>
+<td style="text-align: left;"><p>System.Reflection 2.0 |+</p></td>
+<td style="text-align: left;"><p><strong>dmcs</strong></p></td>
+<td style="text-align: left;"><p>C# compiler</p></td>
+<td style="text-align: left;"><p>4.0</p></td>
+<td style="text-align: left;"><p>IVKM.Reflection</p></td>
+<td style="text-align: left;"><p>System.Reflection 4.0 |+</p></td>
+<td style="text-align: left;"><p><strong>smcs</strong></p></td>
+<td style="text-align: left;"><p>C# Compiler</p></td>
+<td style="text-align: left;"><p>2.1 (Silverlight, MonoTouch, MonoDroid)</p></td>
+<td style="text-align: left;"><p>IKVM.Reflection</p></td>
+<td style="text-align: left;"><p>System.Reflection 2.0 |+</p></td>
+<td style="text-align: left;"><p><strong>mcs</strong></p></td>
+<td style="text-align: left;"><p>C# Compiler</p></td>
+<td style="text-align: left;"><p>Any profile, any mscorlib</p></td>
+<td style="text-align: left;"><p>IKVM.Reflection</p></td>
+<td style="text-align: left;"><p>IKVM.Reflection |+</p></td>
+<td style="text-align: left;"><p><strong>csharp</strong></p></td>
+<td style="text-align: left;"><p>Interactive C# Shell/REPL</p></td>
+<td style="text-align: left;"><p>4.5</p></td>
+<td style="text-align: left;"><p>System.Reflection 4.5</p></td>
+<td style="text-align: left;"><p>System.Reflection 4.0 |+</p></td>
+<td style="text-align: left;"><p><strong>Mono.CSharp</strong></p></td>
+<td style="text-align: left;"><p>C# Compiler as a Service</p></td>
+<td style="text-align: left;"><p>2.0, 2.1 and 4.0.</p></td>
+<td style="text-align: left;"><p>System.Reflection 4.0</p></td>
+<td style="text-align: left;"><p>System.Reflection</p></td>
+</tr>
+</tbody>
+</table>
+<p>System.Reflection is still used as a backend for the compiler as a service and the <a href="http://localhost:4000/CSharpRepl" title="wikilink">C# interactive shell</a>.</p>
+<h3 id="evaluation-can-now-compile-types">Evaluation can now Compile Types</h3>
+<p>The Evaluator.Eval () API is no longer limited to expressions and statements, you can now pass entire namespace, class, interface, struct definitions as a string and have the result get compiled.</p>
+<p>This extends to the <strong>csharp</strong> command:</p>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+csharp&gt; class X { public int a; }
+csharp&gt; var t = new X () { a = 1 };
+csharp&gt; print (t.a);
+1
+csharp&gt; 
+&lt;/code&gt;</code></pre>
+</div>
+<h3 id="instance-api">Instance API</h3>
+<p>The compiler as a service exposed by the Mono.CSharp library is no longer limited to be a global compiler, now you can instantiate multiple scopes for the compiler, each having its own set of localized types and global variables.</p>
+<p>For example, the following sample assigns a string in one context and an int in another one:</p>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+using System;
+using Mono.CSharp;
+
+class MyWorld {
+       public Evaluator Evaluator;
+
+       public MyWorld (string [] args)
+       {
+               var r = new Report (new ConsoleReportPrinter ());
+               var cmd = new CommandLineParser (r);
+
+               var settings = cmd.ParseArguments (args);
+               if (settings == null || r.Errors &gt; 0)
+                       Environment.Exit (1);
+
+               Evaluator = new Evaluator (settings, r);
+       }
+}
+
+class X {
+       static int Main (string [] args)
+       {
+               var first = new MyWorld (args);
+               var second = new MyWorld (args);
+
+               first.Evaluator.Run (&quot;var Demo = \&quot;hello, world\&quot;;&quot;);
+               second.Evaluator.Run (&quot;var Demo = 1;&quot;);
+               first.Evaluator.Run (&quot;print (Demo);&quot;);
+               second.Evaluator.Run (&quot;print (Demo);&quot;);
+               return 0;
+       }
+}
+&lt;/code&gt;</code></pre>
+</div>
+<h2 id="c-interactive-shell">C# Interactive Shell</h2>
+<p>New convenience function print, can be used instead of Console.WriteLine</p>
+<p>Additionally, the C# interactive shell will by default use a terse syntax that does not require a semicolon at the end of an expression, for example:</p>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+csharp&gt; 1 + 2
+3
+csharp&gt;
+&lt;/code&gt;</code></pre>
+</div>
+<h2 id="profile">4.5 Profile</h2>
+<p>The 4.5 Profile is a strict superset of the 4.0 API and is now the default profile.</p>
+<p>Because 4.5 API is a strict superset of 4.0 API they both share the same assembly version number, so we actually install the 4.5 library into the GAC.</p>
+<p>Some of the changes in the 4.5 API family include:</p>
+<ul>
+<li>New Async methods</li>
+<li>WinRT compatibility API</li>
+<li>Newly introduced assemblies (System.Net.Http, System.Threading.Tasks.Dataflow)</li>
+</ul>
+<h2 id="new-microsoft-open-source-stacks">New Microsoft Open Source Stacks</h2>
+<p>We now include the following assemblies as part of Mono from Microsoft's <a href="http://aspnetwebstack.codeplex.com/">ASP.NET WebStack</a>:</p>
+<ul>
+<li>System.Net.Http.Formatting.dll</li>
+<li>System.Web.Http.dll</li>
+<li>System.Web.Razor.dll</li>
+<li>System.Web.WebPages.Deployment.dll</li>
+<li>System.Web.WebPages.Razor.dll</li>
+<li>System.Web.WebPages.dll</li>
+<li>System.Web.Mvc.dll</li>
+<li>System.Json.dll (Previously available in Mono, but now replaced with Microsoft's implementation)</li>
+</ul>
+<p>We also bundle the recently open sourced Entity Framework and</p>
+<ul>
+<li>EntityFramework.dll</li>
+</ul>
+<h2 id="garbage-collector-2">Garbage Collector</h2>
+<p>SGen now has a new task management system that allows it to easily scale new GC-related tasks across multiple CPUs if available:</p>
+<ul>
+<li>SGen on SMP systems is able to distribute more work across the worker threads. Previously only the mark phase was distributed.</li>
+<li>SGen is now able to perform parallel collection in the nursery.</li>
+<li>SGen has been ported to Win32</li>
+<li>SGen has been ported to the MIPS platform</li>
+<li>Precise stack scanning has been improved considerably, and it is now supported on x86 and ARM.</li>
+<li>On OSX, SGen now uses Mach APIs directly to speedup some tasks in the garbage collector.</li>
+</ul>
+<h2 id="runtime-optimizations">Runtime Optimizations</h2>
+<p>Implemented fast version of ThreadLocal<T> (it is now a low-level intrinstic operation)</p>
+<p>List<T> optimizations</p>
+<p>Support for new attributes to force inlining.</p>
+<p><strong>Major change in Mono</strong> to support the full table of Unicode surrogate characters. This code was written by Damien Diederen and David Mitchell from Logos software.</p>
+<p>Runtime supports deferred attaching to the process (when using suspend=n,server=y the runtime collects metadata until a debugger is attached).</p>
+<p>Implement tail call optimizations on PowerPC for F# (Bug #664631)</p>
+<p>New profiler that can be used with Intel's VTune Amplifier Profiler.</p>
+<p>Support for System.Net.NetworkInformation.NetworkChanged events on Linux.</p>
+<p>New tool: crlupdate this is the Mono Certficate Revocation List Downloader and Updater and can be used to download of new, or update of existing, Certficate Revocation List (CRL) associated with the certificates present in the user (default) or machine stores. The CRL present in the stores are used to determine the validity of unexpired, trusted X.509 certificates.</p>
+<h2 id="asp.net-1">ASP.NET</h2>
+<p>Bring the error page to the new millenium.</p>
+<h2 id="codecontracts">CodeContracts</h2>
+<p>Alexander Chebaturkin has implemented initial version of static Code Contract analyser as part of SoC 2011.</p>
+<h2 id="smaller-updates">Smaller Updates</h2>
+<p>Partial support for Portable Class Libraries (details)</p>
+<p>Updated Unicode tables, fixes long-standing 480178</p>
+<h2 id="macos-x">MacOS X</h2>
+<p>We continue to expand significantly our support for MacOS X and iOS.</p>
+<p>Mono can now be compiled by users as a 64-bit binary. Mono still ships as a 32-bit binary, as most libraries that exist today for Mono run only in 32 bits.</p>
+<p>DriveInfo now returns correct information on OSX.</p>
+<h2 id="mono.data.sqlite">Mono.Data.Sqlite</h2>
+<p>It is now possible to configure the threading model for SQLite using the SetConfig method in the SQLiteConnection class.</p>
+<p>Supports iOS crypto APIs.</p>
+<h2 id="c5-library">C5 Library</h2>
+<p>We have updated the venerable C5 library to the latest version.</p>
+<h1 id="breaking-changes-since-mono-2.10">Breaking Changes Since Mono 2.10</h1>
+<p>In order to be compatible with Microsoft .NET's behavior, exceptions thrown in object finalizers now cause a full runtime abort. This behavior was already present for thread pool threads, but hadn't been enabled for the finalizer thread yet.</p>
+<p>Generally, one should avoid exceptions in finalizers entirely. If you must use them, catch them so that they do not terminate the application.</p>
+<h2 id="gdb">GDB</h2>
+<ul>
+<li>GDB support has been extended with a new gdb hook that is aware of the SGenGC internals.</li>
+<li>Added pretty printers for more runtime data structures like MonoVTable to the mono gdb mode.</li>
+</ul>
+<h2 id="mips-port">MIPS port</h2>
+<p>The MIPS port is now complete, it can do a full bootstrap, and run the runtime/corlib test suites.</p>
+<h2 id="soft-debugger">Soft Debugger</h2>
+<ul>
+<li>Single stepping is now implemented using breakpoints in most cases, speeding it up considerably.</li>
+<li>Calls to System.Diagnostics.Debugger:Log()/Break () are now routed to the debugger using new UserLog/UserBreak event types.</li>
+<li>S390x is now supported (Neale Ferguson).</li>
+<li>MIPS is now supported.</li>
+<li>Added new methods to Mono.Debugger.Soft and the runtime to decrease the amount of packets transmitted between the debugger and the debuggee. This significantly improves performance over high latency connections like USB.</li>
+<li>Many bug fixes.</li>
+</ul>
+<h2 id="static-compiler-aot">Static Compiler (AOT)</h2>
+<p>Made changes to some AOT data structures to reduce their size, especially when using generics. This reduces the size of an mscorlib AOT image by about 1-2%.</p>
+<p>Many changes to the class libraries allow more core Generics code to run on systems that do not support JIT compilation.</p>
+<h1 id="installing-mono-3.0">Installing Mono 3.0</h1>
+<p><strong>Binary Packages and Source Code Downloads:</strong></p>
+<p><code>Source code and pre-compiled packages for Linux, Solaris, </code><br /><code>MacOS X and Windows are available from our web site from </code><br /><code>the </code><a href="http://localhost:4000/Downloads" title="wikilink"><code>Downloads</code></a><code> section.</code></p>
+<p><strong>Quick source code installation:</strong></p>
+<p><code>If we have no packages for your platform, installing from </code><br /><code>source code is very simple.   </code></p>
+<p>Compile libgdiplus to support System.Drawing:</p>
+<p><bash></p>
+<p><code>   $ tar xjvf libgdiplus-3.0.tar.bz2</code><br /><code>   $ cd libgdiplus-3.0</code><br /><code>   $ ./configure</code><br /><code>   $ make</code><br /><code>   $ make install</code></p>
+<p></bash></p>
+<p>Then compile Mono itself:</p>
+<p><bash></p>
+<p><code>   $ tar xjvf mono-3.0.tar.bz2</code><br /><code>   $ cd mono-3.0</code><br /><code>   $ ./configure</code><br /><code>   $ make</code><br /><code>   $ make install</code></p>
+<p></bash></p>
+<h1 id="bug-fixes-2">Bug Fixes</h1>
+<ul>
+<li><em>mdoc update</em> has been fixed so that <em>-fno-assembly-versions</em> and <em>--delete</em> interact properly, and delete XML types and members which do not exist in the target assembly. This allows copying e.g. <a href="https://github.com/mono/mono/tree/master/mcs/class/corlib/Documentation/en">corlib/Documentation/en</a>, processing <em>en</em> against the Silverlight-profile <em>mscorlib.dll</em>, and removing all types and members which don't exist in the Silverlight profile.</li>
+</ul>
+</body>
+</html>

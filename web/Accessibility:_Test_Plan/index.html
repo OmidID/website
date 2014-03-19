@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="scope">Scope</h2>
+<p>A test plan for the Accessibility team's efforts in bringing accessibility to mono by implementing the managed UI Automation framework.</p>
+<h2 id="references">References</h2>
+<p><a href="http://localhost:4000/Accessibility:_Test_Plan" title="wikilink">Product Test Plan</a> (current page)<br /><a href="http://localhost:4000/Accessibility:_Test_Case_Specification" title="wikilink">Product Test Case Specification</a><br /><a href="http://localhost:4000/Accessibility:_Test_Log" title="wikilink">Product Test Log</a><br /><a href="http://localhost:4000/Accessibility:_Test_Summary" title="wikilink">Product Test Summary</a><br /><a href="http://localhost:4000/Accessibility:_Bug_Specification" title="wikilink">Product Bug Specification</a><br /><a href="http://localhost:4000/Accessibility:_Test_Coding_Standard" title="wikilink">Product Test Coding Standard</a><br /><a href="http://localhost:4000/Accessibility" title="wikilink">Product Home</a><br /> The <a href="http://www.mono-project.com/Accessibility:_Roadmap">Product roadmap</a><br />The <a href="http://www.mono-project.com/Accessibility#Architecture">Architecture overview</a><br /><a href="http://www.novell.com/news/press/microsoft-and-novell-celebrate-year-of-interoperability-expand-collaboration-agreement">The Novell &amp; Microsoft announcement</a> to create cross-platform accessibility framework</p>
+<h2 id="qa-meetings">QA Meetings</h2>
+<p><a href="Accessibility:_QA_Meetings_2008_Jun_5" title="wikilink"> June 5 2008</a><br /><a href="Accessibility:_QA_Meetings_2008_Aug_13" title="wikilink"> August 13 2008</a><br /><a href="Accessibility:_QA_Meetings_2009_Mar_25" title="wikilink"> Mar 25 2009</a><br /><a href="Accessibility:_QA_Meetings_2009_May_20" title="wikilink"> May 20 2009</a><br /> No meetings scheduled</p>
+<h2 id="definitions">Definitions</h2>
+<p><a href="http://msdn2.microsoft.com/en-us/accessibility/bb892133.aspx">UIA</a>---Microsoft UI Automation. A managed code application programming interface (API), exposing user interface controls for test automation and assistive technology. Part of the .NET framework starting at 3.0. Successor of MSAA (Microsoft Active Accessibility)<br /><br />UIA Clients---Applications such as screen readers and testing frameworks written in managed code (e.g., C#/VB).<br /><br />UIA Providers---UI implementations or application controls such as checkboxes. Written in managed code or C/C++.<br /><br />AT---Assistive technology. A generic term that includes assistive, adaptive, and rehabilitative devices and the process used in selecting, locating, and using them.<br /><br />AT-SPI---A toolkit neutral way of providing accessibility facilities in applications. AT-SPI can also be used to automate testing of user interfaces. AT-SPI is currently supported by GTK+2, JAVA/Swing, Mozilla, and StarOffice/OpenOffice. For our product, AT-SPI will act as the equivalent of the UIA core.<br /><br />ATK---Accessibility toolkit. A developer toolkit that allows programmers to use common GNOME accessibility features in their applications.<br /><br />ATK/UIA Bridge---Mapping of ATK to the UIA provider APIs.<br /><br />UIA/at-spi Bridge---Mapping of AT-SPI to the UIA provider APIs.<br /><br /><a href="http://localhost:4000/WinForms" title="wikilink">WinForms</a>---One of the many GUI Toolkits for use with Mono, working towards compatibility with Microsoft's System.Windows.Forms.<br /><br /><a href="http://localhost:4000/Moonlight" title="wikilink">Moonlight</a>---The Mono-based implementation of Silverlight.<br /><br /><a href="http://live.gnome.org/Accerciser">Accerciser</a>---An interactive Python accessibility explorer for the GNOME desktop. It uses AT-SPI to inspect and control widgets, allowing you to check if an application is providing correct information to assistive technologies and automated test frameworks.<br /><br /><a href="http://live.gnome.org/Orca">Orca</a>---Open source scriptable screen reader. Using various combinations of speech, braille, and magnification, Orca helps provide access to applications and toolkits that support the AT-SPI (e.g., the GNOME desktop).<br /><br /><a href="http://www.codeplex.com/Wiki/View.aspx?ProjectName=IronPython">IronPython</a>---Implementation of the Python programming language, targeting .NET and Mono. It makes .NET libraries easily available to Python programmers, while maintaining full compatibility with the Python language.<br /><br /><a href="http://www.python.org">CPython</a>---The default, most-widely used implementation of the Python programming language. It is written in C, hence the name CPython.<br /><br /><a href="http://medsphere.org/projects/strongwind">Strongwind</a>---A GUI test automation framework inspired by dogtail. Strongwind is object-oriented and extensible. Strongwind is written in Python and uses the pyatspi library to manipulate and query the state of applications.</p>
+<h2 id="test-plan">Test plan</h2>
+<h3 id="purpose">Purpose</h3>
+<p>This document is a comprehensive test strategy to be used by testers to ensure proper and exhaustive testing. It also acts as a reference for all stakeholders wishing to obtain information on current and past testing efforts.</p>
+<h3 id="outline">Outline</h3>
+<h4 id="test-plan-identifier"><u>Test plan identifier</u></h4>
+<p>The purpose of this section is to identify the current and previous versions of the test plan, its level, and the version of software it pertains to.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>ID</p></th>
+<th style="text-align: left;"><p>Level</p></th>
+<th style="text-align: left;"><p>Software Version</p></th>
+<th style="text-align: left;"><p>Modify Time</p></th>
+<th style="text-align: left;"><p>Author</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Accessibility-TP-V0.1</p></td>
+<td style="text-align: left;"><p>Draft</p></td>
+<td style="text-align: left;"><p>N/A</p></td>
+<td style="text-align: left;"><p>03-25-2008</p></td>
+<td style="text-align: left;"><p>Brian &amp; Calen</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Accessibility-TP-V1.0</p></td>
+<td style="text-align: left;"><p>Initial Release</p></td>
+<td style="text-align: left;"><p>N/A</p></td>
+<td style="text-align: left;"><p>03-25-2008</p></td>
+<td style="text-align: left;"><p>Brian &amp; Calen</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h4 id="introduction"><u>Introduction</u></h4>
+<p>Testing efforts will be related to the project goals, which are:</p>
+<ul>
+<li>Make mono <a href="http://localhost:4000/WinForms" title="wikilink">WinForms</a> accessible. All WinForms currently supported by mono.</li>
+<li>Make <a href="http://localhost:4000/Moonlight" title="wikilink">Moonlight</a> accessible</li>
+<li>Allow <a href="http://localhost:4000/UI_Automation" title="wikilink"> UI Automation</a> based Accessibility Technologies to run on Linux</li>
+</ul>
+<p>This plan includes integration, system, and acceptance testing. Unit testing is excluded, as it is being managed by individual developers.</p>
+<p>Integration testing to test WinForms accessibility via UIA provider and UIA/ATK bridge to AT-SPI is scheduled to be completed in 2008.<br /><br />System testing will be performed in 2009. Testing will be performed using an AT management tool to test the client and provider.<br /><br />Acceptance testing will be performed later in 2009 before the product is released. During system testing, the product should be tested in its entirety from the end user's point of view.<br /><br /></p>
+<h4 id="test-items"><u>Test items</u></h4>
+<p>According to the project plan, test items is below:</p>
+<p>Test Components:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Test Items</p></th>
+<th style="text-align: left;"><p>Priority(S1/S2/S3)</p></th>
+<th style="text-align: left;"><p>Schedule</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Winforms Providers</p></td>
+<td style="text-align: left;"><p>S1</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Moonlight Providers</p></td>
+<td style="text-align: left;"><p>S1</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Core-Provider</p></td>
+<td style="text-align: left;"><p>S1</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Core-Client</p></td>
+<td style="text-align: left;"><p>S1</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>ATSPIBridge</p></td>
+<td style="text-align: left;"><p>S1</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h4 id="software-risk-issues"><u>Software risk issues</u></h4>
+<p><em>This section describes any risks resulting from lack of time and/or resources.</em></p>
+<ul>
+<li>frequent changes to requirements and/or design.</li>
+<li>loss of support from Novell/Microsoft upper management</li>
+</ul>
+<p>Developers are also tracking problems they encounter:</p>
+<ul>
+<li><a href="http://www.mono-project.com/Accessibility:_UiaAtkBridge#Problems_found">UIA/ATK Bridge Problems</a></li>
+</ul>
+<h4 id="features-to-be-tested"><u>Features to be tested</u></h4>
+<p><em>Abstraction of test items. What will be tested from the user or customer point of view.</em></p>
+<h5 id="winforms">WinForms</h5>
+<p>We plan to test all Functionalities of WinForms controls those have been mentioned in <a href="http://monouia.wik.is/Provider_Functional_Specification">Provider_Functional_Specification</a> and <a href="http://mono-project.com/Accessibility:_Bridge_Functional_Specification">Bridge_Functional_Specification</a>.</p>
+<p>According to Q2 2008 of the <a href="Accessibility#http://localhost:4000/Roadmap_roadmap" title="wikilink">Accessibility#Roadmap roadmap</a>, testing contents need relate with below info:</p>
+<ul>
+<li>The WinForms sheet in <a href="http://www.mono-project.com/Accessibility:_Test_Plan_WinForms_Controls">WinForms Controls list</a> defines which WinForms controls will be implemented and therefore need to be tested.</li>
+<li>Create WinForms application samples to test against. These application samples should be written in IronPython. Our sample applications can be found at <a href="svn://anonsvn.mono-project.com/source/trunk/uia2atk">svn://anonsvn.mono-project.com/source/trunk/uia2atk</a> /test/samples. Some C# samples (that can be translated) can be checked out via svn from <a href="http://anonsvn.mono-project.com/viewvc/trunk/winforms">http://anonsvn.mono-project.com/viewvc/trunk/winforms</a>.</li>
+<li>Test WinForms applications samples using Accerciser to ensure that the samples are accessible.</li>
+<li>Test WinForms applications samples using Orca to ensure that the samples are accessible.</li>
+<li>Write automated scripts using Strongwind to verify accessibility of all WinForms controls.</li>
+</ul>
+<p>Stuffs for WinForms test:</p>
+<ul>
+<li>Define what WinForms controls will be tested</li>
+<li>Define what WinForms application samples will be used</li>
+<li>Create custom WinForms applications in IronPython</li>
+<li>Test WinForms application samples with Accerciser to ensure accessibility</li>
+<li>Test WinForms application samples with Orca to ensure accessibility</li>
+<li>Create automated test suite in Python with StrongWind framework to ensure accessibility of all WinForms controls</li>
+<li>Review automated test suites with each other by using <a href="http://reviews.mono-a11y.org/">Review_Board</a>, Please read <a href="http://www.review-board.org/docs/manual/dev/users/#usersguide">UsersGuide</a> before you use it.</li>
+</ul>
+<h5 id="moonlight">Moonlight</h5>
+<p>According to <a href="http://msdn.microsoft.com/en-us/library/cc645072%28VS.95%29.aspx">Silverlight doc</a> that we have 32 Moonlight controls will be implemented, so we should test 32 controls whether they are accessible. (there might be some differences between silverlight and moonlight, it's not sure yet)</p>
+<ul>
+<li>The Moonlight sheet in <a href="http://spreadsheets.google.com/ccc?key=0AkMHBvpvUyGOcHd5ZHk3UzNYUFRCVFJTOW5fb0JqSkE&amp;hl=EN">Moonlight Controls List</a> defines what Moonlight controls should be tested.</li>
+<li>Moonlight test sample will be written in C# and xaml</li>
+<li>Moonlight test script will be written in Python with Strongwind framework</li>
+</ul>
+<p>Testing for Moonlight test:</p>
+<ul>
+<li>Define what Moonlight elements will be tested</li>
+<li>Define what Moonlight application samples will be used</li>
+<li>Create or reuse Moonlight applications</li>
+<li>Test Moonlight application samples with Accerciser(against Firefox web browser?)</li>
+<li>Create automated test suite to ensure the accessibility of all Moonlight elements</li>
+<li>Test Moonlight application samples with Orca</li>
+</ul>
+<h5 id="uia-provider">UIA Provider</h5>
+<ul>
+<li>Define what functional should be test for each control according to <a href="http://monouia.wik.is/Provider_Functional_Specification">Provider_Functional_Specification</a></li>
+<li>Test each controls to ensure provider interface is implemented</li>
+</ul>
+<h5 id="uiaatk-bridge">UIA/ATK Bridge</h5>
+<ul>
+<li>Define what functional should be test for each control according to <a href="http://mono-project.com/Accessibility:_Bridge_Functional_Specification">Bridge_Functional_Specification</a></li>
+<li>Test each controls to ensure ATK interface is showing correct information</li>
+</ul>
+<h5 id="uiaat-spi-bridge">UIA/AT-SPI Bridge</h5>
+<ul>
+<li>Test each controls to ensure AT-SPI is showing correct information</li>
+</ul>
+<h5 id="uia-client-api">UIA Client API</h5>
+<p>UIA verify is an open source test tool like UISpy running on Windows, developer can use it to watch controls properties and patterns, it will be posted running on Linux, so we will need to make sure the behavior of UIA verify on Linux is match to Windows.</p>
+<p>White is a thin wrapper of UIAutomationClient that is like Strongwind wrap pyatspi, developer will post it running on Linux, so we will use White framework to write tests for Client API to against Winforms, Moonlight, Gtk+ applications. The work path of using White to test application is: C# -&gt; White -&gt; UIAutomationClient -&gt; DBus -&gt; UIA -&gt; applications(Winforms/Moonlight/GTK+)</p>
+<p>Testing for UIAutomation Client API test:</p>
+<p>-Winforms</p>
+<ul>
+<li>Design UserCases of the real application(We will use KeePass), analyze the coverage of each ControlPattern's properties and methods</li>
+<li>Write tests using White in C# for the real application</li>
+<li>Run the tests on Linux to make sure they do the same behavior as on Windows</li>
+</ul>
+<p>-Moonlight</p>
+<ul>
+<li>Design UserCases of the real application, analyze the coverage of each ControlPattern's properties and methods</li>
+<li>Write tests using White in C# for Moonlight apps on Windows</li>
+<li>Run the tests on Linux to make sure they do the same behavior as on Windows</li>
+<li>Test UIA verify on Linux to make sure the behavior is match with on Windows. UIA verify have provided automation tests, we can run all the applications on Linux and Windows, then to verify we get the same result of how many tests pass or fail</li>
+</ul>
+<p>-GTK+</p>
+<ul>
+<li>Design UserCases of the real application(gedit?), analyze the coverage of each ControlPattern's properties and methods</li>
+<li>Write tests using White for GTK+ apps</li>
+<li>Run the tests on Linux to make sure Client API is worked for GTK+ app</li>
+</ul>
+<h4 id="features-not-to-be-tested"><u>Features not to be tested</u></h4>
+<p><em>Any features that will not be tested and why. Decisions not to test a feature should be based on priority and risk. If a feature will not be tested, define what features (class, methods, properties) will not be tested.</em></p>
+<p>At this time we plan to test all features exhaustively.</p>
+<h4 id="approach"><u>Approach</u></h4>
+<p><em>A description of how and where testing will be performed and explain any issues that have a major impact on the success of testing and ultimately on the project.</em></p>
+<h5 id="winforms-testing">WinForms Testing</h5>
+<p>The accessibility of WinForms applications will be tested using Strongwind tests and WinForms sample applications. A test harness has also been developed to facilitate the execution and logging of a suite of tests. For more information see the <a href="Accessibility:_Testing_Howto#http://localhost:4000/WinForms" title="wikilink">WinForms portion</a> of the <a href="http://localhost:4000/Accessibility:_Testing_Howto" title="wikilink">Testing Howto</a>.</p>
+<h5 id="moonlight-testing">Moonlight Testing</h5>
+<p>The accessibility of Moonlight applications will be tested using Strongwind tests and Moonlight sample applications. Moonlight application will be writted in C#. For more information see the <a href="Accessibility:_Testing_Howto#http://localhost:4000/Moonlight" title="wikilink">Moonlight portion</a> of the <a href="http://localhost:4000/Accessibility:_Testing_Howto" title="wikilink">Testing Howto</a>.</p>
+<h5 id="uiautomation-client-api-testing">UIAutomation Client API Testing</h5>
+<p>WinForms, Moonlight and Gtk+ applications will be tested using White framework. For more information of how to create White test please see <a href="Accessibility:_Testing_Howto#http://localhost:4000/ClientAPI" title="wikilink">ClientAPI portion</a> of the <a href="http://localhost:4000/Accessibility:_Testing_Howto" title="wikilink">Testing Howto</a>.</p>
+<h5 id="general-guidelines">General Guidelines</h5>
+<ul>
+<li>All testers shall be on the team IRC channel (#mono-a11y on irc.gimp.org) during work hours.<br /><br /></li>
+<li>Tests shall be automated whenever possible. Time constraint is not a good excuse not to automate.<br /><br /></li>
+<li>Test plan will be developed using the IEEE Std. 829-1998 Standard for Software Test Documentation.<br /><br /></li>
+<li>All bugs shall be logged in <a href="https://bugzilla.novell.com">Bugzilla</a> at the time they are found.<br /><br /></li>
+<li>Bugzilla can be accessed from <a href="http://bugzilla.novell.com">http://bugzilla.novell.com</a> with Novell account. The product category is &quot;UI Automation,&quot; which can be found under the Mono classification.<br /><br /></li>
+<li>When a bug's status is changed to RESOlVED or VERIFIED in Bugzilla, the reporter of the bug should change the bug's status to CLOSED or reopen the bug as soon as possible. If the person who reported the bug verifies the bug, the bug can be closed without having its status changed to VERIFIED. A bug should not be closed by someone who did not report the bug unless the reporter is unavailable.<br /><br /></li>
+<li>Types of system testing include function, performance, security, load, reliability, usability, documentation testing.<br /><br /></li>
+<li>Acceptance criteria for patch acceptance: Before a patch is accepted, a QA engineer must ensure that the patch submitted from developer passes QA testing. A build engineer must ensure the patch builds properly and meets packaging standards. QA and build engineers will then create a patch acceptance report, and the patch can be included in the product.<br /><br /></li>
+<li>Testers may perform system testing on the product only after development has verified that they have completed a development milestone and the build team has created a stable release.<br /><br /></li>
+<li>WinForms samples will be created in C#, Boo, or IronPython(here we chose IronPython). Automation scripts, that test the accessibility of the WinForms apps will be created in CPython. <a href="Accessibility:_Testing_Howto#http://localhost:4000/Strongwind" title="wikilink">Strongwind</a> and <a href="Accessibility:_Testing_Howto#http://localhost:4000/Orca" title="wikilink">Orca Regression Tests</a> will be used for the automation scripts.<br /><br /></li>
+<li>No regularly scheduled meetings at this time<br /><br /></li>
+<li>Minor editing (grammar and spelling corrections) of this test plan can be done at any time. Any change to the test plan that changes how the product will be tested shall be approved by the QA team who will determine if the changes are large enough to require a change to the test plan identifier.<br /><br /></li>
+<li>Black box and white box testing methods are both acceptable. However, it is anticipated that black box testing will be the norm.<br /><br /></li>
+<li>Integration testing will involve the iterative testing of new developer code as it becomes available and it is integrated into the product. System testing will begin after provider and client pieces has been implemented and released.<br /><br /></li>
+<li>Smoke tests will be performed and will consist of (1) ensuring that the newest packages provided by the build team install successfully and (2) ensuring basic functionality and sanity of the newest packages.<br /><br /></li>
+<li>Exit criteria has yet to be established. This should be discussed with project management.<br /><br /></li>
+<li>At this time, Orca and Accerciser are the standard tools to be used to test the accessibility of an application. The Orca test harness and Strongwind will be used to automate accessibility tests.<br /><br /></li>
+<li>Run sample with UISpy in Windows system as reference to ensure we implement the similar accessibility.<br /><br /></li>
+<li>Run Gtk sample with Accerciser in Linux system as reference to ensure we implemnet the similar accessibility.<br /><br /></li>
+<li>Log bug into bugzilla, add bug reference like &quot;#BUGxxxx: xxxxxxxx&quot; into automated test suite and comment out the test case if test case is failing. Delete bug reference and uncomment test case till bug is closed.<br /><br /></li>
+</ul>
+<h4 id="item-passfail-criteria"><u>Item pass/fail criteria</u></h4>
+<p>The pass/fail criteria for each of the items described in Test Items section.</p>
+<p>Criteria for Test Components:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Test Items<br /></p></th>
+<th style="text-align: left;"><p>Pass</p></th>
+<th style="text-align: left;"><p>Fail</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Winforms Providers</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Moonlight Providers</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Core-Provider</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Core-Client</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>ATKBridge</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>ATSPIBridge</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<p>Individual test case pass/fail criterion is defined by the automated script which performs the testing. Upon failure of a test case, the script should will log the failure. For exit criteria, see <a href="Accessibility:_Test_Plan#http://localhost:4000/Approach" title="wikilink">Approach</a>.</p>
+<h4 id="suspension-criteria-and-resumption-requirements"><u>Suspension criteria and resumption requirements</u></h4>
+<p>Suspension criteria:</p>
+<ul>
+<li>Unavailability of external dependency during execution.</li>
+<li>When a defect is introduced that cannot allow any further testing (i.e., a blocker bug).</li>
+<li>Critical path deadline is missed so that the client will not accept delivery even if all testing is completed.</li>
+<li>A specific holiday shuts down both development and testing.</li>
+<li>Lack of testing resources (e.g., testers, hardware, etc).</li>
+</ul>
+<p>Resumption requirements:</p>
+<ul>
+<li>When the external dependent systems become available again.</li>
+<li>When a fix is successfully implemented and the testing team is notified to continue testing.</li>
+<li>The contract is renegotiated with the client to extend delivery.</li>
+<li>The holiday period ends.</li>
+<li>Testing resources become available</li>
+</ul>
+<p>A failed build would not constitute suspension as we could generally continue to use the previous build. Major or critical defects would also not constitute suspension as other areas of the system could continue to be tested.</p>
+<h4 id="test-deliverables"><u>Test deliverables</u></h4>
+<p><em>All documents, tools, and other components that are to be developed and maintained in support of the testing effort</em></p>
+<ul>
+<li>Test plan (this document)</li>
+<li>Test cases - test cases are been included into test scripts</li>
+<li>Custom tools - test harness, test scripts, sample applications</li>
+<li>Defect reports - none at this time</li>
+<li>Test summary reports - dashboard web page</li>
+<li>Other - none at this time</li>
+</ul>
+<h4 id="testing-preparation-and-setup"><u>Testing preparation and setup</u></h4>
+<p><em>set of tasks necessary to prepare for and perform testing</em></p>
+<p>Team Setup:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task<br /></p></th>
+<th style="text-align: left;"><p>Finished</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Build UIAutomation project on Bugzilla and Testopia.</p></td>
+<td style="text-align: left;"><p>X</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Prepare virtual machines for most recent releases of supported platforms (openSUSE, Ubuntu, Fedora)</p></td>
+<td style="text-align: left;"><p>X</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Setup test environment on VMs</p></td>
+<td style="text-align: left;"><p>X</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Obtain testable build</p></td>
+<td style="text-align: left;"><p>X</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Build DashBoard for Test Summary Report</p></td>
+<td style="text-align: left;"><p>P</p></td>
+</tr>
+</tbody>
+</table>
+<p>X = Done P = In Progress</p>
+<p>Individual Preparation:</p>
+<ul>
+<li>Enable assistive technologies on the GNOME desktop. This is done from &quot;Assistive Technology Preferences&quot; from the GNOME Control Center.</li>
+<li>Create Novell Bugzilla account</li>
+<li>Install Accerciser on OS</li>
+<li>Install most recent Mono</li>
+<li>Install most recent Orca</li>
+<li>Install most recent Strongwind</li>
+<li>Install Python &gt;=2.5</li>
+<li>Install Iron Python (IPCE) &gt;=1.1</li>
+<li>Setup Windows os(Vista) with UISpy on VM if necessary</li>
+</ul>
+<h4 id="environmental-needs"><u>Environmental needs</u></h4>
+<p><em>Hardware, software, data, interfaces, facilities, publications, other requirements that pertain to the testing effort</em></p>
+<p>Testing may be done on physical and virtual machines.</p>
+<p>All tests must be performed on the most recent official release of the following platforms:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Product</p></th>
+<th style="text-align: left;"><p>openSUSE 11.1</p></th>
+<th style="text-align: left;"><p>openSUSE 11.2</p></th>
+<th style="text-align: left;"><p>SLED 11</p></th>
+<th style="text-align: left;"><p>Fedora 12</p></th>
+<th style="text-align: left;"><p>Ubuntu 9.10 Karmic Koala</p></th>
+<th style="text-align: left;"><p>openSUSE 11.3</p></th>
+<th style="text-align: left;"><p>Fedora 13</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Moonlight ATK Bridge</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Winforms ATK Bridge</p></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Client API project</p></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"><p>x</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p></br></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;"><p>x86</p></th>
+<th style="text-align: left;"><p>x86_64</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>openSUSE</p></td>
+<td style="text-align: left;"><p>X</p></td>
+<td style="text-align: left;"><p>X</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>SLED</p></td>
+<td style="text-align: left;"><p>X</p></td>
+<td style="text-align: left;"><p>X</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Fedora</p></td>
+<td style="text-align: left;"><p>X</p></td>
+<td style="text-align: left;"><p>X</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Ubuntu</p></td>
+<td style="text-align: left;"><p>X</p></td>
+<td style="text-align: left;"><p>X</p></td>
+</tr>
+</tbody>
+</table>
+<p>Hardware:</p>
+<ul>
+<li>No specific hardware requirements at this time</li>
+</ul>
+<p>Software:</p>
+<ul>
+<li>Mono - most recent release</li>
+<li>Accerciser - most recent package for your platform</li>
+<li>Orca - most recent package for your platform</li>
+<li>Python &gt;=2.5</li>
+<li>IronPython (IPCE) - most recent package for your platform</li>
+<li>Strongwind - most recent release</li>
+</ul>
+<h4 id="responsibilities"><u>Responsibilities</u></h4>
+<ul>
+<li>All testers can work wherever they are needed, however, below is where our team focuses their efforts at this time:</li>
+</ul>
+<h5 id="test-suit">Test Suit</h5>
+<p>Test Harness: Brian<br /><br />DashBoard: Brian, Neville<br /><br /></p>
+<h5 id="winforms-1">WinForms</h5>
+<p>Strongwind Tests: Brian, Calen, Ray<br /><br />Orca Tests: Brian<br /><br />Smoke Tests: Brian<br /><br />Sample Applications: Calen, Ray<br /><br /></p>
+<h5 id="moonlight-1">MoonLight</h5>
+<p>Sample Applications: Calen, Neville<br /><br />Strongwind Tests:: Calen, Neville<br /><br /></p>
+<h5 id="uiautomation-client-api">UIAutomation Client API</h5>
+<p>White Tests: Ray, Felicia<br /><br /></p>
+<h4 id="staffing-and-training-needs"><u>Staffing and training needs</u></h4>
+<ul>
+<li>QA Automation Engineer (4)
+<ul>
+<li>Solid programming experience (C#, Python are a bonus)</li>
+<li>QA Engineer experience</li>
+<li>Bugzilla experience is a bonus</li>
+<li>Iterative testing experience is a bonus</li>
+</ul></li>
+</ul>
+<h5 id="training-plan">Training Plan</h5>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Time</p></th>
+<th style="text-align: left;"><p>Contents</p></th>
+<th style="text-align: left;"><p>Author</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Oct 19</p></td>
+<td style="text-align: left;"><p>C# Introduction</p></td>
+<td style="text-align: left;"><p>Matt</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Oct 23</p></td>
+<td style="text-align: left;"><p>C# Introduction</p></td>
+<td style="text-align: left;"><p>Matt</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Oct 30</p></td>
+<td style="text-align: left;"><p>C# Introduction</p></td>
+<td style="text-align: left;"><p>Matt</p></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<p>Everyone in the open source community is encouraged to join our QA team!</p>
+<h4 id="schedule"><u>Schedule</u></h4>
+<p><em>Built around the <a href="http://localhost:4000/Accessibility:_Roadmap" title="wikilink">roadmap</a> but specific to testing with testing milestones</em></p>
+<h5 id="winforms-2">WinForms</h5>
+<p>Based on Q2 in roadmap, our initial testing schedule is below:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Start Time</p></th>
+<th style="text-align: left;"><p>End Time</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Design test plan</p></td>
+<td style="text-align: left;"><p>Mar.</p></td>
+<td style="text-align: left;"><p>Apr.</p></td>
+<td style="text-align: left;"><p>Brian &amp; Calen</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Prepare test environmental stuff(OS, VM, App samples)</p></td>
+<td style="text-align: left;"><p>Mar.</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Brian &amp; Calen</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Set up test environment</p></td>
+<td style="text-align: left;"><p>Apr.</p></td>
+<td style="text-align: left;"><p>May.</p></td>
+<td style="text-align: left;"><p>Brian &amp; Calen</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Design test case and test samples</p></td>
+<td style="text-align: left;"><p>Apr.</p></td>
+<td style="text-align: left;"><p>Jun.</p></td>
+<td style="text-align: left;"><p>Brian &amp; Calen &amp; Ray</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Automate smoke tests</p></td>
+<td style="text-align: left;"><p>Sep. 10 2008</p></td>
+<td style="text-align: left;"><p>Sep. 12 2008</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Design Strongwind test, Run testcase and submit defect (release 0.9)</p></td>
+<td style="text-align: left;"><p>July</p></td>
+<td style="text-align: left;"><p>Nov</p></td>
+<td style="text-align: left;"><p>Calen &amp; Brian</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Design Strongwind test, Run testcase and submit defect (release 1.0 BETA)</p></td>
+<td style="text-align: left;"><p>Dec</p></td>
+<td style="text-align: left;"><p>Jan</p></td>
+<td style="text-align: left;"><p>Calen &amp; Brian &amp; Ray</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Design Strongwind test, Run testcase and submit defect (release 1.0 FINAL)</p></td>
+<td style="text-align: left;"><p>Jan</p></td>
+<td style="text-align: left;"><p>March 16 2009</p></td>
+<td style="text-align: left;"><p>Calen &amp; Brian &amp; Ray</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Review Strongwind test, expand test cases</p></td>
+<td style="text-align: left;"><p>April</p></td>
+<td style="text-align: left;"><p>Jun</p></td>
+<td style="text-align: left;"><p>Brian &amp; Author</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Build DashBoard</p></td>
+<td style="text-align: left;"><p>May</p></td>
+<td style="text-align: left;"><p>Jun</p></td>
+<td style="text-align: left;"><p>Brian &amp; Neville</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Finish test report</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Brian &amp; Calen</p></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h5 id="moonlight-2">MoonLight</h5>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Start Time</p></th>
+<th style="text-align: left;"><p>End Time</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Design test plan</p></td>
+<td style="text-align: left;"><p>Aug. 6</p></td>
+<td style="text-align: left;"><p>Aug. 7</p></td>
+<td style="text-align: left;"><p>Calen &amp; Neville</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>create application samples</p></td>
+<td style="text-align: left;"><p>Aug. 10</p></td>
+<td style="text-align: left;"><p>Aug. 31</p></td>
+<td style="text-align: left;"><p>Calen &amp; Neville</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Write and Review Strongwind tests for each control(5 weeks)</p></td>
+<td style="text-align: left;"><p>Sep. 1</p></td>
+<td style="text-align: left;"><p>Oct. 16(10.1-10.11 are national holiday)</p></td>
+<td style="text-align: left;"><p>Calen &amp; Neville</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Run tests and log bugs(3 weeks)</p></td>
+<td style="text-align: left;"><p>Oct. 19</p></td>
+<td style="text-align: left;"><p>Nov. 6</p></td>
+<td style="text-align: left;"><p>Calen &amp; Neville</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>test one or two Real Moonlight app(1 week)</p></td>
+<td style="text-align: left;"><p>Nov. 9</p></td>
+<td style="text-align: left;"><p>Nov. 13</p></td>
+<td style="text-align: left;"><p>Calen &amp; Neville</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>test report(add moonlight test to dashbard)(1 week)</p></td>
+<td style="text-align: left;"><p>Nov. 9</p></td>
+<td style="text-align: left;"><p>Nov. 13</p></td>
+<td style="text-align: left;"><p>Calen &amp; Neville</p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h5 id="client-api">Client API</h5>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Start Time</p></th>
+<th style="text-align: left;"><p>End Time</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Design test plan</p></td>
+<td style="text-align: left;"><p>Aug. 6</p></td>
+<td style="text-align: left;"><p>Aug. 14</p></td>
+<td style="text-align: left;"><p>Calen &amp; Ray</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Study how to use White to write tests</p></td>
+<td style="text-align: left;"><p>Aug. 6</p></td>
+<td style="text-align: left;"><p>Aug. 14</p></td>
+<td style="text-align: left;"><p>Ray &amp; Felicia</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Study C# and UIA ClientAPI(4 weeks)</p></td>
+<td style="text-align: left;"><p>Aug. 17</p></td>
+<td style="text-align: left;"><p>Sep. 11</p></td>
+<td style="text-align: left;"><p>Ray &amp; Felicia</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Create UIA ClientAPI UserCases and Tests for WinForms real app(KeePass)</p></td>
+<td style="text-align: left;"><p>Sep. 14</p></td>
+<td style="text-align: left;"><p>Oct. 30(10.1-10.11 are national holiday)</p></td>
+<td style="text-align: left;"><p>Ray &amp; Felicia</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Run UIA ClientAPI tests and log bugs for Winforms(KeePass)</p></td>
+<td style="text-align: left;"><p>Nov. 2</p></td>
+<td style="text-align: left;"><p>Nov. 9</p></td>
+<td style="text-align: left;"><p>Ray &amp; Felicia</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Create UIA ClientAPI UserCases and Tests for Moonlight real apps</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Neville &amp; Calen</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Run UIA ClientAPI tests and log bugs for Moonlight real apps</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Neville &amp; Calen</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Create UIA ClientAPI UserCases and tests for GTK+ real app(Tomboy, Tasque?)</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Felicia</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Run UIA ClientAPI tests and log bugs for GTK+ real app(Tomboy, Tasque?)</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Ray &amp; Felicia</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Finish test report</p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Calen &amp; Neville &amp; Ray &amp; Felicia</p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h4 id="risks-and-contingencies"><u>Risks and contingencies</u></h4>
+<p><em>Any activity that jeopardizes the testing schedule is a planning risk</em></p>
+<ul>
+<li>Program release schedule delay will jeopardizes testing schedule</li>
+<li>Program quality of release version couldn't satisfy with acceptance criteria</li>
+<li>Test environmental stuff unobtainable easily</li>
+<li>Delays in necessary QA training (e.g., understanding what needs to be tested, writing sample applications, test tools, and automation scripts)</li>
+<li>Tester staff change or lack of tester resources</li>
+<li>Changes to the original requirements or Designs</li>
+<li>Frequent program design changes</li>
+<li>Loss of support from Novell/Microsoft upper management</li>
+</ul>
+<h4 id="approvals"><u>Approvals</u></h4>
+<p><em>Persons who declare that the software is ready to move to the next stage</em></p>
+<p>Brian Merrell<br />Calen Chen<br />Brad Taylor<br /></p>
+</body>
+</html>

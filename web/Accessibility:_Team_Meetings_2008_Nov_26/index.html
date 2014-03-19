@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>-!- sandy changed the topic of #mono-a11y to: Accessibility &amp; Mono | http://www.mono-project.com/Accessibilit y | Iteration meeting in progress</p></td>
+<td style="text-align: left;"><p>07:01</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>hey folks</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>do we have our contingent from utah yet?</p></td>
+<td style="text-align: left;"><p>07:02</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bgmerrell, decriptor: ?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>alright, we'll get started anyway and they can catch up</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>maybe they forgot like me...</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>:-)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>they're probably getting some rest :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so the release went out last night</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>woohoooo</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>unfortunately it was delayed a day for 64-bit issues that came up at the last minute</p></td>
+<td style="text-align: left;"><p>07:03</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so I'll be planning a little catchup meeting with Brian and Stephen to make a list of things to remember in future release</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>releases*</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so we can avoid this sort of delay in the future</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>if anyone is interested, please blog about it</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so we can get some good press</p></td>
+<td style="text-align: left;"><p>07:04</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>anyway, on to this iteration</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>as before, we still need to prioritize p1 and p2 issues that QA discovers</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so that we can assist them with their testing</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>after that, we need to finish up the remaining 0.9 bugs</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>last I checked, there were 120.5 hours of that</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and finally, we need to begin on 1.0 features</p></td>
+<td style="text-align: left;"><p>07:05</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>for this sprint, I've changed the velocity (estimated number of hours per day) from 6 to 5</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>because our last sprint we did really well in that the graph was as we expected</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but I know that was mainly because people worked extra hours</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so if we allow for more &quot;interruption time&quot;, maybe we'll hit our target better</p></td>
+<td style="text-align: left;"><p>07:06</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>of course, the goal is to have 0 hours remaining at the end of the iteration</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but that almost never happens</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so that shouldn't be the goal</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>if there arent any questions, I guess let's get started planning our sprints?</p></td>
+<td style="text-align: left;"><p>07:07</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>question</p></td>
+<td style="text-align: left;"><p>07:08</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>go ahead</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>should Mario and I focus on outstanding provider work, or outstanding 0.9 bridge work first?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I assume none of it is going into 0.9.1</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>(for enhancement bugs)</p></td>
+<td style="text-align: left;"><p>07:09</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>good question... let's have neville, mario, you and I go back to what we know best, provider work, until we get down to 0 remaining provider bugs</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>coolio</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>any other questions/comments?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>cool</p></td>
+<td style="text-align: left;"><p>07:10</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>give me a minute, and I'll let you guys know how many hours you should plan</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>8 days * 5 hours = 40 hours</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>lets give that a shot</p></td>
+<td style="text-align: left;"><p>07:11</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy: check out #428718... aren't the Label providers done?</p></td>
+<td style="text-align: left;"><p>07:12</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: I notice very few bugs are actually targeted for 1.0</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'll fix that... one moment</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: looking...</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>haha, yeah</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>* sandy </strong></p></td>
+<td style="text-align: left;"><p>closes</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh, there are a couple more</p></td>
+<td style="text-align: left;"><p>07:13</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>just need a unit testing saying &quot;we don't support these patterns&quot;</p></td>
+<td style="text-align: left;"><p>07:14</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'll assign to myself</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: what about the other Label ones... 428719-428722?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>shouldn't berserk be blank again?</p></td>
+<td style="text-align: left;"><p>07:15</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>right, those I'm assigning to myself, and just need unit tests confirming that those patterns are unsupported</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: yeah, I just created the new iteration... I think the page is cached, one sec</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh ok</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>for right now, go to http://build0.sled.lab.novell.com/sprint s/3/</p></td>
+<td style="text-align: left;"><p>07:16</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>there are some bugs that need to be ironed out, apparentl</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy: I'll take MaskedTextBox, MonthCalendar, TabPage and TabControl</p></td>
+<td style="text-align: left;"><p>07:17</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh, mario's not here</p></td>
+<td style="text-align: left;"><p>07:18</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>yeah, we'll just have to let him pick up what's left</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>* ngao </strong></p></td>
+<td style="text-align: left;"><p>can't connect to vpn :(</p></td>
+<td style="text-align: left;"><p>07:19</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>woah did you milestone them all?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>already?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>yea</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>that was fast</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: have you never used the batch feature of Bugzilla?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>...</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>&quot;Change multiple bugs at once&quot;</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>tell me about it later</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>you are going to blow my mind sir</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>:)</p></td>
+<td style="text-align: left;"><p>07:20</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>I will finish ToolBar and ToolStripSeperator first, then pick up new ones</p></td>
+<td style="text-align: left;"><p>07:25</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: I'd prefer if you assign out 40 hours total... just pick things from the 1.0 pool</p></td>
+<td style="text-align: left;"><p>07:26</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'll take TreeView...</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>hey hey, bug in berserk</p></td>
+<td style="text-align: left;"><p>07:27</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: ok</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>428605 is being contabilized as 3 hr instead of 0.5</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: where?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>Are other people able to connect to Berserk? I'm having trouble resolving</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- calen [~calen@61.149.60.75] has joined #mono-a11y</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>hmm, works fine here, but I'm on the N network</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>* decriptor </strong></p></td>
+<td style="text-align: left;"><p>sneaks in and catches up</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>calen, you are in time :)</p></td>
+<td style="text-align: left;"><p>07:28</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, sorry i come back late,</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'll take Splitter</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>calen: no problem</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray :D</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: I don't see it on the list</p></td>
+<td style="text-align: left;"><p>07:29</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>and will take SplitContainer</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: TreeView is huge, apparently</p></td>
+<td style="text-align: left;"><p>07:30</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>puts me at 48 total</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>apparently</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>should I remove an 8 hour bug or just leave it alone?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: well, I've removed it now, but if I add it, it sums 3 to the total hours</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>do you want me to re-add it?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I just assigned every TreeView bug to myself :-P</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: yeah, add it so I can see</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>meh, I'll trash one</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>done</p></td>
+<td style="text-align: left;"><p>07:31</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>well, that won't work...</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>okay, bam</p></td>
+<td style="text-align: left;"><p>07:32</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: looks right to me... I think it is rounding on the view</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>probably rounding down too</p></td>
+<td style="text-align: left;"><p>07:33</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ohhhh, but it's not happening now</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>last time I added it, it was counting as 3, I promise :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>now it's rounding to 0</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>heisenbug or pebkac?</p></td>
+<td style="text-align: left;"><p>07:34</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>:)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>haha, heisenbug</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>that's a new one</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>awesome</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>o rly? I've used that forever</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>new to me</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>cool, so any other meeting business?</p></td>
+<td style="text-align: left;"><p>07:36</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: we will need to estimate bugs ourselves?</p></td>
+<td style="text-align: left;"><p>07:37</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: if they don't have estimates, yes</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>(or if you think the estimates are wrong)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: ok</p></td>
+<td style="text-align: left;"><p>07:38</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: still having issues getting to berserk?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: Yes. build0.sled.lab.novell.com won't resolve for me</p></td>
+<td style="text-align: left;"><p>07:39</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse, i guess you have to login Novell amercan's VPN</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: weird... are you VPN'ed in?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: yes</p></td>
+<td style="text-align: left;"><p>07:40</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>strange... well, I guess you can try again later?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>once i loged in American's VPN, i could access berserk, so was ngao</p></td>
+<td style="text-align: left;"><p>07:41</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>weird</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy, I just add a new bug for StatusBarPanel https://bugzilla.novell.com/show_bug.cgi ?id=449317</p></td>
+<td style="text-align: left;"><p>07:42</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy, can you take a look?</p></td>
+<td style="text-align: left;"><p>07:43</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>calen: no problem</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>did you see my comment about the Image thing?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy, thanks :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy, oh, sorry i didn't, i will read them soon</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- You're now known as sandy|brb</p></td>
+<td style="text-align: left;"><p>07:45</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>* bgmerrell </strong></p></td>
+<td style="text-align: left;"><p>is here</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell, morning!</p></td>
+<td style="text-align: left;"><p>07:46</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>calen: hello!</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sorry i'm late</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: we are making provo look bad :(</p></td>
+<td style="text-align: left;"><p>07:47</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell, morning, dude :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>decriptor, and morning you :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: yeah, sandy is schooling you guys</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, sandy|brb: I assume we can close 428779 right?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: i'd like to see boston make 8am meetings *every* time ;)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: yeah</p></td>
+<td style="text-align: left;"><p>07:48</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bgmerrell: heh, I'm up at 5:20, so it wouldn't be an issue for me</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: yeesh!</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: I don't... that means that we would have 6am meetins</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>no, sorry, i just totally forgot</p></td>
+<td style="text-align: left;"><p>07:49</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: well, a man has to have quiet time to work on Blue Steel</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: is that your new cologne?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>or *the look*</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: sigh. not a zoolander fan?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor, so what's the problems with 64-bit builds? could i give out the helping hand?</p></td>
+<td style="text-align: left;"><p>07:50</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>the look, of course</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: they are fixed</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: yeah, i love zoolander, it just took me a sec</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: why does it say less load than 100% if I selected more than 40h? is the new velocity unset?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: berserk doesn't count the two holidays</p></td>
+<td style="text-align: left;"><p>07:51</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>I need more power captain</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>calen: ray: we need to go through our deadlines and see what we got done. i didn't finish much because of the release issues :(</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor, wow, where could i see the build logs of 64-bit builds?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>obs</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>on Mono:UIA</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>I got a lot of things *almost* finished though :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor, i just see 64-bit packages were disabled :)</p></td>
+<td style="text-align: left;"><p>07:52</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bgmerrell, it's ok , we will follow you up :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell, okay</p></td>
+<td style="text-align: left;"><p>07:53</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bgmerrell, do you like opening a new channel or just in here?</p></td>
+<td style="text-align: left;"><p>07:54</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: ?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>i'll take ColumnHeader</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: calen: let's go to mono-a11y-qa</p></td>
+<td style="text-align: left;"><p>07:55</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: you saw that the tarballs are up and the release notes updated, right?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ray: checking</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bgmerrell: you guys have your own channel?</p></td>
+<td style="text-align: left;"><p>07:56</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: sometimes</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor, i mean i saw the packages were disabled on MonoPreviewOpenSUSE11.0 64-bit :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: si, muchas gracias</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: which project were you looking at?</p></td>
+<td style="text-align: left;"><p>07:57</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>* ray </strong></p></td>
+<td style="text-align: left;"><p>is connecting to obs</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: they are enabled for me</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor, the internet connection is too slow here, i cannot connect to it :(</p></td>
+<td style="text-align: left;"><p>07:58</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: i just have bug428594 patch updated, could you have a look?</p></td>
+<td style="text-align: left;"><p>08:00</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad (et al): wow, just saw the new mono-a11y emails about the glib# issue and replied, let me insist: I knew the problem yesterday, not 2 weeks before now</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>so, i saw some questions about the P1 bugs QA is logging, is that all cleared up?</p></td>
+<td style="text-align: left;"><p>08:01</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: sorry I was mistaken about the timing... from your email it sounded like this was something others knew about that should have held up the release</p></td>
+<td style="text-align: left;"><p>08:02</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: ok, thanks for your apologies; sorry for sounding as a severe issue</p></td>
+<td style="text-align: left;"><p>08:04</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>I only found the issue because I was working on active-descendant-changed, which I'm not planning to backport</p></td>
+<td style="text-align: left;"><p>08:05</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: you can run osc prjresults [package] in your osc directory</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: looking</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>so in osc/Mono:UIA I run osc prjresults mono-core for example</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- You're now known as sandy</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p><nowiki>decriptor, oh, thanks you, you enlightened me</p></td>
+<td style="text-align: left;"><dl>
+
+<dd>)</nowiki>
+</dd>
+</dl></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>ray: I should really make up a cheat sheet or something for OBS :)</p></td>
+<td style="text-align: left;"><p>08:07</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor, :D</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>decriptor, but my time is limited, i have to go offline, i'll check it out tomorrow, the StarBucks will be closed within 5 minutes</p></td>
+<td style="text-align: left;"><p>08:08</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>lol</p></td>
+<td style="text-align: left;"><p>08:10</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ray: later then</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: I don't think that NMimeTypes should return 1 if we don't have an implementation for GetStream. I'd suggest setting it back to 0 and adding a TODO to change to 1 once GetStream is implemented</p></td>
+<td style="text-align: left;"><p>08:11</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>since otherwise we're advertizing that GetStream should work when it doesn't</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- decriptor is now known as decriptor|brb</p></td>
+<td style="text-align: left;"><p>08:13</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor|brb: mind if I create an account for myself on build0? I'm tired of logging in as root</p></td>
+<td style="text-align: left;"><p>08:15</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- ray [~ray@123.127.70.67] has quit [leave]</p></td>
+<td style="text-align: left;"><p>08:18</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>-!- sandy changed the topic of #mono-a11y to: Accessibility &amp; Mono | http://www.mono-project.com/Accessibilit y | Latest release is 0.9.0</p></td>
+<td style="text-align: left;"><p>08:24</p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+</body>
+</html>

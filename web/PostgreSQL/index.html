@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="info">Info</h2>
+<p>Npgsql is the recommended provider to connect to PostgreSQL 7.x and 8.x databases on .NET and Mono.</p>
+<p>Mono distributes the Npgsql database provider for <a href="http://postgresql.org">PostgreSQL</a>.</p>
+<ul>
+<li>Home site: <a href="http://npgsql.projects.postgresql.org/">Npgsql</a></li>
+</ul>
+<ul>
+<li>fully managed provider for PostgreSQL</li>
+</ul>
+<ul>
+<li>does not require a client library</li>
+</ul>
+<ul>
+<li>in namespace Npgsql and assembly Npgsql</li>
+</ul>
+<h2 id="current-status">Current Status</h2>
+<ul>
+<li>Can be used with Postgresql 7.x and 8.x databases</li>
+</ul>
+<ul>
+<li>Has some support for ADO.NET 2.0 including GetSchema.</li>
+</ul>
+<ul>
+<li>You can send insert, update, delete queries</li>
+</ul>
+<p>through NpgsqlCommand.ExecuteNonQuery() method.</p>
+<ul>
+<li>You can send queries like, select count(*) from table, select version() with NpgsqlCommand.ExecuteScalar() method.</li>
+</ul>
+<ul>
+<li>There is logging support. To use it, place code like that in your program:</li>
+</ul>
+<pre><code> NpgsqlEventLog.Level = LogLevel.Debug; 
+ NpgsqlEventLog.LogName = &quot;NpgsqlTests.LogFile&quot;; </code></pre>
+<ul>
+<li>There is a winforms test suite (Thanks Dave Page).</li>
+</ul>
+<ul>
+<li>Better support of ODBC-like ConnectionString in NpgsqlConnection (Thanks Dave Page)</li>
+</ul>
+<ul>
+<li>You can use parameter names with Npgsql (:) or SqlServer (@) prefix style. This easy porting of code from Sql server to postgresql</li>
+</ul>
+<ul>
+<li>You can use native large object support</li>
+</ul>
+<h2 id="action-plan">Action plan</h2>
+<ul>
+<li>Any features or bugs for Npgsql should be implemented in Npgsql's <a href="http://pgfoundry.org/projects/npgsql/">main source code repository</a>. Only bugs necessary for building and running of Npgsql on Mono can be done in Mono's source code repository, but once applied they should be sent to Npgsql's mailing list for inclusion into their source code repository.</li>
+</ul>
+<ul>
+<li>Add any missing functionality to Npgsql. If this funtionality works on .NET but not on Mono, implement the missing features or fix the bugs in Mono</li>
+</ul>
+<h2 id="using-npgsql">Using Npgsql</h2>
+<p><b>Prerequisites</b></p>
+<ul>
+<li>Have a working mono and mcs</li>
+</ul>
+<ul>
+<li>Get <a href="http://npgsql.projects.postgresql.org/">Npgsql</a> and make sure the binary assembly Npgsql.dll is installed in the same place that the mono class libraries are located.</li>
+</ul>
+<ul>
+<li>Connection String Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Parameter Definition</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+<th style="text-align: left;"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Server</p></td>
+<td style="text-align: left;"><p>hostname of the PostgreSQL Server</p></td>
+<td style="text-align: left;"><p>Server=localhost</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Database</p></td>
+<td style="text-align: left;"><p>name of the database</p></td>
+<td style="text-align: left;"><p>Database=postgres</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Port</p></td>
+<td style="text-align: left;"><p>Network port to connect. Optional</p></td>
+<td style="text-align: left;"><p>Port=54321</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>User ID</p></td>
+<td style="text-align: left;"><p>user id</p></td>
+<td style="text-align: left;"><p>User ID=postgres</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Password</p></td>
+<td style="text-align: left;"><p>password</p></td>
+<td style="text-align: left;"><p>Password=mypass12</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Encoding</p></td>
+<td style="text-align: left;"><p>Encoding to be used. Possible values: ASCII(default) and UNICODE. Use UNICODE if you are getting problems with UTF-8 values</p></td>
+<td style="text-align: left;"><p>Encoding=UNICODE</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>SSL</p></td>
+<td style="text-align: left;"><p>True or False. Controls whether to attempt a secure connection. Default = False</p></td>
+<td style="text-align: left;"><p>SSL=true</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Pooling</p></td>
+<td style="text-align: left;"><p>True or False. Controls whether connection pooling is used. Default = True</p></td>
+<td style="text-align: left;"><p>Pooling=false</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>MinPoolSize</p></td>
+<td style="text-align: left;"><p>Min size of connection pool. Default: 1</p></td>
+<td style="text-align: left;"><p>MinPoolSize=2</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>MaxPoolSize</p></td>
+<td style="text-align: left;"><p>Max size of connection pool. Default: 20</p></td>
+<td style="text-align: left;"><p>MaxPoolSize=6</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Timeout</p></td>
+<td style="text-align: left;"><p>Time to wait for connection open in seconds</p></td>
+<td style="text-align: left;"><p>Timeout=30</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Sslmode</p></td>
+<td style="text-align: left;"><p>Mode for ssl connection control. Sslmode can be one of the following values:</p>
+<p><code>           Prefer - If it is possible to connect using ssl, it will be used.</code><br /><code>           Require - If an ssl connection cannot be made, an exception is thrown.</code><br /><code>           Allow - Not supported yet, just connects without ssl.</code><br /><code>           Disable - No ssl connection is done.</code><br /><code>           Default is Disable. </code></p></td>
+<td style="text-align: left;"><p>| Sslmode=Require</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Protocol</p></td>
+<td style="text-align: left;"><p>Protocol version to use, instead of automatic detection. First tries 3 and fallsback to 2; Integer 2 or 3.</p></td>
+<td style="text-align: left;"><p>Protocol=2</p></td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples">Examples</h3>
+<h4 id="some-connection-example">Some Connection Example</h4>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+ using System;
+ using System.Data;
+ using Npgsql;
+
+ public class Test
+ {
+    public static void Main(string[] args)
+    {
+       string connectionString =
+          &quot;Server=localhost;&quot; +
+          &quot;Database=test;&quot; +
+          &quot;User ID=postgres;&quot; +
+          &quot;Password=fun2db;&quot;;
+       IDbConnection dbcon;
+       dbcon = new NpgsqlConnection(connectionString);
+       dbcon.Open();
+       IDbCommand dbcmd = dbcon.CreateCommand();
+       // requires a table to be created named employee
+       // with columns firstname and lastname
+       // such as,
+       //        CREATE TABLE employee (
+       //           firstname varchar(32),
+       //           lastname varchar(32));
+       string sql =
+           &quot;SELECT firstname, lastname &quot; +
+           &quot;FROM employee&quot;;
+       dbcmd.CommandText = sql;
+       IDataReader reader = dbcmd.ExecuteReader();
+       while(reader.Read()) {
+            string FirstName = reader.GetString(reader.GetOrdinal(&quot;firstname&quot;));
+            string LastName = reader.GetString(reader.GetOrdinal(&quot;lastname&quot;));
+            Console.WriteLine(&quot;Name: &quot; +
+                 FirstName + &quot; &quot; + LastName);
+       }
+       // clean up
+       reader.Close();
+       reader = null;
+       dbcmd.Dispose();
+       dbcmd = null;
+       dbcon.Close();
+       dbcon = null;
+    }
+ }
+&lt;/code&gt;</code></pre>
+</div>
+<ul>
+<li>Building C# Example:</li>
+<li>Save the example to a file, such as, TestExample.cs</li>
+</ul>
+<pre><code>$ mcs TestExample.cs -r:System.Data.dll -r:Npgsql.dll</code></pre>
+<ul>
+<li>Running the Example:</li>
+</ul>
+<pre><code> mono TestExample.exe </code></pre>
+<h4 id="howto-use-postgresql-from-asp.net">Howto use PostgreSQL from ASP.Net</h4>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+&lt;%@ Page Language=&quot;c#&quot; Title=&quot;postgres via Npgsql&quot; %&gt;
+&lt;%@ Assembly name=&quot;System&quot; %&gt;
+&lt;%@ Assembly name=&quot;System.Data&quot; %&gt;
+&lt;%@ Assembly name=&quot;Npgsql&quot; %&gt;
+
+&lt;script runat=&quot;server&quot;&gt;
+                protected void Page_Load(object sender, EventArgs e) 
+                {
+                        if (!Page.IsPostBack)
+                        {
+                      string connectionString =
+                        &quot;Server=localhost;&quot; +
+                        &quot;Database=test;&quot; +
+                        &quot;User ID=postgres;&quot; +
+                        &quot;Password=fun2db;&quot;;
+                        System.Data.IDbConnection dbcon;
+                        dbcon = new Npgsql.NpgsqlConnection(connectionString);
+                        dbcon.Open();
+                        System.Data.IDbCommand dbcmd = dbcon.CreateCommand();
+                        string sql =
+                                &quot;SELECT firstname, lastname &quot; +
+                                &quot;FROM employee&quot;;
+                        dbcmd.CommandText = sql;
+                        System.Data.IDataReader reader = dbcmd.ExecuteReader();
+                                dg.DataSource = reader;
+                                dg.DataBind();
+                            reader.Close();
+                        reader = null;
+                        dbcmd.Dispose();
+                        dbcmd = null;
+                        dbcon.Close();
+                        dbcon = null;
+                        }
+                }
+&lt;/script&gt;
+
+&lt;html&gt; 
+&lt;body&gt;
+The DataGrid that follows should list employees &lt;/ br&gt;
+&lt;asp:DataGrid id=&quot;dg&quot; runat=&quot;server&quot;&gt;
+&lt;/asp:DataGrid&gt;
+
+// requires a table to be created named employee
+// with columns firstname and lastname
+// such as,&lt;br /&gt;
+//        CREATE TABLE employee (&lt;br /&gt;
+//           firstname varchar(32),&lt;br /&gt;
+//           lastname varchar(32));&lt;br /&gt;
+//&lt;br /&gt;
+// create records thus&lt;br /&gt;
+//        INSERT INTO employee &lt;br /&gt;
+//           SELECT &#39;Rob&#39;,&#39;Davis&#39;;&lt;br /&gt;
+//        INSERT INTO employee &lt;br /&gt;
+//           SELECT &#39;Sarah&#39;,&#39;Davis&#39;;&lt;br /&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;/code&gt;</code></pre>
+</div>
+<ul>
+<li>More examples can be found in Npgsql Users Manual <a href="http://npgsql.projects.postgresql.org/docs/manual/UserManual.htm">here</a></li>
+</ul>
+<h2 id="installation-instructions-for-postgresql-dbms">Installation instructions for PostgreSQL DBMS</h2>
+<h3 id="on-unix">On UNIX</h3>
+<ul>
+<li>Read the PostgreSQL Installation Instructions</li>
+</ul>
+<p>at /usr/doc/postgresql-x.x.x/html/installation.html</p>
+<ul>
+<li>Depending on your UNIX system, PostgreSQL maybe already installed, a database user 'postgres' created, a linux user 'postgres' created and initdb ran. Or maybe not.</li>
+</ul>
+<pre><code> su
+ adduser postgres
+ mkdir /usr/local/pgsql/data
+ chown postgres /usr/local/pgsql/data
+ su - postgres
+ initdb -D /usr/local/pgsql/data
+ postmaster -i -D /usr/local/pgsql/data
+ createdb test
+ psql test</code></pre>
+<ul>
+<li>Make sure you have a database user named postgres. It is best to install the PostgreSQL DBMS under linux user postgres. When you run the postmaster, run it under the user postgres as well. If this was not done, then you will need to create a user named postgres for the System.Data tests.</li>
+</ul>
+<ul>
+<li>If you already installed PostgeSQL and you do not have a database user named postgres, then you can create user postgres using psql:</li>
+</ul>
+<pre><code>psql test
+create user postgres with password &#39;fun2db&#39;;</code></pre>
+<ul>
+<li>The postmaster must be run with -i option.</li>
+</ul>
+<ul>
+<li>In the /usr/local/pgsql/data/pg_hba.conf file, you need to have the AUTH_TYPE set to md5. You can read more on this at /usr/doc/postgresql-7.2.1/html/client-authentication.html or wherever your PostgreSQL html docs are located. See the 2nd line below, host 127.0.0.1 has an AUTH_TYPE md5 in pg_hba.conf.</li>
+</ul>
+<pre><code># # TYPE     DATABASE    IP_ADDRESS    MASK               AUTH_TYPE
+
+ local      all                                          trust
+ host       all         127.0.0.1     255.255.255.255    md5</code></pre>
+<ul>
+<li>If you can not find your PostgreSQL documentation locally or you did not install it, then you can get it <a href="http://www.postgresql.org/idocs/">here</a>.</li>
+</ul>
+<h3 id="on-windows-using-native-postgresql">On Windows using native PostgreSQL</h3>
+<ul>
+<li>Starting with PostgreSQL 8.0, PostgreSQL has native Windows support</li>
+</ul>
+<ul>
+<li><a href="http://www.postgresql.org/download/">PostgreSQL Downloads</a></li>
+</ul>
+<p><a href="http://localhost:4000/Category:Developer Resource" title="wikilink">Category:Developer Resource</a> <a href="http://localhost:4000/Category:ADO.NET" title="wikilink">Category:ADO.NET</a></p>
+</body>
+</html>

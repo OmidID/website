@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>Mono has both an optimizing just-in-time (JIT) runtime and a interpreter runtime. The interpreter runtime is far less complex and is primarily used in the early stages before a JIT version for that architecture is constructed. The interpreter is not supported on architectures where the JIT has been ported.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Supported Architectures</p></th>
+<th style="text-align: left;"><p>Runtime</p></th>
+<th style="text-align: left;"><p>Operating system</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="Mono:S390" title="wikilink">s390, s390x (32 and 64 bits)</a></p></td>
+<td style="text-align: left;"><p>JIT</p></td>
+<td style="text-align: left;"><p>| Linux</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://localhost:4000/Mono:SPARC" title="wikilink">SPARC (32)</a></p></td>
+<td style="text-align: left;"><p>JIT</p></td>
+<td style="text-align: left;"><p>| Solaris, Linux</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://localhost:4000/Mono:PowerPC" title="wikilink">PowerPC</a></p></td>
+<td style="text-align: left;"><p>JIT</p></td>
+<td style="text-align: left;"><p>| Linux, Mac OSX, Wii, PlayStation 3</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="Mono:x86" title="wikilink">x86</a></p></td>
+<td style="text-align: left;"><p>JIT</p></td>
+<td style="text-align: left;"><p>| Linux, FreeBSD, OpenBSD, NetBSD,<br /> Microsoft Windows, Solaris, OS X, Android</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="Mono:AMD64" title="wikilink">x86-64</a>: AMD64 and EM64T (64 bit)</p></td>
+<td style="text-align: left;"><p>JIT</p></td>
+<td style="text-align: left;"><p>| Linux, FreeBSD, OpenBSD,<br />Solaris, OS X</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="Mono:IA64" title="wikilink">IA64</a> Itanium2 (64 bit)</p></td>
+<td style="text-align: left;"><p>JIT</p></td>
+<td style="text-align: left;"><p>| Linux</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://localhost:4000/Mono:ARM" title="wikilink">ARM</a>: little and big endian</p></td>
+<td style="text-align: left;"><p>JIT</p></td>
+<td style="text-align: left;"><p>| Linux (both old and new ABI), iPhone, Android</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://localhost:4000/Mono:Alpha" title="wikilink">Alpha</a></p></td>
+<td style="text-align: left;"><p>JIT</p></td>
+<td style="text-align: left;"><p>| <strong>not maintained</strong>. Linux</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://localhost:4000/Mono:MIPS" title="wikilink">MIPS</a></p></td>
+<td style="text-align: left;"><p>JIT</p></td>
+<td style="text-align: left;"><p>| Linux</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://localhost:4000/Mono:HPPA" title="wikilink">HPPA</a></p></td>
+<td style="text-align: left;"><p>JIT</p></td>
+<td style="text-align: left;"><p>| <strong>not maintained</strong> Linux</p></td>
+</tr>
+</tbody>
+</table>
+<p>Note that the Alpha, MIPS, ARM big-endian and HPPA architectures are community-supported and may not be as complete as the other architectures.</p>
+<p>Support for SPARC64 works in older versions of Mono, but not in the recent versions.</p>
+</body>
+</html>

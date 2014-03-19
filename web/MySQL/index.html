@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="info">Info</h2>
+<p>The Mono provider for <a href="http://www.mysql.com/">MySQL</a> database is the <a href="http://dev.mysql.com/downloads/connector/net/">MySQL Connector/Net</a>.</p>
+<p>MySQL Connector/Net is a fully managed provider and does not require a client library. You have to get it from MySQL AB. The provider is distributed under the GPL license. This is the recommened provider to use with Mono.</p>
+<p>Support for MySQL Connector/Net can be found <a href="http://dev.mysql.com/support/">here</a>. If you decide to compile from sources, you should define the conditional compilation variable MONO (i.e., -d:MONO when compiling from the command line).</p>
+<h2 id="usage">Usage</h2>
+<p><b>Prerequisites</b></p>
+<ul>
+<li>MySQL database</li>
+</ul>
+<ul>
+<li>MySQL .NET Connector</li>
+</ul>
+<p><b>Connection String</b></p>
+<ul>
+<li>Format:</li>
+</ul>
+<pre><code> &quot;Server=hostname;&quot; + &quot;Database=database;&quot; + &quot;User ID=username;&quot; + &quot;Password=password;&quot; + &quot;Pooling=false&quot;</code></pre>
+<ul>
+<li>Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Parameter Definition</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+<th style="text-align: left;"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Server or Data Source</p></td>
+<td style="text-align: left;"><p>Hostname or IP Address of the MySQL server</p></td>
+<td style="text-align: left;"><p>Server=MYHOST</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Database</p></td>
+<td style="text-align: left;"><p>name of MySQL database</p></td>
+<td style="text-align: left;"><p>Database=testdb</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Port</p></td>
+<td style="text-align: left;"><p>TCP/IP Port to connect. Optional.</p></td>
+<td style="text-align: left;"><p>Port=3306</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>User ID</p></td>
+<td style="text-align: left;"><p>name of MySQL database user</p></td>
+<td style="text-align: left;"><p>User ID=someuser</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Password</p></td>
+<td style="text-align: left;"><p>password for MySQL database user</p></td>
+<td style="text-align: left;"><p>Password=mypass12</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Pooling</p></td>
+<td style="text-align: left;"><p>whether or not to use connection pooling. YES or TRUE to use connection pooling and NO or FALSE to not use connection pooling.</p></td>
+<td style="text-align: left;"><p>Pooling=false</p></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Installing MySql.Data.dll in the GAC:</li>
+</ul>
+<p><code>  cd path_to_your MySql.Data.dll assembly</code><br /><code>  gacutil -i MySql.Data.dll</code></p>
+<p><b>C# Example</b></p>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+ using System;
+ using System.Data;
+ using MySql.Data.MySqlClient;
+
+ public class Test
+ {
+    public static void Main(string[] args)
+    {
+       string connectionString =
+          &quot;Server=localhost;&quot; +
+          &quot;Database=test;&quot; +
+          &quot;User ID=myuserid;&quot; +
+          &quot;Password=mypassword;&quot; +
+          &quot;Pooling=false&quot;;
+       IDbConnection dbcon;
+       dbcon = new MySqlConnection(connectionString);
+       dbcon.Open();
+       IDbCommand dbcmd = dbcon.CreateCommand();
+       // requires a table to be created named employee
+       // with columns firstname and lastname
+       // such as,
+       //        CREATE TABLE employee (
+       //           firstname varchar(32),
+       //           lastname varchar(32));
+       string sql =
+           &quot;SELECT firstname, lastname &quot; +
+           &quot;FROM employee&quot;;
+       dbcmd.CommandText = sql;
+       IDataReader reader = dbcmd.ExecuteReader();
+       while(reader.Read()) {
+            string FirstName = (string) reader[&quot;firstname&quot;];
+            string LastName = (string) reader[&quot;lastname&quot;];
+            Console.WriteLine(&quot;Name: &quot; +
+                  FirstName + &quot; &quot; + LastName);
+       }
+       // clean up
+       reader.Close();
+       reader = null;
+       dbcmd.Dispose();
+       dbcmd = null;
+       dbcon.Close();
+       dbcon = null;
+    }
+ }
+&lt;/code&gt;</code></pre>
+</div>
+<ul>
+<li>Building C# Example:</li>
+</ul>
+<ul>
+<li>Save the example to a file, such as, TestExample.cs</li>
+</ul>
+<pre><code>mcs TestExample.cs -r:System.Data.dll -r:/path/to/MySql.Data.dll</code></pre>
+<ul>
+<li>Running the Example:</li>
+</ul>
+<pre><code> mono TestExample.exe </code></pre>
+<p><a href="http://localhost:4000/Category:Developer Resource" title="wikilink">Category:Developer Resource</a> <a href="http://localhost:4000/Category:ADO.NET" title="wikilink">Category:ADO.NET</a></p>
+</body>
+</html>

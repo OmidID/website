@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>-!- knocte changed the topic of #mono-a11y to: Accessibility team Iteration 9 meeting</p></td>
+<td style="text-align: left;"><p>06:03</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, so</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>does anyone want to mention anything before running the usual scheme of the meeting, jpallen?</p></td>
+<td style="text-align: left;"><p>06:04</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I guess not so, let's start with the usual order</p></td>
+<td style="text-align: left;"><p>06:05</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>devs first, sandy: you're used to be the first, right? :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>ever since preschool</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>heh</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>okay, well this iteration I actually spent a bit of time on putting together New Contributor Guidelines</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I sent an email to the list about it last night</p></td>
+<td style="text-align: left;"><p>06:06</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Also, I continued my testing tasks</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but hit a roadblock that monocov, the code coverage tool I use to tell me how good my tests are, no longer works with mono from svn</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so I patched monocov, and that got committed today actually</p></td>
+<td style="text-align: left;"><p>06:07</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Miguel has been out of the country, so still waiting on that Olive patch :-)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>mm great idea the monocov use</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>so I'll have those tests done in a day or two and pick up some control work</p></td>
+<td style="text-align: left;"><p>06:08</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I should probably talk to mario because he's the expert</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>I guess miguel is the only one who could argue about the patch? wade is no longer with us right?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>miguel was the only one who had issues with the patch</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so I was waiting for him to approve the updated version</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh ok</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'll ping him today</p></td>
+<td style="text-align: left;"><p>06:09</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>fine, thanks sandy, mario can you go now?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'm glad to announce that ListBox, ScrollBar and ComboBox support navigation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>however, I'm still missing some tests, and I need to read the StructureChanged documentation in order to generate the valid events</p></td>
+<td style="text-align: left;"><p>06:10</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I've update the wiki <a href="http://www.mono-project.com/Accessibilit">http://www.mono-project.com/Accessibilit</a> y:_Winforms_Implementation</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>s/update/updated</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I need to write the Navigation stuff in that page</p></td>
+<td style="text-align: left;"><p>06:11</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so next iteration, I'm going to finish the wiki-page, more navigation tests and revamp TextBox</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine, remember me also to talk about the FirstChild navigation issue we talked previously</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>can you tell us what do you mean about the TextBox revamp?</p></td>
+<td style="text-align: left;"><p>06:12</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>sure</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I need to upgrade TextBox provider in order to use the new logic defined, you know, using Behaviors instead of implementing explicitly the Pattern Interface</p></td>
+<td style="text-align: left;"><p>06:13</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok so, how many other providers need to be revamped?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'm not sure, let me see.</p></td>
+<td style="text-align: left;"><p>06:14</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'm just a bit worried of being in a constant refactoring phase, because the plan is a bit delayed</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: most of the ones that need to be revamped are trivial</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte, three, but the changes are trivial as sandy said</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, so, mario: select also another provider to work on in case you revamp TextBox in less than an iteration</p></td>
+<td style="text-align: left;"><p>06:15</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte, actually TextBox isn't finished yet, my plan is to finish it before selecting another</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine then</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok now it's the turn of mgorse, who will spend this iteration getting up to speed in the bridge, because we're likely going to need him in some occassions</p></td>
+<td style="text-align: left;"><p>06:16</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>mgorse: ready to go?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>I didn't do much for the project last iteration. I took some ito to file/comment on a couple of a11y bugs that affect OpenSUSE, and took some fto to run errands related to moving</p></td>
+<td style="text-align: left;"><p>06:17</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>yesterday I continued figuring out how things work, got everything built, and fixed a bug in the bridge related to combo boxes</p></td>
+<td style="text-align: left;"><p>06:18</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>this iteration I'm going to implement StatusBar in the bridge, which will be my foray into working on it</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine, thanks mgorse, I hope you're now well settled in Austin!</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'll go now with my report</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>indeed, I've had only two real days in this iteration and haven't done too much, I also have to apologize because I haven't updated my row on the last iteration in the wiki</p></td>
+<td style="text-align: left;"><p>06:19</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Guadec has been great and well, one lesson learned: you cannot expect many people in after hours talks! it wasn't really my first guadec but didn't know the differentiation between these type of &quot;days ranges&quot; because I only attended Vilanova's 2006 guadec for 1 day (other guadec's I've attended are just spanish guadecs)</p></td>
+<td style="text-align: left;"><p>06:21</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and yesterday I spent it getting up to date, reading emails, all the commits done, and updating my repository (had a problem with MD, now solved)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>still need to finish my uncommitted code about the Edit control type, will do this afternoon surely</p></td>
+<td style="text-align: left;"><p>06:22</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok, oh, let's go with ngao now</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>in the last iteration, i followed the new contributor guidelines, and submitted a patch -- behaviors and events for status bar</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>it's a new work method for me :)</p></td>
+<td style="text-align: left;"><p>06:23</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>next iteration, i will read more navigation codes, and finish status bar navigation</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- peteb [~ptbrunet@cpe-66-69-198-254.austin.res. rr.com] has joined #mono-a11y</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, since mgorse will map the status bar in this iteration, it will be interesting for you to talk with him in case he has any issues</p></td>
+<td style="text-align: left;"><p>06:24</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>thanks ngao</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>sure</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>let's talk QA now</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Calen, you with us? :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte:yes</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>knocte: turn me?</p></td>
+<td style="text-align: left;"><p>06:25</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>yep please</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>okay</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i only practiced openDialog and saveDialog in this Iteration and updated two gtk strongwind test script to remove some unnecessary lines.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i encountered a problem that tooltip cann't be accessibled in openSUSE11 and spent some times to reseach the reason and discuss the problem with bgmerrell and other people, finally bgmerrell make sure 'gail' cause it. :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>today i have tried our monobuild in openSUSE11 VM, i notice the winforms app can be seen in accerciser now but the control's details(such as Label's states, Button's RoleName and actions) still not completely finished,</p></td>
+<td style="text-align: left;"><p>06:26</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>so is gail buggy?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>and there are some difference between gtk app and what i have thought before, 'ipy' to be seen as application name in accerciser and Form's Text be seen as frame name.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>knocte: it seems yes</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>Calen: ok, don't forget to file a bug report then, it's always interesting to have a true reference to the problem</p></td>
+<td style="text-align: left;"><p>06:27</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>even if it's not worth fixing it</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>when he return to old version, it can be work well</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: it's reported</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: Brian have submited a but to gail :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh fine! can you guys then send the URL to our a11y mailing list?</p></td>
+<td style="text-align: left;"><p>06:28</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p><a href="http://bugzilla.gnome.org/show_bug.cgi?i">http://bugzilla.gnome.org/show_bug.cgi?i</a> d=542873</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>perfect, now it's in the meeting log, thanks, so Calen, your plan for next iteration?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>i will keep on reporting :)</p></td>
+<td style="text-align: left;"><p>06:29</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sorry, again. today i have tried our monobuild in openSUSE11 VM, i notice the winforms app can be seen in accerciser now but the control's details(such as Label's states, Button's RoleName and actions) still not completely finished, and there are some difference between gtk app and what i have thought before, 'ipy' to be seen as application name in accerciser and Form's Text be seen as frame name. so i hope in next Iteration i can and will practice our s</p></td>
+<td style="text-align: left;"><p>06:30</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>trongwind test against some winforms controls</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and in next Iteration i still need talk with bgmerrell some details about how to referance states.py and actions.py how to check them, because when i practice like that, it still confuse me :(</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, also I hope that this iteration the olive patch will go in, so be prepared for a bunch of integration effort we will need to start to do for you to maybe start filing bugs to us the devs</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: they are using patched olive already</p></td>
+<td style="text-align: left;"><p>06:31</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh well, I'm not up to date to the extent I thought!</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>BTW, does winforms control's states and actions is same as gtk's which i have seen in accerciser? for example button's action in gtk app is &quot;click&quot;&quot;press&quot;&quot;release&quot;, does button's action in winforms app is the same?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>so I'll get up to speed about the status of these things after the meeting, thanks sandy</p></td>
+<td style="text-align: left;"><p>06:32</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy knocte are we talking about the .pc file. That's the only patch that I'm aware of?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>right</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: yes</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Calen: certainly there are some differences, I'll point to you a thing you could read to find out what should you check for this specific case</p></td>
+<td style="text-align: left;"><p>06:33</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Calen: you done?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: okay, thanks.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>thanks Calen! bgmerrell: can you go on?</p></td>
+<td style="text-align: left;"><p>06:34</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>Calen mentioned I worked on figuring out why tooltip wasn't accessible in openSUSE11. A bug is logged against gail.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I also got a patch accepted for Strongwind that adds a couple of features we might use ( <a href="http://bugzilla.gnome.org/show_bug.cgi?i">http://bugzilla.gnome.org/show_bug.cgi?i</a> d=542458 )</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>In general I did a lot more experimenting with Strongwind and testing widgets I hadn't tried to test yet (that's what led to the patches)</p></td>
+<td style="text-align: left;"><p>06:35</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I reviewed some of Calen's strongwind tests and we made some improvements. Same with Ray's WinForms samples.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I also started adding some constants for atk states and actions to our test framework, and we're going to reorganize a couple of things to make it nice and clean.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>This includes the actions.py and states.py Calen referred to</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>The scuttlebutt is that the latest rpms (as of last night) will allow us (QA) to start writing some tests against winforms! So we're all happy about that, and Calen and I should be starting those tests this iteration.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I also keep pushing back the Strongwind tutorial(s) I've been wanting to write, so hopefully I can finish that up this iteration.</p></td>
+<td style="text-align: left;"><p>06:36</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>And then once Calen is comfortable with writing Strongwind tests for WinForms I really need to start looking at Orca automated tests.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, that sounds really great, because maybe in this iteration it's interesting to start creating a new column on the wiki page about the plan, where you put a percentage of testing to each item already developed (in theory) by us</p></td>
+<td style="text-align: left;"><p>06:37</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so thanks bgmerrell, did Ray do QA work this iteration?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>in this cycle,</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine, then you can go on with QA part Ray</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>1. I have learnt some python and autotools stuff for testing and building</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>2. have some samples polished</p></td>
+<td style="text-align: left;"><p>06:38</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>3. updated all VMs, tune new test environments</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but not to much work about buiding</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>in the next, hopefully I could have all samples done,</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>also start to write new samples; learn some new stuff about building.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>over</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- calvin [~calvin@fixe.dnsdhcp.provo.novell.com] has joined #mono-a11y</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>do you plan to write MWF samples as well? if yes be sure to sync with Calen and bgmerrell</p></td>
+<td style="text-align: left;"><p>06:39</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>hey calvin welcome, we're in the middle of the meeting</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte, i will check it out when them asap</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine Ray, let's go on with decriptor then</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>thanks Ray</p></td>
+<td style="text-align: left;"><p>06:40</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>you're welcome. :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor, a11ybuild: anyone of you there? :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>yup</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sorry</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>it's ok, go ahead</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>failed miserably at trying to tether a cell phone, sorry jpallen</p></td>
+<td style="text-align: left;"><p>06:41</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>had a meeting with the mono build guys and worked something out with them. We are going to try and take advantage of their build system with the advantages of OBS.</p></td>
+<td style="text-align: left;"><p>06:42</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>monobuild is pushing rpms almost per rev update of svn, qa has the url and we found 'our first bug' last night. sandy was awesome and got that resolved so now more than the main form shows up.</p></td>
+<td style="text-align: left;"><p>06:43</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>this iteration, I want to clean up the process and start running the unit tests on each rpm build.</p></td>
+<td style="text-align: left;"><p>06:44</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>it would be cool to have my fake bot push out notices when new rpms are available</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>thanks decriptor. OBS integrations sounds pretty good, who are the mono guys you talked with?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>andrew/marc/rusty/thomas</p></td>
+<td style="text-align: left;"><p>06:45</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>kind of fell on them after wade left</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>since we depend on their stuff I've been trying to integrate into their stuff as well</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine fine, and do you plan to don't make rpms available if unit tests failed?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>there are a couple issue with that, but I think that's where obs stuff will help</p></td>
+<td style="text-align: left;"><p>06:46</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>because there are some unit tests that fail currently I believe</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok, let me know you're progress, that sounds interesting</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: I try and just flag it in the web interface</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p><a href="http://build.mono.lab.novell.com/">http://build.mono.lab.novell.com/</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>cool</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok so we're kind of finished, except for calvin that seems now to be with us? anything that anybody wants to say before we pass to the post-meeting conversations? :)</p></td>
+<td style="text-align: left;"><p>06:47</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>I think it flags the failed tests but still provides rpms</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I did forget one thing</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Friday I went to the GHOP thing at Google</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; calvin&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: hey, yes I'm here</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: ok, but I'm now not able to connect :?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: internal only</p></td>
+<td style="text-align: left;"><p>06:48</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>and did a pretty good job of selling Novell to the grand prize winners :-)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh right, sandy: yeah go on</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>even with the allure of Google</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>they all seemed really excited that it was possible to work on free software all day</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy and bgmerrell's presentation got accepted for this years Utah Open Source Conference :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>haha, fine, put that in the iteration wikipage :P</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>anyway, I thought that was cool...they weren't just blinded by the light of Google</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh, the OSCON right?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: UTOS</p></td>
+<td style="text-align: left;"><p>06:49</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh, I thought they were they same thing :o</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>hehe, fine</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: subtract a few thousand and they are similar :P</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>x)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok, anything else? did I miss anybody?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; Ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte, calvin is here. ;)</p></td>
+<td style="text-align: left;"><p>06:50</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>remember to put your &quot;suffix&quot; nicknames &quot;|wiki&quot; if you plan now on updating the wiki, other people in other timezones can go to bed :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; calvin&gt; </strong></p></td>
+<td style="text-align: left;"><p>yeah, I'm not sure I have a lot go report, I just logged in for the first time in two weeks</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I hope to review things with knocte on the status of the bridge and continue work there when I see where we are at</p></td>
+<td style="text-align: left;"><p>06:51</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and dig through my mountain of email!</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>that's all</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>hehe, fine!</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>we'll change the topic then</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- knocte changed the topic of #mono-a11y to: Accessibility: <a href="http://www.mono-project.com/Accessibilit">http://www.mono-project.com/Accessibilit</a> y</p></td>
+<td style="text-align: left;"><p>06:52</p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+</body>
+</html>

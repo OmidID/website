@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>This sample shows how to implement some asp.net callbacks methods and you to get data without to generate a visible postback.</p>
+<p>You will need mono runtime, csharp compilers and the minimalistic web server xsp version 2.</p>
+<p>Create two files to test this sample.</p>
+<p>Default.aspx</p>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+&lt;% @Page Language=&quot;C#&quot; Inherits=&quot;Default&quot; CodeFile=&quot;Default.aspx.cs&quot; %&gt;
+&lt;html&gt;
+&lt;head id=&quot;headid&quot; runat=&quot;server&quot;&gt;
+ &lt;title&gt;jacob ASP.NET WebForm_DoCallbacks&lt;/title&gt;
+&lt;/head&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    
+    function SendValuesToSumatoryOnServer() 
+        {       
+     var foo_a = document.getElementById(&quot;txt_fooa&quot;).value;
+     var foo_b = document.getElementById(&quot;txt_foob&quot;).value;  
+         SumatoryOnServer(foo_a + &quot;:&quot; + foo_b,&quot;&quot;);
+    }
+
+    function GetDataFromServer(tmpValue)
+        {
+     var foo_result = document.getElementById(&quot;txt_fooresult&quot;);  
+         foo_result.value = tmpValue;   
+    }
+
+&lt;/script&gt;
+&lt;body&gt;
+ &lt;form id=&quot;frmMain&quot; runat=&quot;server&quot;&gt;
+    Sumatory = &lt;asp:TextBox id=&quot;txt_fooa&quot; 
+                                runat=&quot;server&quot; 
+                                style=&quot;font:status-bar;border:1px solid lightgray&quot; /&gt;
+    +
+    &lt;asp:TextBox id=&quot;txt_foob&quot;
+             runat=&quot;server&quot;
+             style=&quot;font:status-bar;border:1px solid lightgray&quot; /&gt;
+
+    &lt;input type=&quot;button&quot; id=&quot;btn_sum&quot; value=&quot;click here to exec sumatory on server&quot;
+           onclick=&quot;SendValuesToSumatoryOnServer()&quot; 
+           style=&quot;font:status-bar;border:1px solid black&quot; /&gt;
+    &lt;br&gt;&lt;br&gt;&lt;br&gt;
+    Result: &lt;asp:TextBox id=&quot;txt_fooresult&quot;
+                runat=&quot;server&quot;
+                style=&quot;font:status-bar;border:1px solid lightblue&quot; /&gt; 
+    &lt;br&gt;
+    
+ &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;/code&gt;</code></pre>
+</div>
+<p>Default.aspx.cs</p>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+using System;
+using System.Web;
+using System.Web.UI;
+
+public partial class Default:Page,ICallbackEventHandler {
+
+  protected string returnValue;
+  
+  protected void Page_Load(object o,EventArgs e) 
+  {
+    string callback_event_reference = this.ClientScript.GetCallbackEventReference(this,&quot;arg&quot;,&quot;GetDataFromServer&quot;,&quot;context&quot;);
+    
+    string callback_implementation = &quot;function SumatoryOnServer(arg,context)&quot; + 
+                      &quot;{ &quot; + callback_event_reference + &quot;;}&quot;;
+this.ClientScript.RegisterClientScriptBlock(this.GetType(),&quot;SumatoryOnServer&quot;,callback_implementation,true);
+  }
+
+  public void RaiseCallbackEvent(string eventArguments) 
+  {
+    char[] sep = {&#39;:&#39;};
+    string[] values = eventArguments.Split(sep[0]);
+    double sum = double.Parse(values[0]) + double.Parse(values[1]);
+    returnValue = sum.ToString();   
+  }
+
+  public string GetCallbackResult() 
+  {
+    return returnValue;
+  }
+} 
+
+&lt;/code&gt;</code></pre>
+</div>
+<p>Now only run xsp2 command on a directory where you are editing this sample source files and later open your firefox web browser and pick this url:</p>
+<p><a href="http://0.0.0.0:8080/Default.aspx">http://0.0.0.0:8080/Default.aspx</a></p>
+<p><a href="http://localhost:4000/Category:HowTo" title="wikilink">Category:HowTo</a></p>
+</body>
+</html>

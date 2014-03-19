@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>Cecil is a library written by <a href="http://evain.net/blog/">Jb Evain</a> to generate and inspect programs and libraries in the ECMA CIL format. It has full support for generics, and support some debugging symbol format.</p>
+<p>In simple English, with Cecil, you can load existing managed assemblies, browse all the contained types, modify them on the fly and save back to the disk the modified assembly.</p>
+<p>Today it is used by the Mono <a href="http://localhost:4000/Debugger" title="wikilink">Debugger</a>, the bug-finding and compliance checking tool <a href="http://localhost:4000/Gendarme" title="wikilink">Gendarme</a>, <a href="http://localhost:4000/MoMA" title="wikilink">MoMA</a>, <a href="DB4http://localhost:4000/O" title="wikilink">DB4O</a>, as well as <a href="http://groups.google.com/group/mono-cecil/web/projects-using-cecil">many other tools</a>.</p>
+<h1 id="mailing-list">Mailing List</h1>
+<p>There is a Google Group to discuss everything Cecil related: <a href="http://groups.google.com/group/mono-cecil">mono-cecil</a></p>
+<h1 id="versions">Versions</h1>
+<p>Recently, Cecil undergone a large refactoring, to be able to fix some issues the previous version had. In its previous form, the code was compilable on a .net 1.0 profile, and you need to use Cecil from the 0.6 family if you still want to use it.</p>
+<p>For every other usage, you're urged to switch to the new version 0.9. Its development has been moved to the <a href="http://github.com/jbevain/cecil">Cecil github page</a> until all the code in Mono is updated to this version.</p>
+<h1 id="using-cecil">Using Cecil</h1>
+<p>Since Cecil's API has not yet been frozen as we want to continue improving it from the lessons learned from various consumers of the API, using Cecil requires your project to take some extra steps compared to when you use a published API.</p>
+<p>The 0.9 family of Cecil, is very close to API stability.</p>
+<p>The pattern used for using libraries whose API is not frozen is described in the <a href="http://www.mono-project.com/http://localhost:4000/Guidelines:Application_Deployment" title="wikilink">Application Deployment</a> guidelines.</p>
+<p>To summarize it, it is necessary for you to copy and bundle a version of Cecil with your project before using it. To do this, you use the following pattern:</p>
+<p><bash> $ cp `pkg-config --variable=Libraries cecil` . $ gmcs program.cs -r:Mono.Cecil.dll </bash></p>
+<p>In a Makefile you would achieve that by doing:</p>
+<p><bash> Mono.Cecil.dll:</p>
+<p><code>       cp `pkg-config --variable=Libraries cecil` .</code></p>
+<p></bash></p>
+<p>And adding Mono.Cecil.dll as one of your dependencies.</p>
+<h1 id="download">Download</h1>
+<p>If you want the up to date version of Mono.Cecil, you need to get it from its <a href="http://github.com/jbevain/cecil">github page</a>.</p>
+<p>If you need a recent build of the 0.6 branch, the recommended way of quickly getting a binary of Mono.Cecil.dll, is to grab it from the last MonoCharge tarball which are part of our <a href="http://mono.ximian.com/daily/">daily builds</a>.</p>
+<p>If needed, you can download Cecil's last revision from the <a href="http://localhost:4000/SVN" title="wikilink">Subversion repository</a> in mcs/class/Mono.Cecil.</p>
+<h1 id="documentation">Documentation</h1>
+<p>You can visit, and even contribute, to Cecil's <a href="http://wiki.github.com/jbevain/cecil/">wiki</a>.</p>
+<h1 id="release-notes">Release notes</h1>
+<p>Here are the release notes for every version of Cecil:</p>
+<p><code>* </code><a href="http://evain.net/blog/articles/2010/04/12/mono-cecil-0-9-cecil-light"><code>Mono.Cecil</code> <code>0.9.1</code></a><br /><code>* </code><a href="http://evain.net/blog/articles/2010/04/12/mono-cecil-0-9-cecil-light"><code>Mono.Cecil</code> <code>0.9</code></a><br /><code>* </code><a href="http://evain.net/blog/articles/2007/10/05/mono-cecil-0-6"><code>Mono.Cecil</code> <code>0.6</code></a><br /><code>* </code><a href="http://evain.net/blog/articles/2007/03/27/mono-cecil-0-5"><code>Mono.Cecil</code> <code>0.5</code></a><br /><code>* </code><a href="http://evain.net/blog/articles/2006/08/24/mono-cecil-0-4-3-released"><code>Mono.Cecil</code> <code>0.4.3</code></a><br /><code>* </code><a href="http://evain.net/blog/articles/2006/04/04/mono-cecil-0-4-1"><code>Mono.Cecil</code> <code>0.4.1</code></a><br /><code>* </code><a href="http://evain.net/blog/articles/2006/02/07/mono-cecil-0-3"><code>Mono.Cecil</code> <code>0.3</code></a><br /><code>* </code><a href="http://evain.net/blog/articles/2005/12/24/mono-cecil-0-2"><code>Mono.Cecil</code> <code>0.2</code></a><br /><code>* </code><a href="http://evain.net/blog/articles/2005/10/31/mono-cecil-0-1-released"><code>Mono.Cecil</code> <code>0.1</code></a></p>
+<h1 id="differences-with-other-alternatives">Differences with other alternatives</h1>
+<h2 id="reflectionreflection.emit">Reflection/Reflection.Emit</h2>
+<p>Reflection and Reflection.Emit only expose a subset of all the features in a CLI image. Since we want to remain compatible with the Microsoft implementation, we can not add or change the behavior of this library to be more complete.</p>
+<p>Two big differences are that:</p>
+<ul>
+<li>Cecil has support for extracting the CIL bytecodes.</li>
+<li>Cecil does not need to load the assembly or have compatible assemblies to introspect the images.</li>
+</ul>
+<h1 id="projects">Projects</h1>
+<p>The following are projects that we want to implement using Cecil:</p>
+
+
+<p>|}</p>
+<p><a href="http://localhost:4000/Category:Mono Framework" title="wikilink">Category:Mono Framework</a> <a href="http://localhost:4000/Category:Developer Resource" title="wikilink">Category:Developer Resource</a></p>
+</body>
+</html>

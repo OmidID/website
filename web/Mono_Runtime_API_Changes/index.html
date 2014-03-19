@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>API changes that we need to make to the Mono Runtime for Mono 2.8:</p>
+<h1 id="tasks">Tasks</h1>
+<p>Drop the MONO_ZERO_LEN_ARRAY from the public header files currently based on the __GNUC__.</p>
+<ul>
+<li>Instead use a mono-configuration.h for the system where MOno is compiled.</li>
+</ul>
+<ul>
+<li>or, define MONO_ZERO_LEN_ARRAY to be the empty string so as to depend on the C99 flexible array feature. This avoids the issues with installing a build-time header mono-configuration.h (see shenanigans with glib-config.h in the glib package, not to mention the issues with having an installed header customized for a particular compiler). Note that GCC claim support for C99 flexible arrays since at least GCC 3.0, and C99 is a 10 year old standard already</li>
+</ul>
+<p>Drop the current verifier API and make it saner. On its current form it is not very usable and it returns a GList, which is not very helpful.</p>
+<p>Drop all uses of glib on public API. This will make the transition to eglib possible.</p>
+<p>Make use of the upcoming error handling API in all functions that mutate the runtime state. This is a pretty wide change as a huge number of functions will change signature.</p>
+<h1 id="api-incompatibilities">API incompatibilities</h1>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>API/ABI issue</p></th>
+<th style="text-align: left;"><p>Solution/workaround</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>libmono will have a different soname and the mono header files will be in a different place.</p></td>
+<td style="text-align: left;"><p>Use pkg-config --cflags mono2 and pkg-config --libs mono2 to compile and link, respectively, instead of using the old &quot;mono&quot; package name.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>The GLib header will no longer be included in mono header files, since no GLib type will be used in the public functions.</p></td>
+<td style="text-align: left;"><p>Include glib.h in your own files if you use GLib functionality. You'll also need to use pkg-config --cflags glib-2.0 and pkg-config --libs glib-2.0 to compile and link, respectively</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>The MonoType struct will become opaque.</p></td>
+<td style="text-align: left;"><p>Use the existing accessor functions instead of peeking inside the fields directly.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>The MonoMethodSignature struct will become opaque.</p></td>
+<td style="text-align: left;"><p>Use the existing accessor functions instead of peeking inside the fields directly.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>The MonoMarshalSpec struct will be hidden and all the public functions using it will become private.</p></td>
+<td style="text-align: left;"><p>If you need to access the marshal info you'll have to decode from the metadata tables.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>The MonoRemoteClass struct will be removed along with the mono_remote_class() function.</p></td>
+<td style="text-align: left;"><p>Embedders should have no need to access this struct.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Managed structs and classes containing references cannot be freely manipulated any longer, to take into consideration the moving GC.</p></td>
+<td style="text-align: left;"><p>Every time a reference field (or a valuetype containing in any way a reference field) is set, it must be done using one of the mono_gc_wbarrie*() set of funtcions. This applies also to arrays containing references.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>The MonoObject, MonoArray and MonoString structs may become opaque.</p></td>
+<td style="text-align: left;"><p>Use only the existing accessor macros and functions to access their internals.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>The MonoAssemblyName struct will become opaque.</p></td>
+<td style="text-align: left;"><p>Ways to allocate it and access it will be provided.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>The mono_image_add_to_name_cache() functions will be removed.</p></td>
+<td style="text-align: left;"><p>There is no use for it for embedders.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>The MonoCustomAttrInfo and MonoCustomAttrEntry structs will become opaque</p></td>
+<td style="text-align: left;"><p>Appropriate accessors will be available.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>The MonoReflectionMethodAux struct will e removed</p></td>
+<td style="text-align: left;"><p>There is no use for it for embedders.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>The sizes and lobounds fields in MonoArrayType will change type to a pointer-sized integer.</p></td>
+<td style="text-align: left;"><p>Don't make assumptions about the fields (in particular that you could create large arrays on 64 bit systems) until the ABI break point.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>The current verify interface will be removed. It's use is debatable so we need feedback from use about it's need.</p></td>
+<td style="text-align: left;"><p>The right solution for most users is to enable CoreCLR security.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>The current loader error system will disappear together with it's API. This is a semantic change that is an implicit part of the API.</p></td>
+<td style="text-align: left;"><p>The new way will be more reliable and less forgiving, so it should be a clean win for users.</p></td>
+</tr>
+</tbody>
+</table>
+<h1 id="api-improvements">API improvements</h1>
+<p>Extend the runtime API to handle generics. This is often requested on MDL.</p>
+<p>Change functions like mono_method_get_param_names and mono_method_get_marshal_info to return failure.</p>
+<h1 id="api-additions">API Additions</h1>
+<p>Add functions to retrieve all parameter information such as flags. Maybe a single function that return a [name, flags, marshal_info?] tuple.</p>
+<h1 id="open-for-debate">Open for debate</h1>
+<p>Make most, if not all, Mono* types opaque so we can more easily change their internals. Some structs are used as input and the user is supposed to fill them so they have to remain there.</p>
+<p>Most functions will take an extra MonoError struct to provide better error handling. If we do that, this will break a huge ammount of functions. Should we keep the old unsafe equivalents?</p>
+<h3 id="open-questions">Open questions</h3>
+<p>Should we provide some sort of backward compatibility with the V1 API using symbol renaming and linker tricks such as the one libc uses?</p>
+</body>
+</html>

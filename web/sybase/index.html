@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="info">Info</h2>
+<ul>
+<li>ADO.NET Provider for Sybase SQL Server databases</li>
+</ul>
+<ul>
+<li>Exists in namespace Mono.Data.SybaseClient and assembly Mono.Data.SybaseClient</li>
+</ul>
+<ul>
+<li>Used the <a href="http://www.freetds.org/">FreeTDS</a> and <a href="http://jtds.sourceforge.net/">jTDS</a> projects as resources.</li>
+</ul>
+<ul>
+<li>Does not require a client library</li>
+</ul>
+<ul>
+<li>Requires the assembly Mono.Data.Tds.dll which implements the TDS protocol</li>
+</ul>
+<ul>
+<li>Uses TDS Protocol Version 5.0</li>
+</ul>
+<h2 id="current-status">Current Status</h2>
+<ul>
+<li>Able to connect to Sybase ASE (Adapter Server Enterprise) 12.x databases</li>
+</ul>
+<ul>
+<li>Does not work with Sybase databases prior to 12.x, such as, 11.x. Is this due to Unicode or something with our TDS 5.0 implementation?</li>
+</ul>
+<ul>
+<li>Does not work with Sybase ASA (Adaptive SQL Anywhere) databases. Maybe the <a href="http://www.freetds.org/">FreeTDS</a> project could help you on this.</li>
+</ul>
+<ul>
+<li>SQL commands can be executed via ExecuteNonQuery() of a SybaseCommand.</li>
+</ul>
+<ul>
+<li>SQL aggregates can be executed and a single row and single column result can be retrieved via ExecuteScalar() of a SybaseCommand</li>
+</ul>
+<ul>
+<li>SQL queries can be executed via ExecuteReader() and results can be retrieved via SybaseDataReader.</li>
+</ul>
+<ul>
+<li>a DataTable with schema info about a result can be gotten via GetSchemaTable() in a SybaseDataReader</li>
+</ul>
+<ul>
+<li>Data can be filled in a DataTable in a DataSet via a SybaseDataAdapter</li>
+</ul>
+<ul>
+<li>SybaseCommandBuilder has been implemented; however, it will not work due to Sybase provider does not return the table names nor key info. This may need modification of TDS 5.0 support in Mono.Data.Tds.</li>
+</ul>
+<h2 id="action-plan">Action plan</h2>
+<ul>
+<li>Need for people to create more tests...</li>
+</ul>
+<ul>
+<li>Make sure the provider works with Sybase ASE 15.</li>
+</ul>
+<ul>
+<li>Add support for new features in Sybase ASE 15</li>
+</ul>
+<ul>
+<li>Make Mono's Sybase provider compatible with Sybase's own ADO.NET provider</li>
+</ul>
+<ul>
+<li>When executing a SQL statement using CommandBehavior of KeyInfo, get the table names used in the SQL and any primary key info. This is needed by the SybaseCommandBuilder to build the where clause of Update and Delete statements.</li>
+</ul>
+<ul>
+<li>Add support for Sybase ASA (Adapter Server Anywhere)</li>
+</ul>
+<ul>
+<li>Add support for older Sybase ASE (Adapter Server Enterprise) databases prior to 12.x</li>
+</ul>
+<h2 id="testing">Testing</h2>
+<p><b>Prerequisites</b></p>
+<ul>
+<li>Have a working mono and mcs installed</li>
+</ul>
+<ul>
+<li>Have access to a Sybase ASE 12.x or higher database or either download it:</li>
+</ul>
+<ul>
+<li><a href="http://www.sybase.com/downloads">Sybase</a></li>
+</ul>
+<ul>
+<li>When you install Sybase Adapter Server Enterprise 12.x from Sybase, the default port is 5000.</li>
+</ul>
+<h1 id="connection-string-format">Connection String Format</h1>
+<ul>
+<li>Has a connection string format:</li>
+</ul>
+<pre><code>Server=hostname;Database=databaseName;User ID=userid;Password=password</code></pre>
+<ul>
+<li>The Server part can be used two ways:</li>
+</ul>
+<ul>
+<li>hostname - &quot;Server=MYHOST&quot;</li>
+</ul>
+<ul>
+<li>hostname,port - &quot;Server=MYHOST,5000&quot;</li>
+</ul>
+<ul>
+<li>Connection String Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Parameter Definition</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+<th style="text-align: left;"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Server or Data Source</p></td>
+<td style="text-align: left;"><p>hostname of the SQL Server</p></td>
+<td style="text-align: left;"><p>Server=MYHOST</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Database or Initial Catalog</p></td>
+<td style="text-align: left;"><p>name of the database</p></td>
+<td style="text-align: left;"><p>Database=pubs</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>User ID or UID</p></td>
+<td style="text-align: left;"><p>name of SQL Server user.</p></td>
+<td style="text-align: left;"><p>User ID=sa</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Password</p></td>
+<td style="text-align: left;"><p>password for SQL Server user.</p></td>
+<td style="text-align: left;"><p>Password=mypass12</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Min Pool Size</p></td>
+<td style="text-align: left;"><p>Specifies the minimum number of connections in the connection pool. Default is 0.</p></td>
+<td style="text-align: left;"><p>Min Pool Size=0</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Max Pool Size</p></td>
+<td style="text-align: left;"><p>Specifies the maximum number of connections in the connection pool. Default is 100.</p></td>
+<td style="text-align: left;"><p>Max Pool Size=100</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Pooling</p></td>
+<td style="text-align: left;"><p>Specifies whether or not to use connection pooling. Valid values are TRUE or YES to use connection pooling or FALSE or NOT to not use connection pooling. Default is TRUE.</p></td>
+<td style="text-align: left;"><p>Pooling=true</p></td>
+</tr>
+</tbody>
+</table>
+<h1 id="c-example">C# Example</h1>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+ using System;
+ using System.Data;
+ using Mono.Data.SybaseClient;
+
+ public class Test
+ {
+    public static void Main(string[] args)
+    {
+       string connectionString =
+          &quot;Server=myhostname,5000;&quot; +
+          &quot;Database=pubs;&quot; +
+          &quot;User ID=myuserid;&quot; +
+          &quot;Password=mypassword;&quot;;
+       IDbConnection dbcon;
+       dbcon = new SybaseConnection(connectionString);
+       dbcon.Open();
+       IDbCommand dbcmd = dbcon.CreateCommand();
+       string sql =
+            &quot;SELECT name &quot; +
+            &quot;FROM master.dbo.sysobjects&quot;;
+       dbcmd.CommandText = sql;
+       IDataReader reader = dbcmd.ExecuteReader();
+       while(reader.Read()) {
+            string objName = reader[&quot;name&quot;].ToString();
+            Console.WriteLine(&quot;Name: &quot; + objName);
+       }
+       // clean up
+       reader.Close();
+       reader = null;
+       dbcmd.Dispose();
+       dbcmd = null;
+       dbcon.Close();
+       dbcon = null;
+    }
+ }
+&lt;/code&gt;</code></pre>
+</div>
+<h2 id="building-c-example">Building C# Example</h2>
+<p>Save the example to a file, such as, TestExample.cs, then to build on Linux, do:</p>
+<pre><code> mcs TestExample.cs -r:System.Data.dll -r:Mono.Data.SybaseClient.dll</code></pre>
+<p>To run the example:</p>
+<pre><code> mono TestExample.exe </code></pre>
+<p><a href="http://localhost:4000/Category:Developer Resource" title="wikilink">Category:Developer Resource</a> <a href="http://localhost:4000/Category:ADO.NET" title="wikilink">Category:ADO.NET</a></p>
+</body>
+</html>

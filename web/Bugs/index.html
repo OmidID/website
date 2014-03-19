@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div style="margin-left: 1.0em; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; float: right; font-size: 100%; width: 320px; background-color:#E5ECF3; border:1px solid #67A7E3;-moz-border-radius: 5px">
+<div style="width: 100%; text-align: center; padding-bottom: 10px; padding-top: 10px;">
+<p><strong>Current Project Bug Counts</strong></p>
+</div>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Mono</p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/oFNqoB">Open</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/qDRd1q">New</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/pkiH1n">Closed</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/mZR3GA">Enh</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Gtk#</p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/nmaRb7">Open</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/ozmLiG">New</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/pmHfaP">Closed</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/n9smSK">Enh</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>MonoDevelop</p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/qATfJN">Open</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/mQQDhs">New</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/q3lhBv">Closed</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/mScNU6">Enh</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Moonlight</p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/q1TD0F">Open</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/ny8zKf">New</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/ofqRTD">Closed</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/mXqpYZ">Enh</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>All</p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/mSOAOJ">Open</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/nW0moo">New</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/qVFVtZ">Closed</a></p></td>
+<td style="text-align: left;"><p><a href="http://bit.ly/nzApEt">Enh</a></p></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+</div>
+<p>We encourage developers to use our software and help us make it a stable, feature complete and reliable system. In order to achieve that goal, we ask you to report bugs as you find them.</p>
+<p>Quick Resources:</p>
+<ul>
+<li><a href="http://bugzilla.xamarin.com/index.cgi">Xamarin's Bugzilla</a></li>
+<li><a href="#http://localhost:4000/How_to_make_a_good_bug_report" title="wikilink">How to make a good bug report</a></li>
+</ul>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Query</p></td>
+<td style="text-align: left;"><p>Patches</p></td>
+<td style="text-align: left;"><p>Add</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://localhost:4000/Mono:Runtime" title="wikilink">Mono Runtime</a></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><span id="Compilers"><strong>Compilers</strong></span></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://localhost:4000/CSharp Compiler" title="wikilink">C# Compiler</a></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Visual Basic.NET Compiler</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>IL Assembler</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><span id="Base Class Libraries"><strong>Base Class Libraries</strong></span></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>mscorlib</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>System</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>System.Core</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>System.Drawing</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>System.Web (ASP.NET WebForms)</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>System.Data (ADO.NET)</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>System.Windows.Forms</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>System.Web.Services</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>System.Xml</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Windows Communication Foundation</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>All</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><span id="Mono Libraries"><strong>Mono Libraries</strong></span></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Gtk#</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://localhost:4000/Cecil" title="wikilink">Cecil</a></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://www.go-mono.com/docs/index.aspx?tlink=0@N%3AMono.Posix">Mono.POSIX</a></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://www.monotorrent.com/">MonoTorrent</a></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://localhost:4000/CocoaSharp" title="wikilink">Cocoa#</a></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><span id="Mono Tools"><strong>Mono Tools</strong></span></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>MonoDevelop</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Debugger</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>XBuild</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Other Tools</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Documentation System</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><span id="Mono Distribution"><strong>Mono Distribution</strong></span></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Packaging</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><span id="MonoTouch"><strong>MonoTouch</strong></span></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Runtime</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Patches.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Patches.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p> </p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Class Libraries</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Tools</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><span id="Mono Tools for Visual Studio"><strong>Mono Tools for Visual Studio</strong></span></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Run in Mono</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Debug in Mono</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>MoMA Integration</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>SuSE Studio Integration</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Package Creation</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Visual Studio Integration</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Server</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Distribution</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><span id="Moonlight"><strong>Moonlight</strong></span></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Moonlight 1.0</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Moonlight 2.0</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Moonlight 3.0</p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><figure>
+<img src="Add.png" title="Xamarin" alt="Xamarin" /><figcaption>Xamarin</figcaption>
+</figure></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>All Components</strong></p></td>
+<td style="text-align: left;"><p><img src="Xamarin_Query.png" title="fig:Xamarin" alt="Xamarin" /> <img src="Novell_Query.png" title="fig:Novell" alt="Novell" /></p></td>
+<td style="text-align: left;"><p>   </p></td>
+<td style="text-align: left;"><p> </p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-make-a-good-bug-report">How to make a good bug report</h2>
+<ol>
+<li>Submit a <b>test case</b>, the smaller, the better. You can do this by clicking on the &quot;Create a new attachment&quot; link. When attaching a file, please set the correct MIME type from the list. For source code, &quot;Plain text&quot; is ok. For tar.gz or .gz files, you can enter &quot;application/x-gzip&quot; in the &quot;Other&quot; text box.</li>
+<li>Run the test against Microsofts .Net to see what it does and if this is an actual bug.</li>
+<li>Use <a href="http://bugzilla.xamarin.com">bugzilla.xamarin.com</a> to report the bug. In <b>addition</b> to bugzilla, posting to the list is fine if the bug merits larger exposure or design discussions to solve; posting to the list twice or more is just a way to annoy people and make them waste time, especially when you start a new thread about it.</li>
+<li>If the test involves libraries or assemblies that are not part of mono, add infomation on where to download all dependencies, and how to compile/install them.</li>
+<li>If compiling the test case requires more than: <code>mcs test.cs</code> provide the <b>full command line</b> you used to compile the test.</li>
+<li>If running the test requires more than: <code>mono test.exe </code> provide the <b>full command line</b> needed to replicate the bug.</li>
+<li>Provide info about the version of the software you're using (both mono and the operating system or relevant libraries).</li>
+<li>Provide the output you expect the test case to produce.</li>
+<li>Provide the actual output <b>you</b> get from the test case.</li>
+<li>If you are new to bug reporting, understand how you should set &quot;priority&quot; for your report. People tend to set <b>CRITICAL or BLOCKER</b> where they should not. Please keep in mind: no matter how important the bug is for you, it is nothing to do with the importance of the bug itself.</li>
+<li>Do not expect us to debug your software. We can not debug every application that is submitted to us, to improve the response time, you should create a self-contained test case that isolates the problem.</li>
+</ol>
+<p>Please include at least 6 items from the list in your bug report. Incomplete bug reports are very hard to understand, reproduce and fix.</p>
+<p><a href="http://localhost:4000/Category:Developer Resource" title="wikilink">Category:Developer Resource</a> <a href="http://localhost:4000/Category:Mono Framework" title="wikilink">Category:Mono Framework</a></p>
+</body>
+</html>

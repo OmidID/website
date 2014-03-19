@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine, let's start then, we'll follow the usual order, unless QA or build guys want to start earlier than the devs :)</p></td>
+<td style="text-align: left;"><p>07:07</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- suseROCKs [~bryen@c-24-12-98-76.hsd1.il.comcast.ne t] has quit [Remote closed the connection]</p></td>
+<td style="text-align: left;"><p>07:08</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, should I start then?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- knocte changed the topic of #mono-a11y to: Accessibility: Iteration switch meeting (weekly)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes, sandy, please, go ahead</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I've been spending a lot of time fixing up base provider unit tests this iteration (not yet committed). I've found some issues with my LabeledBy property implementation. I'm thinking now that I've just made some mistakes using the Navigation stuff, so I'll ask Mario for some help there today.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'm also working to add support for recursive property changes...for example when a control's BoundingRectangeProperty changes, this should also change for its children, etc.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I also have a bridge patch to notify at-spi when IsOffscreenProperty and BoundingRectangleProperty change, but I need to genericize it a bit because right now it's only implemented for Button. This is related to bug #411345.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I will have all of these bits wrapped up by the end of the week. Then I can move on to the next control. Also, decriptor has been working to see if we can get the UIA and WindowsBase assemblies moved from olive to mcs. I'm going to get him some details about how far along WindowsBase is, and I may also be helping him to finish filling out missing fields/classes/etc in olive's UIA assemblies. The discussion won't really start until Miguel</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>is back in town next week.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Oh, and I'm not sure that I'll be able to work Friday. I have to fast and take some nasty drugs in preparation for yet another doctor appointment (on Saturday), so that might affect my ability to work.</p></td>
+<td style="text-align: left;"><p>07:09</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'll update the wiki after the meeting; sorry for not getting to it earlier</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong> </strong></p></td>
+<td style="text-align: left;"><p>-!- jpallen [~jpallen@137.65.132.9] has joined #mono-a11y</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: we just started; I just went</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>you haven't missed much</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>thanks</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, sandy thanks, hi jpallen</p></td>
+<td style="text-align: left;"><p>07:10</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>hello</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: any delay in respect to what you planned in last meeting?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>just the uncommitted code?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: yes, I did not start a new control like I had planned</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I had PrintPreviewDialog in there as a placeholder for whatever control I was going to do</p></td>
+<td style="text-align: left;"><p>07:11</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but I did not get to it</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so that will be my big priority this iteration</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok fine</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>mario: you ready?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes!</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>go ahead</p></td>
+<td style="text-align: left;"><p>07:12</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>I updated Navigation, now you don't need to implement any Navigation-classes, all is *automagically*</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>woo hoo!</p></td>
+<td style="text-align: left;"><p>07:13</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>fixed some bugs, and I opened new bugs to track the patches in mcs MWF</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>spent some time fixing bugs found by mgorse</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'm missing the component-based providers, but I'm sure next iteration will finish them</p></td>
+<td style="text-align: left;"><p>07:14</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done!</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine, I hope mgorse has not get stuck too much about them</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so your plan for next iteration is finish component based providers delayed in this one?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>let's switch to mgorse</p></td>
+<td style="text-align: left;"><p>07:15</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I started working on mapping ProgressBar in the bridge but haven't tested it yet</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Also started working on ListItem</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I haven't committed any of that yet, except for accidentally committing a ProgressBar test</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I've fixed a few bugs in the bridge</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I've been reworking the bridge unit tests to generate real widgets with a form as the parent, since I think that that will make it less likely that we'll run into strange problems with the tester, although I'm not sure yet</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I also tried to add in a PreviewKeyDown event listener on a form, in the hope that it would intercept keys and let me pass them on to the bridge, but it wasn't working. I'll ask about that on #mono-winforms</p></td>
+<td style="text-align: left;"><p>07:16</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, your plan for next iteration? a new bridge class?</p></td>
+<td style="text-align: left;"><p>07:17</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>Next iteration I plan on working on mapping GroupBox in the bridge (unless knocte has already taken it--haven't looked at the wiki) and trying to get the unit tests that are failing to pass</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine, thanks mike</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>let's talk with neville</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok</p></td>
+<td style="text-align: left;"><p>07:18</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>this iteration, is not productive, i was going to implement status bar panel, but puzzled with its type, it is maybe pane type or edit type, but not sure right now</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>as FragmentRootControl can automatically add child provider, i deprecated edit provider and its behaviors</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>next iteration, i will follow mario's comments on my patch, and make a new version. to implement other controls, i would like to talk about it with sandy and mario after meeting</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, do you know which controls are they going to be? already chosen?</p></td>
+<td style="text-align: left;"><p>07:19</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>not yet</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>i will finish navigation first</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, remember to update wiki status, on the schedule page and on the provider status</p></td>
+<td style="text-align: left;"><p>07:20</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and thanks!</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>now let's talk about my &quot;dev&quot; part</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I've been catching up with a lot of things after my FTO, and figuring out about all my new tasks for the new role, however also looked at some tests I was lacking</p></td>
+<td style="text-align: left;"><p>07:21</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>had a bad time figuring out a misleading/confusing implementation in gail about the difference between menuitem and menu (it turns out a submenuitem can take the &quot;menu&quot; role, which is crazy) so</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I fixed some tests and now I was going to commit more</p></td>
+<td style="text-align: left;"><p>07:22</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I hope to finish all these bits by the end of the week and have the Menu finally finished</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>(BTW on Friday it's national holiday in Spain IIRC, just FYI)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok, let's switch to QA guys</p></td>
+<td style="text-align: left;"><p>07:23</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bgmerrell: you there and ready?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>let's get back to calen that I'm sure is there :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>This iteration was just Monday and Tuesday for me. I added some code to one of our gtk examples to show how we can test the sorting order of certain controls. I created some QA architecture diagrams (showing how we are testing WinForms using Strongwind) to add to our QA docs and also to be used for our utosc presentation.</p></td>
+<td style="text-align: left;"><p>07:24</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh sorry brian</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>go on</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte:^^</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>I also came up with a plan for how to test the different &quot;styles&quot; of each control. Knocte suggested this because some controls have different</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>styles/properties that will affect their implementation by the developers</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>This week I'm going to start working with Orca like I mentioned last week.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ray: i'll talk to you about your mailing list questions after this meeting if you have time</p></td>
+<td style="text-align: left;"><p>07:25</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>sure</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>thanks brian, now calen :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: okay</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I adjusted my schedule and have finished strongwind code for label and form controls but not for groupbox, picturebox.</p></td>
+<td style="text-align: left;"><p>07:26</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>(btw, good job on the styles part)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@calen&gt; </strong></p></td>
+<td style="text-align: left;"><p>added 'showing' state to our states list and modify some states with '-' to link two word in states.py, modify all of the old winforms test code because bug411345 has been fixed. verified some bugs</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>read 'Testing Howto' and make a little bit correction, give some suggestions. discuss 'styles' issue.</p></td>
+<td style="text-align: left;"><p>07:27</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I would like to keep on script strongwind test for listbox, checkedlistbox in the coming iteration.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy: sorry i reopened <a href="https://bugzilla.novell.com/show_bug.cgi">https://bugzilla.novell.com/show_bug.cgi</a> ?id=411328, i think you have noticed that :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>knocte, decriptor: BTW, there is one crash when i run groupbox.py app today, the debug info in: <a href="http://rafb.net/p/8tTUxc51.html">http://rafb.net/p/8tTUxc51.html</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine, btw that reminds me about the scrollbar bugs, mgorse: you started to work on scrollbar already, right?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>thanks calen, mmm, groupbox was not started IIRC, at least there's no class with that name in the bridge</p></td>
+<td style="text-align: left;"><p>07:28</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: yeah. Theoretically, anyway. What bugs are you referring to?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>does that bug need to be marked as private?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: you'll get emails in your inbox about them soon if you didn't already</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>decriptor: why?</p></td>
+<td style="text-align: left;"><p>07:29</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: all of our bugs are private</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>I've sort of got detoured with getting exceptions in the tester</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: needs to be fixed</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: is that a requirement from anyone?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes, why are bugs private?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: marking them private kills community effort</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: I agree, that's why I'm asking sandy</p></td>
+<td style="text-align: left;"><p>07:30</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: was there somebody we needed to ping to fix that?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: fyi, Orca isn't working right with our bridge right now because of the key-grab issue that I alluded to</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'm on my other computer so I dont' have my IM logs handy, sorry</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: you can change it on the bug itself I think</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: oh, then you mean by default?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: no, our entire product/component/whatever is private</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy: I guess that doesn't help :P</p></td>
+<td style="text-align: left;"><p>07:31</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, I'll try to move the bugzilla private problem forward</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: thanks for the tip, i guess i will set up some orca tests against our gtk samples for now, just to set things up</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>anyway, I have more info in a IM log with jpallen, so I'll check that</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>fine, ok, we deviated a bit, I think we were with Ray's turn now, right?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>bgmerrell: okay. I'm hoping that someone on #mono-winforms might know what to do and I'll be able to make some progress on it</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes</p></td>
+<td style="text-align: left;"><p>07:32</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>should i start?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: cool, ray: yes, first QA, then build</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>in the early days of the week, i implement two controls, but get stuck with two controls as well. it wastes me a lot of time.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>there are 8 controls left, and i left the complex controls and implement them at the end, so that i could be concentrated on them. :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and then, i have spent time to read new materials on the wiki.</p></td>
+<td style="text-align: left;"><p>07:33</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>didn't do much about building, packaging atspi-dbus drives me and decriptor crazy :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>in the next iteration, i'll pursue to do what i am doing, and pay more attention to Strongwind test script.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>when you get stuck with a control, maybe it's handy to use VS.NET's visual designer, I use it on my virtual machine sometimes</p></td>
+<td style="text-align: left;"><p>07:34</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes, me too</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>(easier to design sample controls that way, instead of coding them all by hand)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>oh fine then</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok, thanks ray</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>now, decriptor?</p></td>
+<td style="text-align: left;"><p>07:35</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>can do</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>your turn</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>I was at linux world expo last week and gave a presentation on UIA :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>cool</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>but I've worked on figure out what's getting messed up in monobuild with the rpms, working on trying to get atspi-dbus build working</p></td>
+<td style="text-align: left;"><p>07:36</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>as ray mentioned</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>also looking at possibly using cruise control .net as I have time to look at it</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>it might be something that the mono team moves to as well once 2.0 is out the door</p></td>
+<td style="text-align: left;"><p>07:37</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh really, did you talk about it with any mono team member?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>and in some free time, look at making our uia stuff api stable with some help from sandy</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>knocte: with ajorg who seems to be the goto guy now since wade left</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>the goto guy? heheh</p></td>
+<td style="text-align: left;"><p>07:38</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: also I've been emailing on the mono-devel list about olive and mono/mcs and moving our stuff from olive to mono</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>knocte: you are on the mono-devel list right?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>yeah, saw that, many thanks about your interest</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>yep</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>no prob</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, if you're done then</p></td>
+<td style="text-align: left;"><p>07:39</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>did I miss anyone?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>next iteration, I'm going to continue working on build stuff :) ...</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'm thinking if we can get our stuff out of olive and into mono/mcs it might be easier to get our stuff built on other distributions as well</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>hoping to get that atpsi-dbus stuff working too</p></td>
+<td style="text-align: left;"><p>07:40</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, I hope we can move it forward, however it seems there's a lot of code stubs there...mmm</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>fine, dive into atspi-dbus if you can</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: its an rpmlint issue that we can't figure out</p></td>
+<td style="text-align: left;"><p>07:41</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>well, then we are all finished, don't remember to update wikis (with the |wiki alias suffix preferably)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>I've started asking around and all the obvious things are there :(</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: rpmlint is an rpm &quot;compiler&quot; ?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>or verifier like gendarme?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>tester of sorts</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I think</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>verifier is probably more correct</p></td>
+<td style="text-align: left;"><p>07:42</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes, i guess verifier</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: a question that has come up, maybe for mgorse is how do we go about checking/testing atspi-dbus</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>uninstall the old and install the new?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>I guess it's about removing at-spi corba packages and replacing them, and then running QA tests for instance?</p></td>
+<td style="text-align: left;"><p>07:43</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>s/them/them with the new ones/</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>that's more up to bgmerrell I guess :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes, maybe you can sync with him after you have the packages</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>can do, I'm really hoping to have those finished this iteration</p></td>
+<td style="text-align: left;"><p>07:44</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor: Do you mean testing the package, or testing the functionality of the code?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>both I guess</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>There is some stuff in the tests sub-directory, but it isn't complete</p></td>
+<td style="text-align: left;"><p>07:46</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte, decriptor: Apparently Gary Ekker is the guy who can fix bugzilla for us; jpallen emailed him last month but we didn't hear anything back, so I just pinged him again about it.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>so, i'm not seeing how it is private</p></td>
+<td style="text-align: left;"><p>07:47</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: he sits across the hall from me :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh, thanks sandy</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: you can't see them without a novell account</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>I'll test with my brother's bugzilla account which is not a novell one</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>I have both a novell and non novell account that's how I found out its private</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>or just log out and try to look at a bug url</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>hmm</p></td>
+<td style="text-align: left;"><p>07:48</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh yeah, that's easier</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: you'll see toward the bottom that there is a checkbox &quot;This bug is only open to Novell employees and contractors&quot;</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>decriptor, you can see the top right of the page, it has a red novell icon</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@decriptor&gt; </strong></p></td>
+<td style="text-align: left;"><p>if you look at group visibility on the right you only see the red circle N and not a globe for global</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>jpallen: and it cannot be unchecked</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ditto decriptor</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@bgmerrell&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: is anyone else testing the functionality of the at-spi over dbus code?</p></td>
+<td style="text-align: left;"><p>07:49</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; jpallen&gt; </strong></p></td>
+<td style="text-align: left;"><p>ah</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>well, I think we can close the meeting? :) thanks all for coming</p></td>
+<td style="text-align: left;"><p>07:51</p></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+</body>
+</html>

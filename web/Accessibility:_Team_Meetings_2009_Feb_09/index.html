@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>alright folks, let's get started</p></td>
+<td style="text-align: left;"><p>07:04</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sshaw&gt; </strong></p></td>
+<td style="text-align: left;"><p>time to party</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, yes, but those wiki pages are not _really_ correct , right?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>for some controls</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>first off, I really want to thank everyone for putting extra effort in for this rlease</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ray: they should be. if they're not, you need to let us know</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>sshaw, oh, never mind, dude :)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>so I'd like to start off by going around the room and having everyone update us on their status</p></td>
+<td style="text-align: left;"><p>07:05</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>namely, I'd like to know how many hours of work remain (estimated)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, yeah, that's we will do, but i was wondering when you implement the code, what's your devs' reference? :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>and if they think anything needs to be addressed before we are feature complete</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ray: I'll explain after the meeting</p></td>
+<td style="text-align: left;"><p>07:06</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; ray&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad, yes, sorry :D</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>let's start reverse alphabetically by nick</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy: you're up</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>so you can go last?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>heh</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>sandy why do I always have to go first? :)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>so I've got about 6 hours of work left for my features, plus 8 hours to really finish all my unit tests</p></td>
+<td style="text-align: left;"><p>07:07</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sshaw&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: because you are al capitano</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>:)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>s/al/il/</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I ran into some irritating problems with MenuItem</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>it already has a couple of known issues for 1.0</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>are these issues in Mono Winforms?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>but it looks like I may either be spending time hacking around bounding rectangle issues, or adding another one to the list</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>brad: yes</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>the winforms api doesn't support much</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and I didn't realize some flaws in what I get with internal stuff</p></td>
+<td style="text-align: left;"><p>07:08</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>in short</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>MS deprecated this API for a reason :-)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>anyway, that's my status</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>should be done for tomorrow</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>(except maybe some unit tests, we'll see)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>alright. of course, prioritize the feature work. we can always do unit tests tomorrow</p></td>
+<td style="text-align: left;"><p>07:09</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I do know how to fix this stuff for Mono 2.6</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but there is no way jpobst will let changes in now</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>because he's not familiar with the code</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>that's totally understandable</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>alright, ngao ?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: yes</p></td>
+<td style="text-align: left;"><p>07:10</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: can you give your update for us?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: sure</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>brad: there's propertygrid left to implement and colordialog is missing unit test</p></td>
+<td style="text-align: left;"><p>07:11</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>brad: I'm figuring out how to get BaseColorControl provider</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: what's left to do on propertygrid?</p></td>
+<td style="text-align: left;"><p>07:12</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: and about PropertyGrid, why it's inner control can't be added by itself</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>we may not be recieving events about it</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>anyway, how many hours do you think you have outstanding on that?</p></td>
+<td style="text-align: left;"><p>07:13</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: actually, i'm not sure about propertygrid, but I think i could talk about colordialog with you guys after meeting and finish it</p></td>
+<td style="text-align: left;"><p>07:14</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: alright... maybe if you want to give propertygrid to me, I can finish it up</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: oh, thank you, if it won't block your schedule?</p></td>
+<td style="text-align: left;"><p>07:15</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ngao: oh, it's no problem</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ngao: just send me the bug number</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ngao: is that it? can we move on?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt; ngao&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: alright</p></td>
+<td style="text-align: left;"><p>07:16</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>mgorse: your turn!</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mgorse&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>NotifyIcon is the only feature I have left, and I need to expose the bounding rectangle for the icon</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so I'm guessing about 3 hours, but I've been struggling to figure out how to do that, so it's hard for me to say</p></td>
+<td style="text-align: left;"><p>07:17</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>The rest are unit tests, which might be another 3-4 hours</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Ie, I need to test that an accessible-value event is received when a ScrollBar's value is changed, but I vaguely remember trying to add a test for that the other day and the gail test failing, so I need to look into it again</p></td>
+<td style="text-align: left;"><p>07:18</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I've generally been having trouble testing events</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but that's all. I have PropertyGrid on the bridge, and I don't think it should require any more bridge work in theory, but we need a unit test</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>cool</p></td>
+<td style="text-align: left;"><p>07:19</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>alright, mario, you're up</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>hello</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'm missing tests for DataGridXXXProvider s</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>however, there's a ListView test that tests ListView when View.Details,</p></td>
+<td style="text-align: left;"><p>07:20</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>honestly I've been having problems writting the tests, segfaults and that kind of problems</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>:-/</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>is driving me crazy, but I'm trying to find the issue.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'm talking about bridge tests, btw</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>yeah, I've been having the same kind of issues</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>provider side is complete</p></td>
+<td style="text-align: left;"><p>07:21</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so, I hope to finish writing all tests today.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>I think next phase, we need to invest more time into making sure our tests are repeatable</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>mario: how many hours do you think you have left?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>I guess 8hrs, more or less</p></td>
+<td style="text-align: left;"><p>07:22</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>mario: and am I right in saying that none of that work is actually feature work, just unit tests?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>yes, all unit tests</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>bridge tests, actually</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, cool</p></td>
+<td style="text-align: left;"><p>07:23</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>oh I forgot, I'm missing to fix 2 bugs</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>let's add 4 hours more</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>I probably should have specified that besides the bounding rectangle bug, all my work is bridge-side</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>those can easily be put off till tomorrow though</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@mario&gt; </strong></p></td>
+<td style="text-align: left;"><p>two QA reported bugs</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>alright, knocte, I think you're alphabetically next</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>I go</p></td>
+<td style="text-align: left;"><p>07:24</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so, thanks to sandy's work on the provider for contextmenu*, the bridge unit tests have been starting to yield some failures, and I've fixed some of them, but I still have to fix 4:</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>a) GetExtents is failing to give positive coordinates</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>b) the test is deadlocking on app termination (maybe because I'm not yet handling the MenuClosed event)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>c) the test affects other test in the suite if it's not run the last one</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>d) still don't know if it passes Atk.Selection tests</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I guess I will need 4 hours for this</p></td>
+<td style="text-align: left;"><p>07:25</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and later I'll do a test for ContextMenu, which maybe it's working out of the box by just wrapping it under the same bridge class as ContextMenuStrip</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>(I guess I need 1 or 2 hours more for this)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>after that, if I have time, I'll refactor a bit more the menu stuff</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>ok, sounds good</p></td>
+<td style="text-align: left;"><p>07:26</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>and with that, I would be feat complete</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>super.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>as for me, I'll be taking on Neville's PropertyGrid work</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but my last feature was ScrollableControl</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>which I finished on Friday</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>(seems to have not broken anything)</p></td>
+<td style="text-align: left;"><p>07:27</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@brad&gt; </strong></p></td>
+<td style="text-align: left;"><p>for the most part, wherever it's used, it's worked out of the box on the Bridge</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>yeah, surprisingly enough</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I've hit some odd cases though... UpDownBase subclasses ScrollableControl</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but Mono doesn't seem to implement it properly</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>so I've got to file some bugs when I get a chance</p></td>
+<td style="text-align: left;"><p>07:28</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and that's really it</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I'll be sending out some policies about tomorrow</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>basically, only bug fixes, no new features, likely some form of code review required</p></td>
+<td style="text-align: left;"><p>07:29</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>and working with Sandy to split up some exploratory tasks when people get done with the bugs they assign tomorrow</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>anything else anyone wants to bring up?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>ok, meeting adjourned</p></td>
+<td style="text-align: left;"><p>07:30</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>thanks guys for joining</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sshaw&gt; </strong></p></td>
+<td style="text-align: left;"><p>brad: no thank you</p></td>
+<td style="text-align: left;"><p>07:31</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>sandy: can you post the log? :)</p></td>
+<td style="text-align: left;"><p>07:33</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>&lt;@sandy&gt; </strong></p></td>
+<td style="text-align: left;"><p>knocte: yeah</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>I noticed the other day that I missed a few...</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>but yeah, I'll post this</p></td>
+<td style="text-align: left;"><p>07:34</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>&lt;@knocte&gt; </strong></p></td>
+<td style="text-align: left;"><p>cool thx</p></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+</body>
+</html>

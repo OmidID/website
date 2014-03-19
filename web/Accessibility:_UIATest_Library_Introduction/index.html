@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="what">What</h1>
+<p>UIATest library is a sub-project of <a href="http://www.codeplex.com/UIAutomationVerify">UI Automation Verify</a> project.</p>
+<p>The following description is quoted from the project page:</p>
+<p><em>UIA Verify is a test automation framework that features the User Interface Automation Test Library (UIA Test Library) and Visual UI Automation Verify (Visual UIA Verify), the graphical user interface tool. The framework facilitates manual and automated testing of the Microsoft (R) User Interface (UI) Automation Provider implementation of a control or application. The majority of the UIA Verify functionality is provided through a dynamic link library (e.g., UIATestLibrary.dll) that contains the code for testing specific UI Automation functionality and supports logging of the test results.</em></p>
+<h1 id="sample-usage">Sample Usage</h1>
+<p>SampleDriver is a simple console application which will start the Microsoft Notepad application and run all priority #0 tests on Notepad’s main window and all its decedent controls. You may find the SampleDriver project in the UIA Automation Verify solution. In Programs.cs, the TestMain.StartApplication is defined to launch Notepad.exe and return the AutomationElement object for the Notepad’s main window control. Then in TestMain.Main, after StartApplication is called:</p>
+<p><code>AutomationElement element = StartApplication(&quot;NOTEPAD.EXE&quot;, null);</code></p>
+<p>The program will use the following line of code to run all the priority #0 tests:</p>
+<p><code>TestRuns.RunAllTests(element, true, TestPriorities.Pri0, TestCaseType.Generic, false, true, null);</code></p>
+<p>Then use the returned element’s WindowPattern to close the main window and quit:</p>
+<p><code>((WindowPattern)element.GetCurrentPattern(WindowPattern.Pattern)).Close();</code></p>
+<p>Actually we can consider TestRun as the entry class of UIA Test Library, since another real driver application - Visual UIA Verify, also use the members of TestRun class to launch the tests (We may find related code in AutomationTestManager.RunTest).</p>
+<h1 id="how-visual-uia-verify-uses-uia-test-library">How Visual UIA Verify uses UIA Test Library</h1>
+<p>With the Visual UIA Verify, users can quickly find and select any UI element anywhere on the desktop. Based on the specific control type and the supported control patterns, UIA Verify provides the built-in test scenarios prioritized for the particular UI element.</p>
+<p>Just like the Sample Driver project, Visual UIA Verify also uses UIA Test Library to perform the UI Automation tests, and the following is the procedure of how Visual UIA Verify invokes UIA Test Library:</p>
+<p>In AutomationTestManager.cs</p>
+<p><code>testWindow.ShowAndRunTests(manager, parentWindow);</code></p>
+<p>Then in RunningTestWindow.cs</p>
+<p><code>internal void ShowAndRunTests(AutomationTestManager manager, IWin32Window parentWindow)</code></p>
+<p>Then call:</p>
+<p><code>private void RunTests()</code></p>
+<p>Then the following method is called in another thread (i.e. as a background task):</p>
+<p><code>private void _backgroundWorker_DoWork(object sender, DoWorkEventArgs e)</code></p>
+<p>Then back to AutomationTestManager.cs, this method is called:</p>
+<p><code>public TestResults PerformTest(AutomationTest test, AutomationElement element)</code></p>
+<p>Then according to test.Type, one of following methods will be called:</p>
+<ul>
+<li>TestRuns.RunAutomationElementTest</li>
+<li>TestRuns.RunControlTests</li>
+<li>TestRuns.RunPatternTests</li>
+</ul>
+<h1 id="how-to-define-test-cases">How to Define Test Cases</h1>
+<p>Like x-unit, UIA Test Library groups test cases into test suites. Each test suites inherits TestObject class (directly or indirectly), and defines each test case as a member method with has one TestCaseAttribute attached.</p>
+<p>We shall place the test suite class in right namespace so that they can be found and loaded by TestRuns class (i.e. the entry class for the UIA Test Library as we mentioned before). UIA Test Library defines three types of test cases: AutomationElement tests, control tests and pattern tests.</p>
+<p>In current UIA Test Library code base, test suites are already defined for each control type and control pattern. All of these test suites are placed under the Tests directory of the UIATestLibrary project.</p>
+<h2 id="test-cases-by-type">Test Cases by Type</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Type</p></th>
+<th style="text-align: left;"><p>Class/Namespace</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>AutomationElement</p></td>
+<td style="text-align: left;"><p><strong><em>Microsoft.Test.UIAutomation.<br />Tests.Patterns.AutomationElementTests</em></strong></p></td>
+<td style="text-align: left;"><p>Test the <a href="http://msdn.microsoft.com/en-us/library/system.windows.automation.automationelement.automationelementinformation_properties.aspx">common properties of an AutomationElement</a> and corresponding PropertyValueChangedEvent</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Control</p></td>
+<td style="text-align: left;"><p>Placed in the <strong><em>Microsoft.Test.UIAutomation.<br />Tests.Controls</em></strong> namespace</p></td>
+<td style="text-align: left;"><p>Test the behaviors that a certain type of control shall provide.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Pattern</p></td>
+<td style="text-align: left;"><p>Placed in the <strong><em>Microsoft.Tes'UIAutomation.<br />Tests.Pattern</em></strong> namespace</p></td>
+<td style="text-align: left;"><p>Test the properties, methods and events exposed by each UIA pattern.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-inheritance-relationship-of-test-case-classes">The Inheritance Relationship of Test Case Classes</h2>
+<ul>
+<li>TestObject
+<ul>
+<li>ControlObject
+<ul>
+<li><strong>Control Test Suites</strong></li>
+</ul></li>
+<li>PatternObject
+<ul>
+<li><strong>Pattern Test Suites</strong></li>
+<li>AutomationElementWrapper
+<ul>
+<li><strong>AutomationElementTests</strong></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="testcaseattribute">TestCaseAttribute</h2>
+<p>The TestCaseAttribute can mark a method to be a test case. Also this class defines some public properties to give detailed infomartion of the test case, in which some important proerties are:</p>
+<ul>
+<li>Priority: defines the test priority, in Visual UIA Verify you can specify to run the test cases of some certain prioity, or of all the priorities.</li>
+<li>TestName: the name of the test case.</li>
+<li>TestSummary: the summary of the test usually indicates the goal or purpose of the test.</li>
+<li>Description: the description of the test usually indicates the procedure (i.e. the action/expected results of each step) performed by the test.</li>
+</ul>
+<h2 id="making-assertion">Making Assertion</h2>
+<p>All test suite classes inherit TestObject and use TestObject.[ThrowMe|ThrowMeAssert] to verify states and testing results (ThrowMeAssert calls ThrowMe internally).</p>
+<p>In case that the condition argument of ThrowMe method is evaluated as false，if the checkType argument of ThrowMe method is CheckType.Warning, then related information will be dumped to the logging output and the testing procedure won't be broken, otherwise an exception will be thrown and the test case will fail.</p>
+<h2 id="logging">Logging</h2>
+<p>In UIA Test Library, we can use UIAVerifyLogger to log information. We may use following member methods of UIAVerifyLogger to perform the logging action:</p>
+<ul>
+<li>public static void LogError(Exception exception)</li>
+<li>public static void LogUnexpectedError(Exception exception)</li>
+<li>public static void LogComment(object comment)</li>
+<li>public static void LogComment(string format, params object[] args)</li>
+</ul>
+<p>And we may use following member methods of UIAVerifyLogger to set where the logging output is redirected to:</p>
+<ul>
+<li>public static void SetLogger(string filename)</li>
+<li>public static void SetLogger(ILogger logger)</li>
+</ul>
+<p>Unlike log4net, we can set only one logger to the UIAVerifyLogger class, however we can manually implement a composite logger if we need multiple logger attached.</p>
+<p>Finally we also have a method to close the logging output stream:</p>
+<ul>
+<li>public static void CloseLog()</li>
+</ul>
+<p>TestObject class also defined a short-cut method named Comment to log a quick comment, in which UIAVerifyLogger.LogComment is called internally.</p>
+<h1 id="sample-tests">Sample Tests</h1>
+<p>We'll take several test suites in UIA Test Library as examples in this section, and demonstrate how the tests are implemented.</p>
+<h2 id="sample-1-titlebarcontroltests">Sample 1: TitleBarControlTests</h2>
+<p>The TitleBarControlTests class is written to test the sepcial behavior provided by a functional TitleBar control. Apparently this class is a control test suite, therefore TitleBarControlTests inherits ControlObject class, and is defined in Microsoft.Test.UIAutomation.Tests.Controls namepsace.</p>
+<p>Generally a test suite class need to define two things:</p>
+<ul>
+<li>public const string TestSuite</li>
+<li>Test cases, i.e. the method marked by TestCaseAttribute</li>
+</ul>
+<p>TestSuite shall always be the same as the full name of the suite class, and it's the key point for the library to find the test suite class for a certain AutomationElement. The related code is defined in <strong>TestObject.GetControlTestObject</strong>.</p>
+<p>TitleBarControlTests only defines one test case named &quot;GetBoundingRect1&quot;, where the &quot;1&quot; at the end of the name indicates the test case is of priority 1. As the TestSummary of the test case indicates, this test case &quot;Verify that the immediate children return actual BoundingRectangles and are withing the parents BoundingRectangle&quot;. (Actually there is a typo here: &quot;withing&quot; shall be &quot;within&quot;)</p>
+<p>By reviewing the method body, we may find out that how the bounding rectangles of the titlbar control and its immediate children are retrieved and verified, and how an exception is thrown with &quot;ThrowMe&quot; when a verification fails.</p>
+<p>At the end of the this method, we have this line of code:</p>
+<p><code>m_TestStep++;</code></p>
+<p><strong>m_TestStep</strong> is inherited from TestObject class, which stores the count of performed testing steps of a test suite object. For simple test cases like TitleBarControlTests.GetBoundingRect1, which contains only one testing step, will only increase m_TestStep for once; while for some more complicate test case like AutomationElementTest.HwndWindowRect1MSAA, which have multiple testing steps, will increase m_TestStep for multiple times. Usually we can query how many steps a test case have by viewing the Desciption property of its attached TestCaseAttribute object. Testing step can help us to get more precise position of a found bug.</p>
+<h2 id="sample-2-valuetests">Sample 2: ValueTests</h2>
+<p>ValueTests class is written to test the properties, methods and events provided by ValuePattern. This class is a control test suite, therefore ValueTests inherits PatternObject class, and is defined in Microsoft.Test.UIAutomation.Tests.Patterns namepsace. We can run this test on any AutomationElement supports ValuePattern.</p>
+<p>Just like TitleBarControlTests, ValueTests defines a TestSuite const string member to store the class's full type name. Then UIA Test Library can find the pattern test suites for a certain AutomationElement with &quot;TestSuite&quot;. The related code is defined in <strong>Helpers.GetPatternSuitesForAutomationElement</strong>.</p>
+<h3 id="valuewrapper">ValueWrapper</h3>
+<p>Instead of directly inherit PatternObject, ValueTests inherits ValueWrapper class, which then inherits PatternObject. We may find this kind of *Wrapper class for each control pattern test in the code base. Usually the *Wapper class will define members to invoke each method/property provided by the pattern. E.g. ValueWrapper defines pattern_SetValue method to call ValuePattern.SetValue method, and defines pattern_IsReadOnly and pattern_Value property to retrieve ValuePattern.IsReadOnlyProperty and ValuePattern.ValueProperty respectively.</p>
+<h3 id="valuetests-test-steps">ValueTests Test Steps</h3>
+<p>ValueTests defines some test steps in the &quot;Test Steps&quot; code region. Each test step is a method whose name starts with &quot;TS_&quot; or &quot;TSC_&quot;, performs a simple verification or action, and will increase m_TestStep for once. Many ValueTests's test cases are consitituted by those defined test steps.</p>
+<h3 id="valuetests-test-cases">ValueTests Test Cases</h3>
+<p>ValueTests's test cases are defined in the &quot;Tests: Pattern Specific&quot; code region in ValueTests.cs. Each test case is a member method with one TestCaseAttribute attached. All the test cases are clearly self-explained by the TestCaseAttribute's Description property. Taking <strong>TestSetValue116</strong> as the example, its description is:</p>
+<p><code>&quot;Precondition: Verify that control is read only&quot;,</code><br /><code>&quot;Precondition: Verify that this control supports 'String' types&quot;,</code><br /><code>&quot;Step: Get a random valid value&quot;,</code><br /><code>&quot;Step: Add event that will catch PropertyChangeEvent&quot;,</code><br /><code>&quot;Step: Set the pattern to this value&quot;, </code><br /><code>&quot;Step: Step: Wait for event&quot;, </code><br /><code>&quot;Verify the pattern is set to this value&quot;,</code><br /><code>&quot;Verify that the PropertyChangeEvent event is not fired&quot;</code></p>
+<p>Then when we review the &quot;SetValue_SetToRandomValue&quot; method used by this test case, we'll find that each check/step in the description turns out an invocation to the corresponding test step method.</p>
+<p>And another thing: in the last step of <strong>TestSetValue116</strong>, actually whether the PropertyChangeEvent event is fired <strong>is not</strong> checked at all (EventFired.Undetermined is passed to the TSC_VerifyPropertyChangedListener method), since the UIAutomation spec didn't mention whether an PropertyChangeEvent shall be fired if the <strong>Value</strong> is modified by calling ValuePattern.SetValue. However, if the <strong>Value</strong> is modified by non-UIA methods, such as by sending native mouse/keyboard messages or by manually inputs, we should verify that a PropertyChangeEvent is fired.</p>
+</body>
+</html>

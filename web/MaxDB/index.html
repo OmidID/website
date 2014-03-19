@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="info">Info</h2>
+<p>MaxDBProvider is ADO.NET data provider on .NET and Mono for the SAP-certified open source database MaxDB 7.5/7.6 (see <a href="http://www.mysql.com/products/maxdb">MaxDB</a>).</p>
+<ul>
+<li>Home site is [<a href="http://www.sourceforge.net/projects/maxdbprovider">http://www.sourceforge.net/projects/maxdbprovider</a></li>
+</ul>
+<p>MaxDBProvider]</p>
+<ul>
+<li>Can access MaxDB server either using native network protocol directly or</li>
+</ul>
+<p>through corresponding client library</p>
+<ul>
+<li>Namespace MaxDB.Data and assembly MaxDB.Data.dll</li>
+</ul>
+<h2 id="using">Using</h2>
+<h3 id="connection-string">Connection String</h3>
+<h4 id="connection-string-format">Connection String Format</h4>
+<p><code>Server=localhost;Database=Test;User ID=MyLogin;Password=MyPwd;</code></p>
+<h4 id="connection-string-parameters">Connection String Parameters</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Parameter Definition</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+<th style="text-align: left;"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Data Source or Server or Address or<br />Addr or Network Address</p></td>
+<td style="text-align: left;"><p>Hostname or IP Address of the MaxDB server</p></td>
+<td style="text-align: left;"><p>Server=myhost</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Initial Catalog or Database</p></td>
+<td style="text-align: left;"><p>Name of MaxDB database</p></td>
+<td style="text-align: left;"><p>Database=testdb</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>User ID or Login</p></td>
+<td style="text-align: left;"><p>Name of MaxDB database user</p></td>
+<td style="text-align: left;"><p>Login=MyLogin</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Password or PWD</p></td>
+<td style="text-align: left;"><p>Password of MaxDB database user</p></td>
+<td style="text-align: left;"><p>Password=MyPass</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Mode</p></td>
+<td style="text-align: left;"><p>Internal or Oracle. MaxDB database mode. Default = Internal</p></td>
+<td style="text-align: left;"><p>Mode=Oracle</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Pooling</p></td>
+<td style="text-align: left;"><p>True or False. Controls whether connection pooling is used. Default = True</p></td>
+<td style="text-align: left;"><p>| Pooling=True</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Min Pool Size</p></td>
+<td style="text-align: left;"><p>Min size of connection pool. Default: 1</p></td>
+<td style="text-align: left;"><p>Min Pool Size=1</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Max Pool Size</p></td>
+<td style="text-align: left;"><p>Max size of connection pool. Default: 20</p></td>
+<td style="text-align: left;"><p>Max Pool Size=20</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Connection Lifetime or<br />Load Balance Timeout</p></td>
+<td style="text-align: left;"><p>Connection lifetime in the connection pool (in seconds). Default: 0</p></td>
+<td style="text-align: left;"><p>Connection Lifetime=20</p></td>
+</tr>
+</tbody>
+</table>
+<p>The Server connection string parameter can be used in two different ways:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Server Definition</p></th>
+<th style="text-align: left;"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>hostname</p></td>
+<td style="text-align: left;"><p>Server=localhost</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>hostname:port</p></td>
+<td style="text-align: left;"><p>Server=localhost:7210</p></td>
+</tr>
+</tbody>
+</table>
+<h3 id="c-example">C# Example</h3>
+<h4 id="source-code">Source code</h4>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+using System;
+using System.Data;
+using MaxDB.Data;
+
+public class Test
+{
+  public static void Main(string[] args)
+  {
+    string connectionString =
+      &quot;Server=localhost;&quot; +
+      &quot;Database=test;&quot; +
+      &quot;User ID=scott;&quot; +
+      &quot;Password=tiger;&quot;;
+    IDbConnection dbcon = new MaxDBConnection(connectionString);
+    dbcon.Open();
+    IDbCommand dbcmd = dbcon.CreateCommand();
+    // requires a table to be created named employee
+    // with columns firstname and lastname
+    // such as,
+    //        CREATE TABLE employee (
+    //           firstname varchar(32),
+    //           lastname varchar(32));
+    string sql =
+      &quot;SELECT firstname, lastname &quot; +
+      &quot;FROM employee&quot;;
+    dbcmd.CommandText = sql;
+    dbcmd.Connection = dbcon;
+    IDataReader reader = dbcmd.ExecuteReader();
+    while (reader.Read())
+    {
+      string FirstName = (string)reader[&quot;firstname&quot;];
+      string LastName = (string)reader[&quot;lastname&quot;];
+      Console.WriteLine(&quot;Name: &quot; +
+        FirstName + &quot; &quot; + LastName);
+    }
+    // clean up
+    reader.Dispose();
+    reader = null;
+    dbcmd.Dispose();
+    dbcmd = null;
+    dbcon.Dispose();
+    dbcon = null;
+  }
+}
+&lt;/code&gt;</code></pre>
+</div>
+<h4 id="building-example">Building Example</h4>
+<p>Save the example to the file TestExample.cs and compile it<br /><bash> $ mcs TestExample.cs -r:System.Data.dll -r:MaxDB.Data.dll </bash></p>
+<h4 id="running-the-example">Running the Example</h4>
+<p><bash> $ mono TestExample.exe </bash></p>
+<p><a href="http://localhost:4000/Category:ADO.NET" title="wikilink">Category:ADO.NET</a></p>
+</body>
+</html>

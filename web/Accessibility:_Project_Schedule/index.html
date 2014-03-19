@@ -1,0 +1,3391 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="summary">Summary</h2>
+<p>This page contains the iteration schedule for the <a href="http://localhost:4000/Accessibility" title="wikilink">UI Automation accessibility</a> project. If you are looking for a higher level view of the project status, you can view the <a href="http://localhost:4000/Accessibility:_Roadmap" title="wikilink">project roadmap</a> page.</p>
+<p>The project is broken down into two phases:</p>
+<ul>
+<li>Phase 1 - Q4 2008 - UIA Provider and WinForms integration</li>
+<li>Phase 2 - Q4 2009 - UIA Client and Moonlight integration</li>
+</ul>
+<p>The work is broken down into one week iterations with tasks assigned to members of the <a href="http://localhost:4000/Accessibility:_Team" title="wikilink">team</a>. The iterations are listed in order of dates with past iterations being listed by date at the bottom of the page.</p>
+<p>You can also get a view of the status of the work here:</p>
+<p><u>Development Status</u></p>
+<ul>
+<li><a href="http://localhost:4000/Accessibility:_Control_Status" title="wikilink">WinForms Control Status</a></li>
+<li><a href="http://localhost:4000/Accessibility:_Mapping_UIA_to_ATK" title="wikilink">UIA Control Types Status</a></li>
+</ul>
+<p><u>Testing Status</u></p>
+<ul>
+<li><a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a></li>
+</ul>
+<h2 id="current-iterations">Current Iterations</h2>
+<h3 id="iteration-16---september-10---16">Iteration 16 - September 10 - 16</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Recursive Properties</strong><br />Support proper event propagation.</p></td>
+<td style="text-align: left;"><p>In progress</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>MenuStrip</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ToolStripMenuItem</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ToolStripDropDownItem</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TextBox</strong>, <strong>RichTextBox</strong>, <strong>MaskedTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>99%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Implement ScrollBar in internal ListBox.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Mono-a11y-Bugs</strong><br />Fixing of P1 bugs.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=414937">Bug 414937</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=415320">Bug 415320</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=419023">Bug 419023</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=423240">Bug 423240</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=424681">Bug 424681</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=423356">Bug 423356</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=414617">Bug 414617</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=425597">Bug 425597</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=425774">Bug 425774</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=426254">Bug 426254</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=419019">Bug 419019</a></del></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Mono-MWF-Bugs</strong><br />Tooltip-based providers (ToolTip, HelpProvider and ErrorProvider) and Events-missing providers.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=425277">Bug 425277. ToolTip</a><br /><a href="https://bugzilla.novell.com/show_bug.cgi?id=425988">Bug 425988. HelpProvider</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=426459">Bug 426459. ErrorProvider</a></del><br /><del><a href="https://bugzilla.novell.com/show_bug.cgi?id=426464">Bug 426464. ScrollBar.RangeValue</a></del></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MWF.MessageBox a11y</strong><br />Patch MWF.MessageBox to add Label</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>StatusBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Missing Navigation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Header UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brad</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>HeaderItem UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Create Smoke Test Harness</strong><br />Create a smoke test suite based on the regression harness</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Update openSUSE test VMs</strong><br />Add passwordless sudo for smoke tests, and update packages</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Write Smoke Test for Form</strong><br />Create a smoke tests that test for basic uia2atk functionality for the Form control</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Write Smoke Test for PictureBox</strong><br />Create a smoke tests that test for basic uia2atk functionality for the PictureBox control</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Review Form smoke test code</strong><br />Review code before adding to test suite</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Review PictureBox smoke test code</strong><br />Review code before adding to smoke test suite</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Implement Winforms Samples</strong><br />Continue to implement winforms test samples</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (71/75)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Work on Orca</strong><br />Investigate and Learn Orca Test</p></td>
+<td style="text-align: left;"><p>10%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test NotifyIcon control</strong><br />commited strongwind test code and run test</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>verify bugs</strong><br />upgrad test environment and verify bugs</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>update strongwind test code</strong><br />modify strongwind test code with a new way to test states and actions</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Winforms Samples</strong><br />implement winforms test samples DataGrid and DataGridBoolColumn</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 17 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-17---september-17---23">Iteration 17 - September 17 - 23</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ToolStripSeparator</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ToolStripSplitButton</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>PrintPreviewControl</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ContextMenu</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ContextMenuStrip</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>DateTimePicker</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>FlowLayoutPanel</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>FontDialog</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MainMenu</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>MonthCalendar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>NotifyIcon</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>OpenFileDialog</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ProgressBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ScrollableControl</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TabPage</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ToolBarButton</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>StatusStrip</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>TabControl</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ToolStrip</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ToolStripComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MenuStrip</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ToolStripLabel</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ToolStripProgressBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ToolStripDropDownButton</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TrackBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Hyperlink UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brad</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Thumb UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>DataGrid Sample</strong><br />Implement DataGrid WinForms sample</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>DataGridBoolColumn Sample</strong><br />Implement DataGridBoolColumn WinForms sample</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>DataGridTextBoxColumn Sample</strong><br />Implement DataGridTextBoxColumn WinForms sample</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>DataGridView Sample</strong><br />Implement DataGridView WinForms sample</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Review Form test code</strong><br />Review code before adding to smoke test suite</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Review button_label_linklabel test code</strong><br />Review code before adding to test suite</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Review PictureBox test code</strong><br />Review code before adding to test suite</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Review StatusBar test code</strong><br />Review code before adding to test suite</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Review VScrollBar test code</strong><br />Review code before adding to test suite</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Review HScrollBar test code</strong><br />Review code before adding to test suite</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Review ProgressBar test code</strong><br />Review code before adding to test suite</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Implement Winforms Samples</strong><br />Continue to implement winforms test samples</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (71/75)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Work on Orca</strong><br />Investigate and Learn Orca Test</p></td>
+<td style="text-align: left;"><p>10%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Iteration 18 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-18---september-24---30">Iteration 18 - September 24 - 30</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ToolStripTextBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>TreeView</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>WebBrowser</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Table UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brad</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Tree UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Iteration 19 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-19---october-1---7">Iteration 19 - October 1 - 7</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TitleBar UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brad</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>DataGrid UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brad</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>DataItem UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brad</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>MenuItem UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brad</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TreeItem UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>DomainUpDown</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>FileDialog</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ListView</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>DataGrid</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>DataGridBoolColumn</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>DataGridView</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>DataGridTextBoxColumn</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MenuItem</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ColumnHeader</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Panel</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>PageSetupDialog</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>PropertyGrid</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ColorDialog</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>SaveFileDialog</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Splitter</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TableLayoutPanel</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ThreadExceptionDialog</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ToolBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>SplitContainer</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ContainerControl</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Iteration 20 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-20---october-8---14">Iteration 20 - October 8 - 14</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Calendar UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brad</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Iteration 21 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-21---october-15---21">Iteration 21 - October 15 - 21</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 22 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-22---october-22---28">Iteration 22 - October 22 - 28</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 23 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-23---october-28---november-4">Iteration 23 - October 28 - November 4</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 24 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-24---november-5---november-11">Iteration 24 - November 5 - November 11</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 25 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-25---november-12---18">Iteration 25 - November 12 - 18</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 26 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-26---november-19---25">Iteration 26 - November 19 - 25</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 27 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h2 id="elements-delayed">Elements delayed</h2>
+<p>This table contains tasks not started that were initially planned in a specific iteration.</p>
+<table>
+<col style="width: 40%" /><col style="width: 10%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Iteration</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Reason</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ScrollBar UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Not started</p></td>
+<td style="text-align: left;"><p>7</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"><p>GuadecES &amp; Guadec</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>MenuBar UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Not started</p></td>
+<td style="text-align: left;"><p>8</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"><p>Guadec</p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h2 id="past-iterations">Past Iterations</h2>
+<h3 id="iteration-1---may-19---27">Iteration 1 - May 19 - 27</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Button</strong> <em>(Button)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Some unimplemented properties, see <a href="http://localhost:4000/Accessibility:_Control_Status" title="wikilink">Control Status</a>.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>CheckBox</strong> <em>(CheckBox)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Label</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>GroupBox</strong> <em>(Pane)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Didn't get very far.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing IScrollProvider and ITextProvider implementations. This provider may work for MaskedTextBox and RichTextBox.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>LinkLabel</strong> <em>(Hyperlink)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Button UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>65%</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"><p>Missing base implementation of Atk.ComponentImplementor which is work needed for all control types. Also missing Atk.ImageImplementor and some Atk.TextImplementor methods related to coordinates. Also need to finish up states and events.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Text UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>65%</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"><p>Missing tests: more Atk-centric for events (although Label may only have property-changed), and other non-Atk-centric ones (in BridgeTester.cs). Missing some methods implementation related to coordinates. Missing ComponentImplementor methods which may be reusable in the base class. Missing the study of the role ATK_ROLE_ACCEL_LABEL and the state ATK_STATE_MULTI_LINE.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Write WinForms Sample Application</strong><br />Implement needed WinForms sample application to be tested</p></td>
+<td style="text-align: left;"><p>13%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>Finished some simple application sample with winforms &quot;button\label\linklabel\numericUpDown\textbox\groupBox\checkbox\radiobutton\panel&quot; control by Ironpython. the code reposit in uiaqa.sled.lab.novell.com:/var/qa/code.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Write Test Script For Button</strong><br /></p></td>
+<td style="text-align: left;"><p>0%</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>Push</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Build Packages</strong><br />Build packages for preparing building &amp; testing environment.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>Built olive and gtk-sharp on OBS, but should do some works to simplify the olive package.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Understand Architecture</strong><br />Understand the architecture well &amp; build Provider from svn.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Cspi</strong><br />Modify spi_main.c and spi_event.c to use dbus</p></td>
+<td style="text-align: left;"><p>Done (untested)</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Proof-of-Concept Automation Tests</strong><br /></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p><a href="http://www.medsphere.org/projects/strongwind/">Strongwind</a> test created against sample GTK app</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Setup Testing Lab</strong><br /></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p><a href="https://wiki.innerweb.novell.com/index.php/UIAQA">https://wiki.innerweb.novell.com/index.php/UIAQA</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Research automated testing of WinForms actions and properties</strong><br /></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>We'll use <a href="http://www.medsphere.org/projects/strongwind/">Strongwind</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Iteration 2 Planning Meeting</strong><br />IRC Meeting on #mono-a11y on Wednesday, May 28, 2008<br /><a href="http://www.timeanddate.com/worldclock/fixedtime.html?year=2008&amp;month=5&amp;day=28&amp;hour=14&amp;min=0&amp;sec=0">14:00:00 UTC time</a></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>All</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-2---may-28---june-3">Iteration 2 - May 28 - June 3</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Form</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Along with GroupBox, there remain issues with child control/provider management.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Button</strong> <em>(Button)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Some unimplemented properties, see <a href="http://localhost:4000/Accessibility:_Control_Status" title="wikilink">Control Status</a>.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>GroupBox</strong> <em>(Group)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RadioButton</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>RadioButton needs to be handled in the context of its sibling RadioButtons.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>60%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Partial implementation of ITextProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RichTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>40%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Reuses TextRangeProvider implemented in TextBox.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MaskedTextBox</strong> <em>(Edit)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>60%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Reuses TextRangeProvider implemented in TextBox.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Button UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>95% done</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"><p>Still a few items left that need to be done for all controls (see <a href="http://localhost:4000/Accessibility:_Mapping_UIA_to_ATK" title="wikilink">UIA Control Types Status</a>).</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Pane UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>95% done</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"><p>Still a few items left that need to be done for all controls (see <a href="http://localhost:4000/Accessibility:_Mapping_UIA_to_ATK" title="wikilink">UIA Control Types Status</a>).</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>CheckBox UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>100%</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"><p>It seems to be working completely, but note: DoAction() is the function that is called when performing the action from accerciser, it works with CheckBox, but not for Button.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Write WinForms Sample Application</strong><br />Implement needed WinForms sample application to be tested</p></td>
+<td style="text-align: left;"><p>34%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Cspi</strong><br />Get event listeners to work with dbus and test.</p></td>
+<td style="text-align: left;"><p>Coded but untested</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Get all our test code in Mono SVN</strong></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Implement test framework</strong><br />Automate Strongwind tests simultaneously on all test machines</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Write more Strongwind tests</strong><br />Write at least 1 more Strongwind test against GTK, add to test suite</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Document+Blog testing techniques</strong><br />Howto write Strongwind tests and how to add them to the test suite</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Simplify &amp; Build new packages</strong><br />Simplify olive package and build patched new packages. e.g. mcs, mono</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>hackers could download the lastest modified uia-windowsbase libraries and strongwind from <a href="http://download.opensuse.org/repositories/home:/rawang/openSUSE_10.3/noarch/">here</a>.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>StatusBar</strong> <em>(StatusBar)</em><br />Familiarize the steps of implementing Providers &amp; Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>No unit test</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Iteration 3 Planning Meeting</strong><br />IRC Meeting on #mono-a11y on Wednesday, June 4, 2008<br /><a href="http://www.timeanddate.com/worldclock/fixedtime.html?year=2008&amp;month=6&amp;day=4&amp;hour=14&amp;min=0&amp;sec=0">14:00:00 UTC</a></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>All</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-3---june-4---10">Iteration 3 - June 4 - 10</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Form</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Along with GroupBox, there remain issues with child control/provider management.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>GroupBox</strong> <em>(Group)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>See Form notes.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Button</strong> <em>(Button)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Some unimplemented properties, see <a href="http://localhost:4000/Accessibility:_Control_Status" title="wikilink">Control Status</a>.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RadioButton</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Finishing testing.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Partial implementation of ITextProvider: missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RichTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Reuses TextRangeProvider class (part of TextBoxProvider). Missing TextUnit.Format (used by this control) and IScrollProvider implementation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MaskedTextBox</strong> <em>(Edit)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Reuses TextRangeProvider class (part of TextBoxProvider).</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>List UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>0% (FTO most of the time)</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"><p>Moved this forward</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ComboBox UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"><p>Atk tests done. Left: non-Atk centric tests, and implementation (but easy because it has only one new interface: Atk.Selection, that's why I put 50%)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Prepare Demo</strong><br />Setup VM with demos for Jared's MS demo, write sample scripts</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>cspi</strong><br />Finish caching; implement Accessible, Component, Selection, and Text interfaces</p></td>
+<td style="text-align: left;"><p>Done (untested)</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>at-spi-registryd</strong><br />Test that applications are able to register</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>DEB package &amp; QA works</strong><br />build packages to deb format, and research some QA works.</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>take over some what Calen did, and start to write test samples</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Write WinForms Sample Application</strong><br />Implement needed WinForms sample application to be tested</p></td>
+<td style="text-align: left;"><p>34%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>According to QA meeting decision, I will stop this job, and Ray will take over it.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test Coding Standards</strong><br />create standards for test coding and test files/directory name.</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>should review it with Brian</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test Script</strong><br />build automation test scripts for winforms.</p></td>
+<td style="text-align: left;"><p>0%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>StatusBar</strong> <em>(StatusBar)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Missing unit test. GridPatternIdentifiers. To determine the value of IDs.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 4 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-4---june-11---17">Iteration 4 - June 11 - 17</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Form</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>GroupBox</strong> <em>(Group)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Button</strong> <em>(Button)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Some unimplemented properties, see <a href="http://localhost:4000/Accessibility:_Control_Status" title="wikilink">Control Status</a>.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RadioButton</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ListBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>0% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Not started</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Winforms Patch</strong><br />Get necessary MWF patches comitted to mcs project</p></td>
+<td style="text-align: left;"><p>100% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Worked with jpobst and kangaroo to get patch in shape and committed.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Olive Infrastructure</strong><br />Set up deployment of UIAutomation* assemblies</p></td>
+<td style="text-align: left;"><p>90% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Waiting for patch review; adds a11y.pc and installs symlinks of our assemblies in $prefix/lib/mono/a11y (previous it was in .../mono/3.0).</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Uia2Atk Makefiles</strong><br />Create makefiles for UIAutomationWinforms and UiaAtkBridge solutions</p></td>
+<td style="text-align: left;"><p>50% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Finished UIAutomationWinforms, UiaAtkBridge will require more work because MD doesn't generate Makefiles for C projects.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Partial implementation of ITextProvider: missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RichTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Reuses TextRangeProvider class (part of TextBoxProvider). Missing TextUnit.Format (used by this control) and IScrollProvider implementation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MaskedTextBox</strong> <em>(Edit)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Reuses TextRangeProvider class (part of TextBoxProvider).</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Tests missing.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Write winforms architecture wiki-page</strong></p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>List UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>10% Done</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"><p>Carrying this forward to next iteration</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>RadioButton UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>70% done</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"><p>Lacking events and unresolved issue about radiobutton default checked behaviour</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ComboBox UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>70% done</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"><p>Lacking events and investigation on different CB styles</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Event Capture Script</strong><br />Write app that will catch at-spi events</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Polish test harness</strong><br />check results, bug fixes, summarized error logs, etc.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Review QA standards</strong><br />Review the QA standards info that Calen created</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Cspi</strong><br />Finish testing and debugging application registration and event passing</p></td>
+<td style="text-align: left;"><p>75%</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>StatusBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Determine the value of IDs. Run nunit on Vista.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Write Samples</strong><br />Catch up to speed to finish test samples</p></td>
+<td style="text-align: left;"><p>79%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>pick Form and FontDialog controls to &quot;cut my teeth&quot; on.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test Coding Standards</strong><br />review it with Brian and finish it</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test Script</strong><br />start to learn and practice strongwind test scripts against gtk app with Brian's help.</p></td>
+<td style="text-align: left;"><p>30%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>winforms application samples</strong><br />update winforms application samples base on test coding standards.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 5 Planning Meeting</strong><br />June 18, 2008<br /><a href="http://www.timeanddate.com/worldclock/fixedtime.html?month=6&amp;day=18&amp;year=2008&amp;hour=8&amp;min=0&amp;sec=0&amp;p1=220">14:00:00 UTC</a></p></td>
+<td style="text-align: left;"><p>planned</p></td>
+<td style="text-align: left;"><p>All</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-5---june-18---24">Iteration 5 - June 18 - 24</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Form</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>GroupBox</strong> <em>(Group)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Button</strong> <em>(Button)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Some unimplemented properties, see <a href="http://localhost:4000/Accessibility:_Control_Status" title="wikilink">Control Status</a>.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RadioButton</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Olive Infrastructure</strong><br />Set up deployment of UIAutomation* assemblies</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Waiting for patch review.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Uia2Atk Makefiles</strong><br />Create makefiles for UIAutomationWinforms and UiaAtkBridge solutions</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Need to clean up install targets and commit. Not too worried about accidentally deploying test assemblies at this point.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RichTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MaskedTextBox</strong> <em>(Edit)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing tests and internal controls in Navigation: Edit, List and Button.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ListBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Navigation logic missing.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Write winforms architecture wiki-page</strong></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p><a href="http://localhost:4000/Accessibility:_Winforms_Implementation" title="wikilink"> Windows Forms Implementation Page.</a> More detailed information will be added as soon as we add more classes.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>List UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>10% Done</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"><p>Carried over from last iteration</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Window UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"><p>Lacking events</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Update openSUSE VMs</strong><br />Create new openSUSE11 VMs and setup test environment on them</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Implement Samples</strong><br />Continue to implement test samples</p></td>
+<td style="text-align: left;"><p>79%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more details from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (57/72)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Cspi</strong><br />Finish testing and debugging application registration and event passing</p></td>
+<td style="text-align: left;"><p>87.5%</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Cspi</strong><br />Implement table, hypertext, and editableText interfaces</p></td>
+<td style="text-align: left;"><p>Done (untested)</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>discuss strongwind test</strong><br />discuss strongwind test with Brian.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test Script</strong><br />start to learn and practice strongwind test scripts against gtk TreeView app work with Brian's help.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Build UiaAtkBridge</strong><br /> This is the first initial build</p></td>
+<td style="text-align: left;"><p>99%</p></td>
+<td style="text-align: left;"><p>decriptor</p></td>
+<td style="text-align: left;"><p>Autotools stuff is pretty much finished. Working on creating rpms</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Build UIAutomationWinforms</strong><br /> This is the first initial build</p></td>
+<td style="text-align: left;"><p>99%</p></td>
+<td style="text-align: left;"><p>decriptor</p></td>
+<td style="text-align: left;"><p>Autotools stuff is pretty much finished. Working on creating rpms</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Iteration 6 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-6---june-25---july-1">Iteration 6 - June 25 - July 1</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Form</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>GroupBox</strong> <em>(Group)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Button</strong> <em>(Button)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Some unimplemented properties, see <a href="http://localhost:4000/Accessibility:_Control_Status" title="wikilink">Control Status</a>.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RadioButton</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Olive Infrastructure</strong><br />Set up deployment of UIAutomation* assemblies</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Waiting for patch review.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Uia2Atk Makefiles</strong><br />Create makefiles for UIAutomationWinforms and UiaAtkBridge solutions</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>There may be outstanding issues related to installing test assemblies and providing packaging support...will work with Stephen Shaw if such issues surface.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RichTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MaskedTextBox</strong> <em>(Edit)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>List navigation preview. Missing tests and internal controls in Navigation: Edit and Button.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ListBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Navigation logic preview: tests missing. This provider will support CheckListBox.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>CheckedListBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Same as ListBox provider.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ScrollBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>This provider supports: ScrollBar, HScrollBar and VScrollBar. Missing: more tests.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>HScrollBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Same as ScrollBar.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>VScrollBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Same as ScrollBar.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Revamping</strong>'<br /> Navigation logic and Fragment subclassing.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>List UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>40% Done</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"><p>Carried over.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Bridge Code re-work</strong><br />Fix up contruction of DOM to be based on fragement elements</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Edit UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>30%</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"><p>Uncommitted yet</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Research Orca Automated Testing</strong><br />Determine how we are going to test our product with Orca</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Add WinForms testing info to test plan</strong><br />Discuss how we are doing WinForms testing on the Approach section of the test plan</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Update test plan</strong><br />Update test plan with current information.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test test harness and gtk tests on OS11</strong></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Submit abstract for UTOSC</strong><br />Submit proposal to present at UTOSC 08</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test Script</strong><br />practice strongwind test scripts to check Button against gtk. work with Brian's help.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Implement Samples</strong><br />Continue to implement test samples</p></td>
+<td style="text-align: left;"><p>79%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (57/72)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Cspi</strong><br />Finish testing and debugging application registration</p></td>
+<td style="text-align: left;"><p>Done?</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Cspi</strong><br />Adapt cspi test template as needed for dbus</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Build UiaAtkBridge</strong><br />This is the first initial build</p></td>
+<td style="text-align: left;"><p>99%</p></td>
+<td style="text-align: left;"><p>decriptor</p></td>
+<td style="text-align: left;"><p>Working on creating rpms. This should be done this iteration</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Build UIAutomationWinforms</strong><br />This is the first initial build</p></td>
+<td style="text-align: left;"><p>99%</p></td>
+<td style="text-align: left;"><p>decriptor</p></td>
+<td style="text-align: left;"><p>Working on creating rpms. This should be done this iteration</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Build System</strong><br />A methodology or system for building</p></td>
+<td style="text-align: left;"><p>planned</p></td>
+<td style="text-align: left;"><p>decriptor</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>StatusBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Parallel Mono Environments</strong><br />Set up build environment</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>CheckedListBox</strong> <em>(List)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Iteration 7 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-7---july-2---july-8">Iteration 7 - July 2 - July 8</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Form</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>GroupBox</strong> <em>(Group)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Button</strong> <em>(Button)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Some unimplemented properties, see <a href="http://localhost:4000/Accessibility:_Control_Status" title="wikilink">Control Status</a>.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RadioButton</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Olive Infrastructure</strong><br />Set up deployment of UIAutomation* assemblies</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Waiting for patch review.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>TextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>RichTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>MaskedTextBox</strong> <em>(Edit)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Finish navigation: missing Edit. More tests.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ListBox</strong> and <strong>CheckedListBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>More tests</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ScrollBar</strong>, <strong>HScrollBar</strong> and <strong>VScrollBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>More tests.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>StatusBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Update provider to new changes.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Parallel Mono Environments</strong><br />Set up build environment</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>FTO and Bridge work</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Cspi</strong><br />Implement login-helper interface</p></td>
+<td style="text-align: left;"><p>Done (untested)</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Review WinForms sample apps</strong><br />Review our current WinForms sample apps and make some notes for Ray</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Write example tests</strong><br />Determine methods for testing Tooltip and Treeview widgets</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Write another Strongwind test</strong><br />Work with Calen on one test.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Implement Samples</strong><br />Continue to implement test samples</p></td>
+<td style="text-align: left;"><p>79%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (57/72)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Polish samples</strong><br />polish the samples to suite the test needs.</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>11 samples need to be improved</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>strongwind Test Script</strong><br />practice strongwind test scripts for statusbar, menubar/menuitem, toolbar, pagetab, scrollbar.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>I wrote all of those tests in one test script by runing gedit as practice application</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>blog document</strong><br />worte strongwind study information in blog.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 8 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-8---july-8---15">Iteration 8 - July 8 - 15</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Form</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>GroupBox</strong> <em>(Group)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Button</strong> <em>(Button)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Some unimplemented properties, see <a href="http://localhost:4000/Accessibility:_Control_Status" title="wikilink">Control Status</a>.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RadioButton</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing incomplete.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Olive Infrastructure</strong><br />Set up deployment of UIAutomation* assemblies</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Waiting for patch review.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>New Contributor Guidelines</strong><br />Document how a new UIA developer should get started building and developing our code, and what guidelines to follow for patches and direct svn access.</p></td>
+<td style="text-align: left;"><p>100% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Of course the wiki page, <a href="http://localhost:4000/Accessibility: Getting Started With Development" title="wikilink">Accessibility: Getting Started With Development</a>, is a living document, so it can always be improved. Explanatory email sent to list.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>RichTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MaskedTextBox</strong> <em>(Edit)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing internal Vertical ScrollBar in internal ListBox.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ListBox</strong> and <strong>CheckedListBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>More tests</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ScrollBar</strong>, <strong>HScrollBar</strong> and <strong>VScrollBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>More tests.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>StatusBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Missing Navigation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>FTO</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"><p>on FTO during iteration</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>strongwind Test Script</strong><br />practice strongwind test scripts for openDialog, saveDialog, update two test scripts.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>tooltip problem in openSUSE11.0</strong><br />encountered tooltip problem,and spent some times to reseach the reason and discuss the problem with bgmerrell and other people.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Implement Samples</strong><br />Continue to implement test samples</p></td>
+<td style="text-align: left;"><p>79%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (57/72)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Polish samples</strong><br />polish the samples to suite the test needs.</p></td>
+<td style="text-align: left;"><p>87%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Strongwind practice</strong><br />write strongwind tests for multiple dialogs and several strongwind widgets we haven't dealt with yet</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Resolve tooltip problem</strong><br />discover why tooltips aren't accessible in openSUSE11</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p><a href="http://bugzilla.gnome.org/show_bug.cgi?id=542873">http://bugzilla.gnome.org/show_bug.cgi?id=542873</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Support radio button menu items</strong><br />Add support for radio menu items to Strongwind</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p><a href="http://bugzilla.gnome.org/show_bug.cgi?id=542458">http://bugzilla.gnome.org/show_bug.cgi?id=542458</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Support menu items with children</strong><br />Add support for menu items with children to Strongwind</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p><a href="http://bugzilla.gnome.org/show_bug.cgi?id=542458">http://bugzilla.gnome.org/show_bug.cgi?id=542458</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 9 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-9---july-16---22">Iteration 9 - July 16 - 22</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Correct StructureChangedEvents Usage</strong></p></td>
+<td style="text-align: left;"><p>100% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Providers now send the correct events, and the bridge &quot;remove&quot; notification handling is partially implemented.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Form</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>99% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Need small tweak before committing.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>GroupBox</strong> <em>(Group)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>99% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Need small tweak before committing.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Button</strong> <em>(Button)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>100% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>RadioButton</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>99% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Need small tweak before committing.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Olive Infrastructure</strong><br />Set up deployment of UIAutomation* assemblies</p></td>
+<td style="text-align: left;"><p>95% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Waiting for patch review.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Winforms Implementation Wiki Page</strong><br />Update.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p><a href="http://www.mono-project.com/Accessibility:_Winforms_Implementation">Page updated</a> to latest changes.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>TextBox</strong>, <strong>RichTextBox</strong>, <strong>MaskedTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>99%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Implement ScrollBar in internal ListBox.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ListBox</strong> and <strong>CheckedListBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>98%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>ListBox done. Finish CheckedListBox Unitary Tests.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ScrollBar</strong>, <strong>HScrollBar</strong> and <strong>VScrollBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>PictureBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Finish Unitary Tests.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ErrorProvider</strong>, <strong>ToolTip</strong>, <strong>HelpProvider</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>30%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Partial implementation, need to improve logic to get components from winform control: Form. Write Unitary Tests.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>StatusBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Missing Navigation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>GridItem</strong><br />Implement needed Control Pattern interfaces</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ProgressBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Prepare for StatusBar Navigation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Bridge Work</strong><br />Catch up on bridge work</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Menu UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Edit UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>30%</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"><p>Planned to finish and commit</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>StatusBar UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>80%?</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"><p>Need to finish tests. Also, StatusBarPanels are untested.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Add repo to test machines</strong><br />Add Mono repo with our packages to test machines and set auto updates.</p></td>
+<td style="text-align: left;"><p>Aborted</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>Not using repos anymore (at this time)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Fix logging in test harness</strong><br />Log directories aren't unique using time only. Need to use date and time.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Refactor Gtk Test Examples</strong><br />Do more abstraction in the application wrapper to make the test scripts more simple.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>These Gtk examples are what we will base our WinForms tests on.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Create actions and states constants</strong><br />setup scripts with string values for valid actions and states</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>This didn't turn out like I had hoped, but the scripts are there. We'll add to them as we go. I had hoped to get a complete static list from the beginning.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Implement Samples</strong><br />Continue to implement test samples</p></td>
+<td style="text-align: left;"><p>79%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (57/72)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Polish samples</strong><br />polish the samples to suite the test needs.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test Button control</strong><br />strongwind test scripts for winforms Button control.and log bug</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>test script need to be checked to add into the test suite. bugs need to be fixed</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Analyze Frame problem</strong><br />Analyze why strongwind can't find Frame</p></td>
+<td style="text-align: left;"><p>done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>program doesn't support 'showing' state, but strongwind need run findFrame() with x.showing, and program can't get new label text when click button, so test run false.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>upgrade winforms app</strong><br />upgrade some winforms applicaltion not use '&amp;' in form text.</p></td>
+<td style="text-align: left;"><p>done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>if there is '&amp;' in form text, strongwind can't find the frame.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Build System</strong><br />A methodology or system for building</p></td>
+<td style="text-align: left;"><p>done</p></td>
+<td style="text-align: left;"><p>decriptor</p></td>
+<td style="text-align: left;"><p>Moving forward with a hybrid solution of monobuild and OBS</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>RPM push script</strong><br />A script that grabs all the latest</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>decriptor</p></td>
+<td style="text-align: left;"><p>Collects all of the latest rpms and pushes them to build1</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Extend Monobuild</strong><br />Build out monobuild to handle our needs</p></td>
+<td style="text-align: left;"><p>00%</p></td>
+<td style="text-align: left;"><p>decriptor</p></td>
+<td style="text-align: left;"><p>Learn the code ( the original coder is gone )</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 10 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-10---july-23---29">Iteration 10 - July 23 - 29</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Commit outstanding tests</strong><br />Form, RadioButton, GroupBox</p></td>
+<td style="text-align: left;"><p>Committed, but Form tests could be improved.</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Update contributor guidelines</strong><br />Specifically, document where our coding standards, etc, deviate from the rest of Mono.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Olive Infrastructure</strong><br />Set up deployment of UIAutomation* assemblies</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Committed.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>PictureBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Finish Unitary Tests. Update Navigation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ErrorProvider</strong>, <strong>ToolTip</strong>, <strong>HelpProvider</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing Navigation, unitary Tests and HelpProvider provider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>StatusBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Missing Navigation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ProgressBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Prepare for StatusBar Navigation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ScrollBar UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>60%</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"><p>Need test, orientation support, GetValue fix</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>atspi-dbus ATK adaptor</strong><br />Finish collection interface</p></td>
+<td style="text-align: left;"><p>Done (untested)</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Image UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Spinner UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Implement Samples</strong><br />Continue to implement test samples</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (58/72)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Build software</strong><br />Promote the lastest Accerciser into openSUSE:Facctory</p></td>
+<td style="text-align: left;"><p>10%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>fork a branch, wait for built and promote it.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Write uia2atk update script</strong><br />Write a script that pulls down and installs the latest uia2atk related rpms</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Update Gtk samples with constants</strong><br />Update the Gtk samples to use the actions and states constants instead of strings</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test Button control</strong><br />script strongwind test for winforms Button control.and run test</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>test script need to be checked to add into the test suite. waiting bugs to be fixed</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test CheckBox control</strong><br />script strongwind test scripts for winforms CheckBox control. and run test</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>test script need to be checked to add into the test suite. waiting bugs to be fixed</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test RadioButton control</strong><br />script strongwind test scripts for winforms RadioButton control.</p></td>
+<td style="text-align: left;"><p>60%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>not run the test yet, developer doesn't finish it. and test script need to be checked to add into the test suite.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 11 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-11---july-30---august-5">Iteration 11 - July 30 - August 5</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>NumericUpDown</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing not completed.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>PrintPreviewDialog</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Not started</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Bugfixing</strong><br />Address major issues in bugzilla</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Fixed bugs 411328, 412206, and 411345. No luck with 411882.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>PictureBox</strong> <em>(Pane)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Finish Unitary Tests. Update Navigation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ErrorProvider</strong>, <strong>ToolTip</strong>, <strong>HelpProvider</strong> <em>(Pane, ToolTip, ToolTip)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing Navigation, unitary Tests and HelpProvider provider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>TextBox</strong>, <strong>RichTextBox</strong>, <strong>MaskedTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>99%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Implement ScrollBar in internal ListBox.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>StatusBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ProgressBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Prepare for StatusBar Navigation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Image</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Finding Image Type Control.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Edit</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Prepare for StatusBar Navigation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ScrollBar UIA Control Type</strong><br />Finish mapping UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"><p>Still need tests</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Separator UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Group UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Calvin</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Document UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>uia2atk update cron job</strong><br />Put cron jobs on openSUSE test machines to execute uia2atk update script at a certain interval</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Write an Orca Automated Test</strong><br />Write an automated proof-of-concept test with Orca's test harness.</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Update test VMs</strong><br />Setup test environment non-openSUSE VMs</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Document+Blog testing techniques</strong><br />Howto write Strongwind tests and how to add them to the test suite.</p></td>
+<td style="text-align: left;"><p>60%</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>Finished with sample application. Started writing howto.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Implement Samples</strong><br />Continue to implement test samples</p></td>
+<td style="text-align: left;"><p>84%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (61/72)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test scrollbar control</strong><br />script strongwind test scripts for winforms scrollbar control against checkedlistbox.py, and run test.</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p><a href="https://bugzilla.novell.com/show_bug.cgi?id=414937">Bug414937</a> is blocking the test</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test vscrollbar control</strong><br />script strongwind test scripts for winforms vscrollbar control against vscrollbar.py, and run test.</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>minor <a href="https://bugzilla.novell.com/show_bug.cgi?id=414617">Bug414617</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test hscrollbar control</strong><br />script strongwind test scripts for winforms hscrollbar control against hscrollbar.py, and run test.</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>same as vscrollbar test</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Iteration 12 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-12---august-6---12">Iteration 12 - August 6 - 12</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>NumericUpDown</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>Testing not completed.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>PrintPreviewDialog</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Bugfixing</strong><br />Address major issues in bugzilla</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ErrorProvider</strong>, <strong>ToolTip</strong>, <strong>HelpProvider</strong> <em>(Pane, ToolTip, ToolTip)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing Navigation, unitary Tests and HelpProvider provider implementation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TextBox</strong>, <strong>RichTextBox</strong>, <strong>MaskedTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>99%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Implement ScrollBar in internal ListBox.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Navigation</strong><br />Updated Navigation to support Component-based providers.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Winforms Implementation</strong><br />Updated <a href="http://localhost:4000/Accessibility:_Winforms_Implementation" title="wikilink"> wiki</a> page.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MWF Patches</strong><br />Bugs opened to track UIA patches in MWF controls</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Opened <a href="https://bugzilla.novell.com/show_bug.cgi?id=416663">ListBox</a> Bug<br /> Opened <a href="https://bugzilla.novell.com/show_bug.cgi?id=416640">ComboBox</a> Bug<br /> Opened <a href="https://bugzilla.novell.com/show_bug.cgi?id=416759">HScrollBar/VScrollBar</a> Bug</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Mono-a11y Patches</strong><br />Review of patches sent to mailing list.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Image</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Finding Image Type Control.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Edit</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Canceled because it could be automatically added.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>StatusBarPanel</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Puzzled with its type (Edit or Pane).</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ScrollBar UIA Control Type</strong><br />Finish mapping UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ProgressBar UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Done (untested)</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Slider UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Example Code</strong><br />Code Gtk example to show how we can test the sorting order of certain controle. e.g., ensure that clicking a column header reorders the table cells in a treeview</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>Code added to the gtktreeview tests</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Create QA Architecture Diagrams</strong><br />Create architecture diagrams for Strongwind by itself and Strongwind together with our test harness.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p><a href="http://www.mono-project.com/Image:Strongwind_arch.png">1</a> and <a href="http://www.mono-project.com/Image:Qa_arch.png">2</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Plan testing of other &quot;styles&quot;</strong><br />Discuss and come up with a plan to test different styles/subelements of WinForms controls</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p><a href="https://bugzilla.novell.com/show_bug.cgi?id=418916">https://bugzilla.novell.com/show_bug.cgi?id=418916</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Implement Samples</strong><br />Continue to implement test samples</p></td>
+<td style="text-align: left;"><p>88%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (64/72)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test CheckBox control</strong><br />script strongwind test scripts for winforms CheckBox control. and run test, verified bug</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>test script need to be checked to add into the test suite.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test Form control</strong><br />script strongwind test scripts for winforms Form control. and run test</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>test script need to be checked to add into the test suite. waiting bugs to be fixed</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test Label control</strong><br />script strongwind test scripts for winforms Label control. and run test</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>test script need to be checked to add into the test suite.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>modify old strongwind test code</strong></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>added 'showing' state to our test list and modify some states with '-' to link two word in states.py, modify all of the old code because bug411345 has been fixed.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 13 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-13---august-13---19">Iteration 13 - August 13 - 19</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>NumericUpDownProvider</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Implement LabeledByProperty</strong></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"><p>(tested, too)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Prepare UTOSC talk with Brian</strong></p></td>
+<td style="text-align: left;"><p>In Progress</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Support recursive provider property changes</strong></p></td>
+<td style="text-align: left;"><p>20%</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ErrorProvider</strong> and <strong>ToolTip</strong> <em>(Pane, ToolTip)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing Unitary Tests.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>HelpProvider</strong> <em>(ToolTip)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing implementation and Unitary Tests.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TextBox</strong>, <strong>RichTextBox</strong>, <strong>MaskedTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>99%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Implement ScrollBar in internal ListBox.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MWF Patches</strong><br />Bugs opened to track UIA patches in MWF controls</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Update <a href="https://bugzilla.novell.com/show_bug.cgi?id=416663">ListBox</a> patch.<br /> Update <a href="https://bugzilla.novell.com/show_bug.cgi?id=416640">ComboBox</a> patch.<br /> Update <a href="https://bugzilla.novell.com/show_bug.cgi?id=416759">HScrollBar/VScrollBar</a> patch.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>SWF.StatusBar Patch</strong></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Make StatusBar support PanelAdded Event.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>StatusBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Navigation problems.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>StatusBarPanel</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Missing test.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>GroupBox UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"><p>Mapped to Pane; missing IExpandCollapseProvider</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ToolBar UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Andres</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Fix crashing WinForms tests</strong><br />WinForms takes a little longer than Gtk for the application to launch and applications list to settle; this was causing the crashes.</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>Affects all __init__.py scripts.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Smoke test plan</strong><br />Create smoke test plan with Ray and Calen</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>initial UTOSC slides&quot;</strong><br />create UTOSC slides for my part of the presentation</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>TOP SECRET!</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Research Orca Automated Testing</strong><br />Determine how we are going to test our product with Orca</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>Have the beginnings of a functional test</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Implement Samples</strong><br />Continue to implement test samples</p></td>
+<td style="text-align: left;"><p>88%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (64/72)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test Form control</strong><br />run test again</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>test script need to be checked to add into the test suite.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test RadioButton control</strong><br />run test again</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>bug411882 block the frame be closed</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test PictureBox control</strong><br />commit test code and run test</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test StatusBar control</strong><br />commit test code and run test again</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test ListBox control</strong><br />commit test code and run test again</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>accerciser can't get list's parent, and cant use 'click' action to select listitem,there is no action can be use</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test GroupBox control</strong><br />commit test code and run test again</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>comment bug</strong><br />gave comment info for bug411328</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 14 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-14---august-20---september-2-2-week-iteration-because-of-hackweek">Iteration 14 - August 20 - September 2 (2 week iteration because of hackweek)</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Name and LabeledBy Properties</strong><br />Fix these properties to behave as expected.</p></td>
+<td style="text-align: left;"><p>Done and tested</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Recursive Properties</strong><br />Support proper event propagation.</p></td>
+<td style="text-align: left;"><p>80% Done</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ErrorProvider</strong> and <strong>ToolTip</strong> <em>(Pane, ToolTip)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing Unitary Tests.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>HelpProvider</strong> <em>(ToolTip)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing implementation and Unitary Tests.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TextBox</strong>, <strong>RichTextBox</strong>, <strong>MaskedTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>99%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Implement ScrollBar in internal ListBox.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>MWF Patches</strong><br />Bugs opened to track UIA patches in MWF controls</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Updated <a href="https://bugzilla.novell.com/show_bug.cgi?id=416663">ListBox</a> patch: Commited in mcs r111718.<br /> Updated <a href="https://bugzilla.novell.com/show_bug.cgi?id=416640">ComboBox</a> patch: Commited in mcs r111719.<br /> Updated <a href="https://bugzilla.novell.com/show_bug.cgi?id=416759">HScrollBar/VScrollBar</a> patch: Commited in mcs r111720.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ProgressBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>StatusBarPanel</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Couldn't get control instance in Test</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>MWF Patches</strong><br />Bugs opened to track UIA patches in MWF controls</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Updated <a href="https://bugzilla.novell.com/show_bug.cgi?id=419079">StatusBar</a> patch: Commited in mcs r112138.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Tab UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brad</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Spinner UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>TabItem UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Review and edit Form test</strong><br />Review Calen's Form test and make updates</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>UTOSC plans &amp; practice</strong><br />Plan and prepare for UTOSC presentation with Sandy</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>QA Process Bugs</strong><br />Log some bugs about our QA process and discuss with Brad &amp; Andres</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p><a href="https://bugzilla.novell.com/show_bug.cgi?id=418916">418916</a>, <a href="https://bugzilla.novell.com/show_bug.cgi?id=418909">418909</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>UTOSC presentation graphics</strong><br />Finish up the architecture graphics for our utosc slides</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>TOP SECRET!</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Enhance uia2atk_rpm_update.sh</strong><br />Better command line argument parsing and add functionality to download and install older rpms (in case smoke tests fail)</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Implement Samples</strong><br />Continue to implement test samples</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (65/72)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Work on Strongwind</strong><br />try to write my first strongwind test sample</p></td>
+<td style="text-align: left;"><p>0%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test CheckedListBox control</strong><br />commit test code and run test</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test ToolTip control</strong><br />commit test code</p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test StatusBar control</strong><br />run test again</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>verify bugs</strong><br />upgrad test environment and verify bugs</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>run tests and file bugs</strong><br />re-run some strongwind tests</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p><a href="https://bugzilla.novell.com/show_bug.cgi?id=421836">Bug421836</a> <a href="https://bugzilla.novell.com/show_bug.cgi?id=421831">Bug421831</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Iteration 15 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<h3 id="iteration-15---september-3---9">Iteration 15 - September 3 - 9</h3>
+<table>
+<col style="width: 50%" /><col style="width: 10%" /><col style="width: 50%" /><col style="width: 30%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Task</p></th>
+<th style="text-align: left;"><p>Status</p></th>
+<th style="text-align: left;"><p>Owner</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Recursive Properties</strong><br />Support proper event propagation.</p></td>
+<td style="text-align: left;"><p>In progress</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>MenuStrip</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ToolStripMenuItem</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ToolStripDropDownItem</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Sandy</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ErrorProvider</strong>, <strong>ToolTip</strong> and <strong>HelpProvider</strong> <em>(Pane, ToolTip, ToolTip)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>TextBox</strong>, <strong>RichTextBox</strong>, <strong>MaskedTextBox</strong> <em>(Edit/Document)</em><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>70%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Missing methods in TextRangeProvider. Missing IScrollProvider implementation.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>ComboBox</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>99%</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p>Implement ScrollBar in internal ListBox.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>MWF Patches</strong><br />Assembly friend</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Mario</p></td>
+<td style="text-align: left;"><p><a href="https://bugzilla.novell.com/show_bug.cgi?id=422821">Patched</a>.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>StatusBar</strong><br />Implement needed UIA Provider interfaces</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Neville</p></td>
+<td style="text-align: left;"><p>Missing Navigation.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>ToolTip UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Brad</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>SplitButton UIA Control Type</strong><br />Map UIA Provider interfaces to ATK</p></td>
+<td style="text-align: left;"><p>Planned</p></td>
+<td style="text-align: left;"><p>Mike</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Gtk Orca test</strong><br />Finish a complete orca test for our code that utilizes their test harness to execute it</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p>uia2atk/test/keystrokes</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Orca test docs</strong><br />Add information about how we will use Orca to test to the <a href="http://localhost:4000/Accessibility:_Testing_Howto" title="wikilink">Accessibility:_Testing_Howto</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Brian</p></td>
+<td style="text-align: left;"><p><a href="http://www.mono-project.com/Accessibility:_Testing_Howto#Orca">http://www.mono-project.com/Accessibility:_Testing_Howto#Orca</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Implement Winforms Samples</strong><br />Continue to implement winforms test samples</p></td>
+<td style="text-align: left;"><p>90%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"><p>get more detials from <a href="http://localhost:4000/Accessibility:_Test_Plan_WinForms_Controls" title="wikilink">Accessibility:_Test_Plan_WinForms_Controls</a> (65/72)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Work on Strongwind</strong><br />try to write my first strongwind test sample</p></td>
+<td style="text-align: left;"><p>0%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Build Deb Package</strong><br />Build UIAutomation and UiaAtkBridge to deb packages in home:uia2atk, openSUSE Build Service.</p></td>
+<td style="text-align: left;"><p>0%</p></td>
+<td style="text-align: left;"><p>Ray</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test progressbar control</strong><br />commited strongwind test code, run test</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>Pass</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test numericupdown control</strong><br />commited strongwind test code, run test</p></td>
+<td style="text-align: left;"><p>80%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>when set value in accerciser you should move mouse through the widge otherwise appliction can't get the new value, appearances is the same as bug 415320 and 419023</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test picturebox control</strong><br />run test again</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>Pass</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test vscrollbar control</strong><br />run test again</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>Pass</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>Test hscrollbar control</strong><br />run test again</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>Pass</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Test statusbar control</strong><br />run test again</p></td>
+<td style="text-align: left;"><p>95%</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>Pass</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><strong>verify bugs</strong><br />upgrad test environment and verify bugs</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>run tests and file bugs</strong><br />re-run strongwind tests, and file bugs</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Calen</p></td>
+<td style="text-align: left;"><p>checkbox:<a href="https://bugzilla.novell.com/show_bug.cgi?id=424681">Bug424681</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><strong>Iteration 16 Planning Meeting</strong></p></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+</body>
+</html>

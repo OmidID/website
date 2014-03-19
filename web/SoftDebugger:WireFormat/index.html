@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="introduction">Introduction</h1>
+<p>The <a href="http://localhost:4000/Mono:Runtime:Documentation:SoftDebugger" title="wikilink">Mono Soft Debugger</a> (SDB) is a debugger implemented by the Mono runtime. The Mono runtime exposes an interface that debugger clients can use to debug a Mono application. Mono provides a convenience library in the form of the Mono.Debugger.Soft.dll that can be used to communicate with a running Mono process.</p>
+<p>The Mono.Debugger.Soft.dll library uses a protocol over sockets to debug applications. The wire protocol is inspired by the <a href="http://download.oracle.com/javase/1,5.0/docs/guide/jpda/jdwp-spec.html">JDWP (Java Debug Wire Protocol)</a>. Familiarity with that specification is a good read.</p>
+<p>This document describes the wire protocol used between debugging clients and the Mono runtime.</p>
+<p>Where possible, the corresponding protocol detail is linked to a function name and file location in Mono source code. These informations are based on Mono master version at revision <em>f42ba4a168e7cb9b9486b8a96c53752e4467be8a</em>.</p>
+<h1 id="protocol-details">Protocol details</h1>
+<h2 id="transport">Transport</h2>
+<p>Mono SDB protocol, just like its Java counterpart, was designed with no specific transport in mind. However, presently the public Mono SDB only has a TCP/IP transport available (under the transport name of <code>dt_socket</code>). Other transports can be plugged by modifying this interface.</p>
+<h3 id="bootstraping-a-connection">Bootstraping a connection</h3>
+<p>To boostrap a connection, the client send handshake to the server (see <code>debugger-agent.c:1034</code>) in the form of the 13 ASCII characters string &quot;DWP-Handshake&quot; and wait for the server reply which consist of the exact same ASCII character sequence.</p>
+<h2 id="packets">Packets</h2>
+<p>Just like JDWP, Mono SDB protocol is packet-based with two types of packet: command and reply. All fields in a packet is sent in big-endian format which is transparently handled in Mono source code with corresponding helper encode/decode functions.</p>
+<p>Command packet are used by either side (client or server) to request information, act on the execution of the debugged program or to inform of some event. Replies is only sent in response to a command with information on the success/failure of the operation and any extra data depending on the command that triggered it.</p>
+<p>Both type of packet contains a header. The header is always 11 bytes long. Their descriptions are given afterwards:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Command packet header</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>byte 1</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>length</p></td>
+</tr>
+</tbody>
+</table>
+<p>In Mono SDB source code, the command header is decoded in the server thread <code>debugger_thread</code> function at <code>debugger-agent.c:7583</code>.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Reply packet header</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>byte 1</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>length</p></td>
+</tr>
+</tbody>
+</table>
+<p>In Mono SDB source code, a reply packet is constructed and sent by the <code>send_reply_packet</code> function in <code>debugger-agent:1514</code>.</p>
+<h3 id="packet-field-details">Packet field details</h3>
+<h4 id="common-fields">Common fields</h4>
+<p>length</p>
+<blockquote>
+<p>The total length in byte of the packet including header i.e. this value will be 11 if the packet only consists of header with no other data</p>
+</blockquote>
+<p>id</p>
+<blockquote>
+<p>Uniquely identify sent packet command/reply pair so that they can be asynchronously matched. This is in practise a simple monotonic integer counter. Note that client and server may use the same id value when sending their packets as the uniqueness property is only with respect to a specific source.</p>
+</blockquote>
+<p>flags</p>
+<blockquote>
+<p>At the moment this value is only used with a reply packet in which case its value is set to <code>0x80</code>. A command packet should have this value set to 0.</p>
+</blockquote>
+<h4 id="command-specific-fields">Command specific fields</h4>
+<p>command set</p>
+<blockquote>
+<p>This value allows grouping commands into similar blocks for quicker processing. The different command sets with their values are given below:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Command set</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Virtual Machine</p></td>
+<td style="text-align: left;"><p>1</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Object reference</p></td>
+<td style="text-align: left;"><p>9</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>String reference</p></td>
+<td style="text-align: left;"><p>10</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Threads</p></td>
+<td style="text-align: left;"><p>11</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Array reference</p></td>
+<td style="text-align: left;"><p>13</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Event request</p></td>
+<td style="text-align: left;"><p>15</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Stack frame</p></td>
+<td style="text-align: left;"><p>16</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>AppDomain</p></td>
+<td style="text-align: left;"><p>20</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Assembly</p></td>
+<td style="text-align: left;"><p>21</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Method</p></td>
+<td style="text-align: left;"><p>22</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Type</p></td>
+<td style="text-align: left;"><p>23</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Module</p></td>
+<td style="text-align: left;"><p>24</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Events</p></td>
+<td style="text-align: left;"><p>64</p></td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>command</p>
+<blockquote>
+<p>Tell what command this packet corresponds to. This value is relative to the previously defined command set so the values are reused across different command sets. Definition of each command is given in a later chapter.</p>
+</blockquote>
+<h4 id="reply-specific-fields">Reply specific fields</h4>
+<p>error code</p>
+<blockquote>
+<p>Define which error occured or if the command was successful. Error code definition is given below:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Error name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Mono specific notes</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Success</p></td>
+<td style="text-align: left;"><p>0</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Invalid object</p></td>
+<td style="text-align: left;"><p>20</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Invalid field ID</p></td>
+<td style="text-align: left;"><p>25</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Invalid frame ID</p></td>
+<td style="text-align: left;"><p>30</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Not Implemented</p></td>
+<td style="text-align: left;"><p>100</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Not Suspended</p></td>
+<td style="text-align: left;"><p>101</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Invalid argument</p></td>
+<td style="text-align: left;"><p>102</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Unloaded</p></td>
+<td style="text-align: left;"><p>103</p></td>
+<td style="text-align: left;"><p>AppDomain has been unloaded</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>No Invocation</p></td>
+<td style="text-align: left;"><p>104</p></td>
+<td style="text-align: left;"><p>Returned when trying to abort a thread which isn't in a runtime invocation</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Absent information</p></td>
+<td style="text-align: left;"><p>105</p></td>
+<td style="text-align: left;"><p>Returned when a requested method debug information isn't available</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>No seq point at IL Offset</p></td>
+<td style="text-align: left;"><p>106</p></td>
+<td style="text-align: left;"><p>Returned when a breakpoint couldn't be set</p></td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<h3 id="data-type-marshalling">Data type marshalling</h3>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Size</p></td>
+<td style="text-align: left;"><p>Description</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>byte</p></td>
+<td style="text-align: left;"><p>1 byte</p></td>
+<td style="text-align: left;"><p>A byte value</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>short</p></td>
+<td style="text-align: left;"><p>2 byte</p></td>
+<td style="text-align: left;"><p>A UInt16 value</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>int</p></td>
+<td style="text-align: left;"><p>4 bytes</p></td>
+<td style="text-align: left;"><p>A UInt32 value</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>long</p></td>
+<td style="text-align: left;"><p>8 bytes</p></td>
+<td style="text-align: left;"><p>A UInt64 value</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>id</p></td>
+<td style="text-align: left;"><p>4 bytes</p></td>
+<td style="text-align: left;"><p>The same size is used for all IDs (ObjectID, PointerID, TypeId, MethodID, AssemblyID, ModuleID, FieldID, PropertyID, DomainID)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>string</p></td>
+<td style="text-align: left;"><p>At least 4 bytes</p></td>
+<td style="text-align: left;"><p>A string consists of a leading int value giving the string size followed by <em>size</em> bytes of character data. Thus an empty string is simply a 4 bytes integer value of 0</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>variant</p></td>
+<td style="text-align: left;"><p>At least 1 byte</p></td>
+<td style="text-align: left;"><p>A variant type is a special value which consists of a leading byte giving away the MonoType information of the variant followed directly by its raw value.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>boolean</p></td>
+<td style="text-align: left;"><p>4 bytes (an int)</p></td>
+<td style="text-align: left;"><p>Tough not strictly a type, a boolean is represented by an int value whose value is 1 for true and 0 for false.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Most of the encoding function for these types are defined as <code>buffer_add_*</code> functions starting from <code>debugger-agent.c:1429</code>. Their counterpart are of the form <code>decode_*</code> starting from <code>debugger-agent.c:1349</code>.</p>
+<p>A lot command returns or accepts fixed-length list of value. In these case, such a list is always prefixed with an int value giving its length followed by <em>length</em> element of the same type (which needs to be inferred from the context). When such a list is used the term &quot;list&quot; will be used. For clarification, an empty list is thus a single int value equals to 0.</p>
+<h3 id="various-enumeration-value-definition">Various enumeration value definition</h3>
+<p>For the record, the following C enumerations define the values used for flags, kind, ... parameters in some commands.</p>
+<p><code></code><br /><code>typedef enum {</code><br /><code>    EVENT_KIND_VM_START = 0,</code><br /><code>    EVENT_KIND_VM_DEATH = 1,</code><br /><code>    EVENT_KIND_THREAD_START = 2,</code><br /><code>    EVENT_KIND_THREAD_DEATH = 3,</code><br /><code>    EVENT_KIND_APPDOMAIN_CREATE = 4,</code><br /><code>    EVENT_KIND_APPDOMAIN_UNLOAD = 5,</code><br /><code>    EVENT_KIND_METHOD_ENTRY = 6,</code><br /><code>    EVENT_KIND_METHOD_EXIT = 7,</code><br /><code>    EVENT_KIND_ASSEMBLY_LOAD = 8,</code><br /><code>    EVENT_KIND_ASSEMBLY_UNLOAD = 9,</code><br /><code>    EVENT_KIND_BREAKPOINT = 10,</code><br /><code>    EVENT_KIND_STEP = 11,</code><br /><code>    EVENT_KIND_TYPE_LOAD = 12,</code><br /><code>    EVENT_KIND_EXCEPTION = 13,</code><br /><code>    EVENT_KIND_KEEPALIVE = 14,</code><br /><code>    EVENT_KIND_USER_BREAK = 15,</code><br /><code>    EVENT_KIND_USER_LOG = 16</code><br /><code>} EventKind;</code><br /><code></code><br /><code>typedef enum {</code><br /><code>    SUSPEND_POLICY_NONE = 0,</code><br /><code>    SUSPEND_POLICY_EVENT_THREAD = 1,</code><br /><code>    SUSPEND_POLICY_ALL = 2</code><br /><code>} SuspendPolicy;</code><br /><code></code><br /><code>typedef enum {</code><br /><code>    MOD_KIND_COUNT = 1,</code><br /><code>    MOD_KIND_THREAD_ONLY = 3,</code><br /><code>    MOD_KIND_LOCATION_ONLY = 7,</code><br /><code>    MOD_KIND_EXCEPTION_ONLY = 8,</code><br /><code>    MOD_KIND_STEP = 10,</code><br /><code>    MOD_KIND_ASSEMBLY_ONLY = 11,</code><br /><code>    MOD_KIND_SOURCE_FILE_ONLY = 12,</code><br /><code>    MOD_KIND_TYPE_NAME_ONLY = 13</code><br /><code>} ModifierKind;</code><br /><code></code><br /><code>typedef enum {</code><br /><code>    STEP_DEPTH_INTO = 0,</code><br /><code>    STEP_DEPTH_OVER = 1,</code><br /><code>    STEP_DEPTH_OUT = 2</code><br /><code>} StepDepth;</code><br /><code></code><br /><code>typedef enum {</code><br /><code>    STEP_SIZE_MIN = 0,</code><br /><code>    STEP_SIZE_LINE = 1</code><br /><code>} StepSize;</code><br /><code></code><br /><code>typedef enum {</code><br /><code>    TOKEN_TYPE_STRING = 0,</code><br /><code>    TOKEN_TYPE_TYPE = 1,</code><br /><code>    TOKEN_TYPE_FIELD = 2,</code><br /><code>    TOKEN_TYPE_METHOD = 3,</code><br /><code>    TOKEN_TYPE_UNKNOWN = 4</code><br /><code>} DebuggerTokenType;</code><br /><code></code><br /><code>typedef enum {</code><br /><code>    VALUE_TYPE_ID_NULL = 0xf0,</code><br /><code>    VALUE_TYPE_ID_TYPE = 0xf1</code><br /><code>} ValueTypeId;</code><br /><code></code><br /><code>typedef enum {</code><br /><code>    FRAME_FLAG_DEBUGGER_INVOKE = 1</code><br /><code>} StackFrameFlags;</code><br /><code></code><br /><code>typedef enum {</code><br /><code>    INVOKE_FLAG_DISABLE_BREAKPOINTS = 1,</code><br /><code>    INVOKE_FLAG_SINGLE_THREADED = 2</code><br /><code>} InvokeFlags;</code></p>
+<h2 id="command-list">Command list</h2>
+<p>Types given in each command comments corresponds to the type described above. When there are additional arguments or multiple values in a command's reply, they are each time described in the order they appear or have to appear in the data part. Not also that there is no kind of separation sequence or added alignement padding between each value.</p>
+<p>In all cases, if you ask for a command that doesn't exist, a reply will be sent with an error code of NOT_IMPLEMENTED.</p>
+<h3 id="virtual-machine-commands">Virtual machine commands</h3>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Action and type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>VERSION</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Returns a mono virtual machine version information (string) followed by two int giving respectively the runtime major and minor version</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>ALL_THREADS</p></td>
+<td style="text-align: left;"><p>2</p></td>
+<td style="text-align: left;"><p>Returns a list of ObjectID each mapping to a System.Threading.Thread instance.</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>SUSPEND</p></td>
+<td style="text-align: left;"><p>3</p></td>
+<td style="text-align: left;"><p>Suspend the VM execution and returns an empty reply</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>RESUME</p></td>
+<td style="text-align: left;"><p>4</p></td>
+<td style="text-align: left;"><p>Resume the VM execution and returns an empty reply</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>NOT_SUSPENDED</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>EXIT</p></td>
+<td style="text-align: left;"><p>5</p></td>
+<td style="text-align: left;"><p>Stop VM and returns an empty reply</p></td>
+<td style="text-align: left;"><p>Ask for a exit code (int) to be used by the VM when it exits</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>DISPOSE</p></td>
+<td style="text-align: left;"><p>6</p></td>
+<td style="text-align: left;"><p>Clear event requests, resume the VM and disconnect</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>INVOKE_METHOD</p></td>
+<td style="text-align: left;"><p>7</p></td>
+<td style="text-align: left;"><p>Returns a boolean telling if the call was successful followed by an exception object (as a variant) if it was not and by the actual returned value (variant) if it was.</p></td>
+<td style="text-align: left;"><p>Ask for an ObjectID (id) mapping to a System.Threading.Thread instance, a flags value (int) to pass to the invoke request, the MethodID (id) of the method to invoke, a variant value to be used as <em>this</em> (VALUE_TYPE_ID_NULL in case of a valuetype) and a list of variant value representing the parameters of the method.</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT, NOT_SUSPENDED, INVALID_METHODID, INVALID_ARGUMENT</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>SET_PROTOCOL_VERSION</p></td>
+<td style="text-align: left;"><p>8</p></td>
+<td style="text-align: left;"><p>Returns an empty reply</p></td>
+<td style="text-align: left;"><p>Ask for two int giving respectively the major and minor version of the procotol to use.</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>ABORT_INVOKE</p></td>
+<td style="text-align: left;"><p>9</p></td>
+<td style="text-align: left;"><p>Abort the invocation and returns an empty reply</p></td>
+<td style="text-align: left;"><p>Ask for an ObjectID (id) mapping to a System.Threading.Thread instance and the id (int) of the command packet that set up the invocation to cancel</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT, NO_INVOCATION</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>SET_KEEPALIVE</p></td>
+<td style="text-align: left;"><p>10</p></td>
+<td style="text-align: left;"><p>Set up the new keep alive value and returns an empty reply</p></td>
+<td style="text-align: left;"><p>Ask for a timeout value (int)</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_TYPES_FOR_SOURCE_FILE</p></td>
+<td style="text-align: left;"><p>11</p></td>
+<td style="text-align: left;"><p>Returns a list of TypeID (id) of class defined inside the supplied file name</p></td>
+<td style="text-align: left;"><p>Ask for a file name (string) and an ignore case flag (byte) although setting it to something different than 0 isn't currently supported.</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_TYPES</p></td>
+<td style="text-align: left;"><p>12</p></td>
+<td style="text-align: left;"><p>Returns a list of TypeID (id) of type which corresponds to the provided type name</p></td>
+<td style="text-align: left;"><p>Ask for type name (string) and a ignore case flag (byte) which acts like a boolean value</p></td>
+<td style="text-align: left;"><p>INVALID_ARGUMENT</p></td>
+</tr>
+</tbody>
+</table>
+<p>The main function handling these commands is <code>vm_commands</code> and is situated at <code>debugger-agent.c:5671</code></p>
+<h3 id="events-commands">Events commands</h3>
+<p>Events allows the debuggee to act on program execution (stepping) and also to set up things like breakpoints, watchpoints, exception catching, etc.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>REQUEST_SET</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Returns the request id (int)</p></td>
+<td style="text-align: left;"><p>Ask for 3 bytes giving the event kind (EventKind enumeration), suspend policy (SuspendPolicy enumeration) and a list of modifiers which content is context dependent and given in the table below</p></td>
+<td style="text-align: left;"><p>INVALID_METHODID, INVALID_TYPEID, NO_SEQ_POINT_AT_IL_OFFSET, INVALID_OBJECT, INVALID_ASSEMBLYID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>REQUEST_CLEAR</p></td>
+<td style="text-align: left;"><p>2</p></td>
+<td style="text-align: left;"><p>Clear the requested event and returns an empty reply</p></td>
+<td style="text-align: left;"><p>Ask for an event type (byte) and a request id (int)</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>REQUEST_CLEAR_ALL_BREAKPOINTS</p></td>
+<td style="text-align: left;"><p>3</p></td>
+<td style="text-align: left;"><p>Returns an empty reply</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+</tbody>
+</table>
+<p>The main function handling these commands is <code>event_commands</code> and is situated at <code>debugger-agent.c:5916</code></p>
+<p>Each modifier has the first byte describing the modification it's carrying out and corresponding to the values found in the ModifierKind enumeration. The following table list the remaining body depending on the modification value.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Mod value</p></td>
+<td style="text-align: left;"><p>Body</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>COUNT</p></td>
+<td style="text-align: left;"><p>a MethodID (id)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>LOCATION_ONLY</p></td>
+<td style="text-align: left;"><p>a MethodID (id) and a location information (long)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>STEP</p></td>
+<td style="text-align: left;"><p>A thread id, size of the step (int) corresponding to the StepSize enumeration and depth of it (int) corresponding to the StepDepth enumeration</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>THREAD_ONLY</p></td>
+<td style="text-align: left;"><p>A thread id</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>EXCEPTION_ONLY</p></td>
+<td style="text-align: left;"><p>A TypeID representing a exception type and two byte values setting respectively the caught and uncaught filter</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>ASSEMBLY_ONLY</p></td>
+<td style="text-align: left;"><p>A list of AssemblyID (id)</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>SOURCE_FILE_ONLY</p></td>
+<td style="text-align: left;"><p>A list of source file name (string)</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>TYPE_NAME_ONLY</p></td>
+<td style="text-align: left;"><p>A list of type name (string)</p></td>
+</tr>
+</tbody>
+</table>
+<h3 id="thread-commands">Thread commands</h3>
+<p>Each command requires at least one ObjectID (of type id) parameter mapping to a thread instance before any additional parameter the command may require.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_FRAME_INFO</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Returns a list of quadruplet of frame ID (int), MethodID (id), IL offset (int) and frame flags (byte)</p></td>
+<td style="text-align: left;"><p>Ask for a start frame (currently other value than 0 aren't supported) as an int and a length as a int</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_NAME</p></td>
+<td style="text-align: left;"><p>2</p></td>
+<td style="text-align: left;"><p>Returns the name of the thread as a string</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_STATE</p></td>
+<td style="text-align: left;"><p>3</p></td>
+<td style="text-align: left;"><p>Return the thread state as an int</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_INFO</p></td>
+<td style="text-align: left;"><p>4</p></td>
+<td style="text-align: left;"><p>Returns a byte value telling if the thread is a threadpool thread (1) or not (0)</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_ID</p></td>
+<td style="text-align: left;"><p>5</p></td>
+<td style="text-align: left;"><p>Returns the thread id (address of the object) as a long</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_TID</p></td>
+<td style="text-align: left;"><p>6</p></td>
+<td style="text-align: left;"><p>Returns the proper thread id (or TID) as a long</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+</tbody>
+</table>
+<p>The main function handling these commands is <code>thread_commands</code> and is situated at <code>debugger-agent.c:6991</code></p>
+<h3 id="appdomains-commands">AppDomains commands</h3>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_ROOT_DOMAIN</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Returns the DomainID of the root domain</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_FRIENDLY_NAME</p></td>
+<td style="text-align: left;"><p>2</p></td>
+<td style="text-align: left;"><p>Returns the friendly name as a string of the provided DomainID</p></td>
+<td style="text-align: left;"><p>Ask for a DomainID (id)</p></td>
+<td style="text-align: left;"><p>INVALID_DOMAINID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_ASSEMBLIES</p></td>
+<td style="text-align: left;"><p>3</p></td>
+<td style="text-align: left;"><p>Returns a list of AssemblyID contained inside this AppDomain</p></td>
+<td style="text-align: left;"><p>Ask for a DomainID (id)</p></td>
+<td style="text-align: left;"><p>INVALID_DOMAINID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_ENTRY_ASSEMBLY</p></td>
+<td style="text-align: left;"><p>4</p></td>
+<td style="text-align: left;"><p>Returns the entry AssemblyID of this domain</p></td>
+<td style="text-align: left;"><p>Ask for a DomainID (id)</p></td>
+<td style="text-align: left;"><p>INVALID_DOMAINID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>CREATE_STRING</p></td>
+<td style="text-align: left;"><p>5</p></td>
+<td style="text-align: left;"><p>Returns the ObjectID of the created string</p></td>
+<td style="text-align: left;"><p>Ask for a DomainID (id) where to create the new string and a string typed value to put inside the domain</p></td>
+<td style="text-align: left;"><p>INVALID_DOMAINID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_CORLIB</p></td>
+<td style="text-align: left;"><p>6</p></td>
+<td style="text-align: left;"><p>Returns the AssemblyID of the load corlib inside this AppDomain</p></td>
+<td style="text-align: left;"><p>Ask for a DomainID (id)</p></td>
+<td style="text-align: left;"><p>INVALID_DOMAINID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>CREATE_BOXED_VALUE</p></td>
+<td style="text-align: left;"><p>7</p></td>
+<td style="text-align: left;"><p>Returns the ObjectID of the boxed value</p></td>
+<td style="text-align: left;"><p>Ask for a DomainID (id), TypeID of the type that is going to be boxed and a variant value which is going to be put into the boxed value</p></td>
+<td style="text-align: left;"><p>INVALID_DOMAINID, INVALID_TYPEID</p></td>
+</tr>
+</tbody>
+</table>
+<p>The main function handling these commands is <code>domain_commands</code> and is situated at <code>debugger-agent.c:6104</code></p>
+<h3 id="assembly-commands">Assembly commands</h3>
+<p>Each command requires at least one AssemblyID (of type id) parameter before any additional parameter the command may require.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_LOCATION</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Returns the filename (string) of image associated to the assembly</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_ASSEMBLYID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_ENTRY_POINT</p></td>
+<td style="text-align: left;"><p>2</p></td>
+<td style="text-align: left;"><p>Returns the MethodID (id) of the entry point or a 0 id if there is none (in case of dynamic assembly or library for instance)</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_ASSEMBLYID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_MANIFEST_MODULE</p></td>
+<td style="text-align: left;"><p>3</p></td>
+<td style="text-align: left;"><p>Returns the ModuleID (id) of the assembly</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_ASSEMBLYID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_OBJECT</p></td>
+<td style="text-align: left;"><p>4</p></td>
+<td style="text-align: left;"><p>Returns the ObjectID of the AssemblyID object instance</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_ASSEMBLYID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_TYPE</p></td>
+<td style="text-align: left;"><p>5</p></td>
+<td style="text-align: left;"><p>Returns the TypeID of the found type or a null id if it wasn't found</p></td>
+<td style="text-align: left;"><p>Ask for a type information in form of a string and a byte value to tell if case should be ignored (1) or not (0)</p></td>
+<td style="text-align: left;"><p>INVALID_ASSEMBLYID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_NAME</p></td>
+<td style="text-align: left;"><p>6</p></td>
+<td style="text-align: left;"><p>Return the full name of the assembly as a string</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_ASSEMBLYID</p></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<p>The main function handling these commands is <code>assembly_commands</code> and is situated at <code>debugger-agent.c:6203</code></p>
+<h3 id="module-commands">Module commands</h3>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>CMD_MODULE_GET_INFO</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Returns the following strings: basename of the image, scope name, full name, GUID and the image AssemblyID (id)</p></td>
+<td style="text-align: left;"><p>Ask for a ModuleID (id)</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+</tbody>
+</table>
+<p>The main function handling these commands is <code>module_commands</code> and is situated at <code>debugger-agent.c:6295</code></p>
+<h3 id="method-commands">Method commands</h3>
+<p>Each command requires at least one MethodID (of type id) parameter before any additional parameter the command may require.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_NAME</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Returns a string of the method name</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_METHODID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_DECLARING_TYPE</p></td>
+<td style="text-align: left;"><p>2</p></td>
+<td style="text-align: left;"><p>Returns a TypeID of the declaring type for this method</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_METHODID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_DEBUG_INFO</p></td>
+<td style="text-align: left;"><p>3</p></td>
+<td style="text-align: left;"><p>Returns the code size of the method (int), source file name (string) and a list of tuple of IL offset (int) and line numbers (int) for the method</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_METHODID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_PARAM_INFO</p></td>
+<td style="text-align: left;"><p>4</p></td>
+<td style="text-align: left;"><p>Returns the call convention (int), parameter count (int), generic parameter count (int), TypeID of the returned value (id), <em>parameter count</em> TypeID for each parameter type and finally <em>parameter count</em> parameter name (string) for each parameter.</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_METHODID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_LOCALS_INFO</p></td>
+<td style="text-align: left;"><p>5</p></td>
+<td style="text-align: left;"><p>Returns the number of locals (int) followed by the TypeID (id) for each locals, followed by the name (string) of each locals (empty string if there is none) and finally followed by the scope of each locals which is a tuple of int giving the start address and end offset.</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_METHODID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_INFO</p></td>
+<td style="text-align: left;"><p>6</p></td>
+<td style="text-align: left;"><p>Returns 3 int representing respectively the method flags, implementation flags and token</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_METHODID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_BODY</p></td>
+<td style="text-align: left;"><p>7</p></td>
+<td style="text-align: left;"><p>Returns a list of byte corresponding to the method IL code.</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_METHODID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>RESOLVE_TOKEN</p></td>
+<td style="text-align: left;"><p>8</p></td>
+<td style="text-align: left;"><p>Returns a variant value corresponding to the provided token</p></td>
+<td style="text-align: left;"><p>Ask for a token value (int)</p></td>
+<td style="text-align: left;"><p>INVALID_METHODID</p></td>
+</tr>
+<tr class="even">
+</tr>
+</tbody>
+</table>
+<p>The main functions handling these commands are <code>method_commands</code> and <code>method_commands_internal</code> and are situated at <code>debugger-agent.c:6968</code> and <code>debugger-agent.c:6968</code> respectively.</p>
+<h3 id="type-commands">Type commands</h3>
+<p>Each command requires at least one TypeID (of type id) parameter before any additional parameter the command may require.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_INFO</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Returns the following informations about the type in that order: namespace (string), class name (string), full name (string), AssemblyID (id), ModuleID (id), TypeID (id), TypeID (id) of underlying type (or a 0 id if there is none), type token (int), type rank (byte), type flags (int), underlying byval type (byte) flags (see after table) and a list of nested type TypeID</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_METHODS</p></td>
+<td style="text-align: left;"><p>2</p></td>
+<td style="text-align: left;"><p>Returns a list of MethodID corresponding to each of the method of the type</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_FIELDS</p></td>
+<td style="text-align: left;"><p>3</p></td>
+<td style="text-align: left;"><p>Returns list of quadruplet of FieldID (id), field name (string), field TypeID (id), field attributes (int)</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_VALUES</p></td>
+<td style="text-align: left;"><p>4</p></td>
+<td style="text-align: left;"><p>Returns a number of variant value equals to the number of FieldID that was passed as parameter. If the field had a ThreadStatic attribute applied to it, value fetched are from the current thread point of view.</p></td>
+<td style="text-align: left;"><p>Ask for a list of FieldID representing this type static fields to the the value of. Only static field are supported.</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID, INVALID_FIELDID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_OBJECT</p></td>
+<td style="text-align: left;"><p>5</p></td>
+<td style="text-align: left;"><p>Returns an ObjectID corresponding to the type instance</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_SOURCE_FILES</p></td>
+<td style="text-align: left;"><p>6</p></td>
+<td style="text-align: left;"><p>Returns the same output than GET_SOURCE_FILES_2 except only the basename of each path is returned</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>SET_VALUES</p></td>
+<td style="text-align: left;"><p>7</p></td>
+<td style="text-align: left;"><p>Returns an empty response</p></td>
+<td style="text-align: left;"><p>Ask for a list of tuple of FieldID and variant value. Only pure static field can be set (i.e. with no extra attribute like ThreadStatic).</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID, INVALID_FIELDID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>IS_ASSIGNABLE_FROM</p></td>
+<td style="text-align: left;"><p>8</p></td>
+<td style="text-align: left;"><p>Returns a boolean equals to true if the type is assignable from the other provided type, false otherwise</p></td>
+<td style="text-align: left;"><p>Ask for an extra TypeID</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_PROPERTIES</p></td>
+<td style="text-align: left;"><p>9</p></td>
+<td style="text-align: left;"><p>Returns a list of quadruplet of FieldID (id), get accessor MethodID (string), set accessor MethodID (id), property attributes (int)</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_CATTRS</p></td>
+<td style="text-align: left;"><p>10</p></td>
+<td style="text-align: left;"><p>Returns a list of custom attribute applied on the type. Custom attribute definition is given below.</p></td>
+<td style="text-align: left;"><p>Ask for a TypeID of an custom attribute type</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_FIELD_CATTRS</p></td>
+<td style="text-align: left;"><p>11</p></td>
+<td style="text-align: left;"><p>Returns a list of custom attributes of a type's field. Custom attribute definition is given below.</p></td>
+<td style="text-align: left;"><p>Ask for a FieldID of one the type field and a TypeID of an custom attribute type</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID, INVALID_FIELDID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_PROPERTY_CATTRS</p></td>
+<td style="text-align: left;"><p>12</p></td>
+<td style="text-align: left;"><p>Returns a list of custom attributes of a type's property. Custom attribute definition is given below.</p></td>
+<td style="text-align: left;"><p>Ask for a PropertyID of one the type field and a TypeID of an custom attribute type</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID, INVALID_PROPERTYID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_SOURCE_FILES_2</p></td>
+<td style="text-align: left;"><p>13</p></td>
+<td style="text-align: left;"><p>Returns a list of source file full paths (string) where the type is defined</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_TYPEID</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_VALUES_2</p></td>
+<td style="text-align: left;"><p>14</p></td>
+<td style="text-align: left;"><p>Returns a number of variant value equals to the number of FieldID that was passed as parameter. If the field had a ThreadStatic attribute applied to it, value fetched are from the thread parameter point of view.</p></td>
+<td style="text-align: left;"><p>Ask for an ObjectID representing a System.Thread instance and a list of FieldID representing this type static fields to the the value of. Only static field are supported.</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT, INVALID_TYPEID, INVALID_FIELDID</p></td>
+</tr>
+</tbody>
+</table>
+<p>The main functions handling these commands are <code>type_commands</code> and <code>type_commands_internal</code> and are situated at <code>debugger-agent.c:6726</code> and <code>debugger-agent.c:6403</code> respectively.</p>
+<p>Byval flags is an indication of the type attribute for a parameter when it's passed by value. A description of these flags follows:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>byte 1</p></td>
+<td style="text-align: left;"><p>byte 2</p></td>
+<td style="text-align: left;"><p>byte 3</p></td>
+<td style="text-align: left;"><p>byte 4</p></td>
+<td style="text-align: left;"><p>byte 5</p></td>
+<td style="text-align: left;"><p>byte 6</p></td>
+<td style="text-align: left;"><p>byte 7</p></td>
+<td style="text-align: left;"><p>byte 8</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Is a pointer type</p></td>
+<td style="text-align: left;"><p>Is a primitive type</p></td>
+<td style="text-align: left;"><p>Is a value type</p></td>
+<td style="text-align: left;"><p>Is an enumeration</p></td>
+<td style="text-align: left;"><p>Unused</p></td>
+<td style="text-align: left;"><p>Unused</p></td>
+<td style="text-align: left;"><p>Unused</p></td>
+<td style="text-align: left;"><p>Unused</p></td>
+</tr>
+</tbody>
+</table>
+<p>Custom attribute definition is as follows: MethodID of the attribute ctor, a list of variant objects representing the typed arguments of the attribute prepended by a length attribute (int) and another list representing named arguments of which elements are either tuple of the constant 0x53 followed by a variant value (in case the named argument is a field) or a triplet of the constant 0x54 followed by a PropertyID followed by a variant value (in case the named argument is a property). In both list case, an empty list is simply one int of value 0.</p>
+<h3 id="stackframe-commands">Stackframe commands</h3>
+<p>Each command requires at least one ObjectID (of type id) parameter mapping to a System.Threading.Thread instance and a FrameID (of type id) before any additional parameter the command may require.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_VALUES</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Ask for a list of position (int) information.</p></td>
+<td style="text-align: left;"><p>Returns a list of miscelleanous typed values. If the position information was negative, the value corresponds to a parameter and if it was positive to a local variable.</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT, INVALID_FRAMEID, ABSENT_INFORMATION</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_THIS</p></td>
+<td style="text-align: left;"><p>2</p></td>
+<td style="text-align: left;"><p>Returns the <em>this</em> value prepended by a single byte value describing its type, or the special TYPE_ID_NULL (byte) value which is equal to 0xf0 in case there is no <em>this</em> parameter.</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT, INVALID_FRAMEID, ABSENT_INFORMATION</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>SET_VALUES</p></td>
+<td style="text-align: left;"><p>3</p></td>
+<td style="text-align: left;"><p>Returns an empty reply</p></td>
+<td style="text-align: left;"><p>Ask for a list of pair of position (int) information and variant whose value is going to be used.</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT, INVALID_FRAMEID, ABSENT_INFORMATION, INVALID_ARGUMENT</p></td>
+</tr>
+</tbody>
+</table>
+<p>The main function handling these commands is <code>frame_commands</code> and is situated at <code>debugger-agent.c:7082</code></p>
+<h3 id="array-commands">Array commands</h3>
+<p>Each command requires at least one ObjectID (of type id) parameter mapping to a System.Array instance before any additional parameter the command may require.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_LENGTH</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Returns an int corresponding to the array rank followed by a set of int pair corresponding respectively to the length and lower bound of each of the array dimensions. In case of a single dimensional zero-based array, the returned data amount to 3 int values with the second being the total length of the array and the third one being 0.</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_VALUES</p></td>
+<td style="text-align: left;"><p>2</p></td>
+<td style="text-align: left;"><p>Returns a list of <em>length</em> elements which individual size in bytes depends on the underlying type of the System.Array instance.</p></td>
+<td style="text-align: left;"><p>Ask for an index (int) and a length (int) to determine the range of value to return</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>SET_VALUES</p></td>
+<td style="text-align: left;"><p>3</p></td>
+<td style="text-align: left;"><p>Return an empty reply</p></td>
+<td style="text-align: left;"><p>Ask for an index (int) and a length (int) to determine the range of value to set and a <em>length</em> number of trailing values whose type and byte size match those of the underlying type of the System.Array instance.</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+</tbody>
+</table>
+<p>The main function handling these commands is <code>vm_commands</code> and is situated at <code>debugger-agent.c:5671</code></p>
+<h3 id="string-commands">String commands</h3>
+<p>Each command requires at least one ObjectID (of type id) parameter mapping to a System.String instance before any additional parameter the command may require.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_VALUE</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Returns a UTF8-encoded string corresponding to the System.String instance with its length prepended as a int value</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_LENGTH</p></td>
+<td style="text-align: left;"><p>2</p></td>
+<td style="text-align: left;"><p>Returns the length of a UTF8-encoded string corresponding to the System.String instance as an int value</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_CHARS</p></td>
+<td style="text-align: left;"><p>3</p></td>
+<td style="text-align: left;"><p>Returns <em>length</em> short values each encoding a character of the string slice</p></td>
+<td style="text-align: left;"><p>Ask for a start index (long) and a length parameter (long) of the string slice to take.</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT, INVALID_ARGUMENT</p></td>
+</tr>
+</tbody>
+</table>
+<p>The main function handling these commands is <code>string_commands</code> and is situated at <code>debugger-agent.c:7293</code></p>
+<h3 id="object-commands">Object commands</h3>
+<p>Each command requires at least one ObjectID (of type id) parameter before any additional parameter the command may require.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Type of reply</p></td>
+<td style="text-align: left;"><p>Additional parameters</p></td>
+<td style="text-align: left;"><p>Possible error code returned</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_TYPE</p></td>
+<td style="text-align: left;"><p>1</p></td>
+<td style="text-align: left;"><p>Returns the TypeID as an id</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_VALUES</p></td>
+<td style="text-align: left;"><p>2</p></td>
+<td style="text-align: left;"><p>Ask for a list of FieldID to fetch value of</p></td>
+<td style="text-align: left;"><p>Returns <em>length</em> values of miscellaneous type and size corresponding to the underlying type of each queried field</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT, UNLOADED, INVALID_FIELDID</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>IS_COLLECTED</p></td>
+<td style="text-align: left;"><p>3</p></td>
+<td style="text-align: left;"><p>Returns an int equals to 1 if the object has been collected by GC, 0 otherwise</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>None</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>GET_ADDRESS</p></td>
+<td style="text-align: left;"><p>4</p></td>
+<td style="text-align: left;"><p>Returns a long value corresponding to the address where the object is stored in memory</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>GET_DOMAIN</p></td>
+<td style="text-align: left;"><p>5</p></td>
+<td style="text-align: left;"><p>Returns an id corresponding to the DomainID the object is located in</p></td>
+<td style="text-align: left;"><p>None</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>SET_VALUES</p></td>
+<td style="text-align: left;"><p>6</p></td>
+<td style="text-align: left;"><p>Returns an empty reply</p></td>
+<td style="text-align: left;"><p>Ask for a list of tuple of FieldID (id) and of the value that should be set to it</p></td>
+<td style="text-align: left;"><p>INVALID_OBJECT, UNLOADED, INVALID_FIELDID</p></td>
+</tr>
+</tbody>
+</table>
+<p>The main function handling these commands is <code>object_commands</code> and is situated at <code>debugger-agent.c:7318</code></p>
+<h3 id="composite-commands">Composite commands</h3>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Name</p></td>
+<td style="text-align: left;"><p>Value</p></td>
+<td style="text-align: left;"><p>Description</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>COMPOSITE</p></td>
+<td style="text-align: left;"><p>100</p></td>
+<td style="text-align: left;"><p>This command is actually part of the event command set and is used for ?</p></td>
+</tr>
+</tbody>
+</table>
+<h1 id="differences-with-jdwp">Differences with JDWP</h1>
+<ul>
+<li>Handshake ASCII sequence is DWP-Handshake instead of JDWP-Handshake</li>
+<li>Some new Mono specific command set such as AppDomain, Assembly or Module and removal/renaming of some Java specific set such as InterfaceType, ThreadGroupReference, ClassLoaderReference, etc.</li>
+<li>Mono SDB protocol has its own specific ID types related to the new command sets.</li>
+<li>SDB protocol has less error code although some are Mono-specific like &quot;No Invocation&quot;, &quot;Absent Informations&quot; and &quot;No seq point at IL offset&quot; codes.</li>
+</ul>
+</body>
+</html>

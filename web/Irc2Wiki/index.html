@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>A mutiliated version of Jamie Zawinksi's irc2html.pl that creates basic MediaWiki tables instead of HTML. Used by the <a href="http://localhost:4000/Accessibility:_Team" title="wikilink"> Accessibility Team</a> to post IRC meeting logs. Works great with irssi log format; can't speak for anything else.</p>
+<p><perl></p>
+<ol>
+<li>!/usr/bin/perl -w</li>
+<li>irc2wiki.pl --- Hacked up irc2html.pl that spits plain MediaWiki tables</li>
+<li>Sandy Armstrong <sanfordarmstrong@gmail.com></li>
+<li>irc2html.pl --- converts raw chat logs to a readable HTML table-ized form.</li>
+<li>Copyright © 1998-2006 Jamie Zawinski <jwz@jwz.org></li>
+<li></li>
+<li>Permission to use, copy, modify, distribute, and sell this software and its</li>
+<li>documentation for any purpose is hereby granted without fee, provided that</li>
+<li>the above copyright notice appear in all copies and that both that</li>
+<li>copyright notice and this permission notice appear in supporting</li>
+<li>documentation. No representations are made about the suitability of this</li>
+<li>software for any purpose. It is provided &quot;as is&quot; without express or</li>
+<li>implied warranty.</li>
+<li></li>
+<li>Created: 11-Jun-98.</li>
+<li></li>
+<li>usage: irc2html.pl [--verbose] [--strip] [--no-color] infile outfile</li>
+<li>Or, just install it as a CGI on your web server.</li>
+<li></li>
+<li>The format it expects from the logs is the format written by, e.g., tkirc:</li>
+<li>each line has a \t on it, and the part before the tab is the person talking,</li>
+<li>or the action happening (&quot;[ join ]&quot; and so on) and the part after the tab</li>
+<li>is the actual text.</li>
+<li></li>
+<li>A number of other formats are accepted as well, e.g.,</li>
+<li></li>
+<li>[17:01:17] <user> blah blah</li>
+<li>and</li>
+<li>13:25 [xxx(~xxx@00.11.222.333)] blah blah</li>
+<li>13:25 [msg(xxx)] blah blah</li>
+<li></li>
+<li>If the line doesn't match any of the known patterns, then we assume that</li>
+<li>the stuff before the first space is the action and the rest is the text.</li>
+<li></li>
+<li>The lines alternate white and gray, changing each time the person talking</li>
+<li>changes (so multiple lines by the same person are colored the same.)</li>
+<li>Or, if --no-color is specified, the talkers are separated by solid</li>
+<li>horizontal lines.</li>
+<li></li>
+<li>If a line ends in something that looks like a timestamp, that goes in</li>
+<li>column 3.</li>
+<li></li>
+<li>The --strip option means to strip out non-talking lines, like &quot;[ join ]&quot;.</li>
+<li></li>
+<li>URLs are made clickable.</li>
+<li></li>
+<li>Color codes, bold, etc. are also supported, thanks to</li>
+<li>Andy Brezinsky <andy@mbrez.com> and Juerd <juerd@juerd.nl>.</li>
+<li></li>
+<li></li>
+<li>This script also works as a CGI: just make a symlink (e.g., irc2html.cgi)</li>
+<li>and it will present you with a text area where you can paste your char log.</li>
+<li>When you submit, it will return the HTML document. This might save some</li>
+<li>time messing around with temporary files.</li>
+<li></li>
+<li>5-May-2006: jwz: updated to use CSS instead of <FONT> tags.</li>
+</ol>
+<p>require 5; use diagnostics; use strict;</p>
+<p>my $progname = $0; $progname =~ s@^.*/([^/]+)$@$1@; my $version = q{ $Revision: 1.23 $ }; $version =~ s/^[^0-9]+([0-9.]+).*$/$1/;</p>
+<p>my $verbose = 0;</p>
+<p>my $strip_seconds = 1; # whether to keep timestamps in hh:mm only. my $strip_timestamps = 0; # whether to omit any third column entirely. my $strip_noise = 0; # whether to strip &quot;join&quot;, &quot;leave&quot;, etc. my $colorize_p = 1; # whether to do background colors. my $separators_p = 0; # whether to do horizontal lines. my $chunk_size = 200; # start a new table after this many lines.</p>
+<p>my $url_re = q{\b(s?https?|ftp|file|gopher|s?news|telnet|mailbox):} .</p>
+<p><code>            q{(//[-A-Z0-9_.]+:\d*)?} .</code><br /><code>            q{[-A-Z0-9_=?\#\$\@~\`%&amp;*+|\/.,;\240]+};</code></p>
+<p>my $fg_color = &quot;#000&quot;; my $bg_color1 = &quot;#FFF&quot;; my $bg_color2 = &quot;#EEE&quot;;</p>
+<p>$ENV{USER} = ($ENV{REMOTE_ADDR} || '?') unless defined ($ENV{USER});</p>
+<p>my $doc_head =</p>
+<p><code>(</code><br /><code> &quot;&quot;</code><br /><code>);</code></p>
+<p>my $stylesheet =</p>
+<p><code>(&quot;</code> <code>\n&quot; .</code><br /><code> &quot;</code></p>
+<STYLE TYPE=\"text/css\">
+<p>\n&quot; .</p>
+<p><code> &quot; </code> <code>\n&quot; .</code><br /><code> &quot;</code></p>
+</STYLE>
+<p>\n&quot; .</p>
+<p><code> &quot;\n&quot;);</code></p>
+<p>my $margin_style = &quot; STYLE=\&quot;border-top: 1px solid;\&quot;&quot;; # used for separators</p>
+<p>my $input_lines = 0; my $output_lines = 0;</p>
+<p>sub convert_line_body($) {</p>
+<p><code> my ($line) = @_;</code></p>
+<p><code> # don't allow any single word to be longer than N chars -- insert spaces.</code><br /><code> # (actually, insert non-breaking spaces (240) which we convert later.)</code><br /><code> 1 while ($line =~ s/^(.*?)([^ \t\n\240]{40})([^ \t\n\240].*)$/$1$2\240$3/s);</code></p>
+<p><code> $line =~ s/&amp;/&amp;/g;</code><br /><code> $line =~ s/</code> <code>$1</code></A><code>@gi;</code></p>
+<p><code> # if the url appeared to end in punctuation, back up over it.</code><br /><code> #$line =~ s@([-.,!;?\#]+)(\&quot;&gt;)@$2@gs;</code><br /><code> #$line =~ s@([-.,!;?\#]+)(</code></A><code>)@$2$1@gs;</code></p>
+<p><code> # if we inserted any non-breaking spaces inside URLs, just nuke them.</code><br /><code> #1 while ($line =~ s@(</code><A HREF=\"[^\"\240]*)\240([^\"]*\"><code>)@$1$2@gi);</code></p>
+<p><code> # convert remaining non-breaking spaces to real spaces.</code><br /><code> $line =~ s/\240/ /g;</code></p>
+<p><code> #if ($verbose) {</code><br /><code> #  $_ = $line;</code><br /><code> #  while (s@</code><A HREF=\"(.*?)\"><code>@@i) {</code><br /><code> #    print STDERR &quot;$progname: line $input_lines: URL: $1\n&quot;;</code><br /><code> #  }</code><br /><code> #}</code></p>
+<p><code> # if there are any ctl characters in it, do color-decoding</code><br /><code> $line = convert_color ($line)</code><br /><code>   if ($line =~ m/[\000-\010\013\014\016-\037]/);</code></p>
+<p><code> return $line;</code></p>
+<p>}</p>
+<p>my $prev_head = &quot;&quot;; my $prev_stamp = &quot;&quot;; my $bg_color = $bg_color1; my $line_tick = 0; my $any_styles = 0; # whether any red hot style sheet action is needed</p>
+<p>sub convert_line($) {</p>
+<p><code> ($_) = @_;</code></p>
+<p><code> # alternate log format...</code><br /><code> s@^[[(](\d?\d:\d\d(:\d\d)?)[])] (.*)$@$3 {$1}@gs;    # leading timestamp</code><br /><code> s@^(\d?\d:\d\d(:\d\d)? ?([AP]M)?) (.*)$@$4 {$1}@gsi; # leading timestamp</code></p>
+<p><code> # leading time/date stamp</code><br /><code> s@^</code><br /><span class="math">$$\d\d?/\d\d/\d\d \@ (\d?\d:\d\d(:\d\d)?)$$</span><br /><code>\s+(.*)$@$3 {$1}@gs;</code></p>
+<p><code> # IRSSI leading full date log format</code><br /><code> s@^\d\d?-...-\d\d\d\d (\d\d?:\d\d(:\d\d)?)\s+(.*)$@$3 {$1}@gs;</code></p>
+<p><code> # GAIM inline timestamps (alone on a line with leading whitespace)</code><br /><code> s@^  +((\d\d?:)?\d\d?:\d\d)$@*** $1@gs;</code></p>
+<p><code> # goofy name+host format...</code><br /><code> s@^</code><br /><span class="math">$$msg\(([^()\[$$</span><br /><code> \t]+)\)\] @&gt;&gt; $1\t@gsi;</code><br /><code> s@^</code><br /><span class="math">$$([^()\[$$</span><br /><code> \t]+)</code><span class="math">$([^()\[\] \t]+)$</span><code>\] @&lt;$1&gt;\t@gsi;</code></p>
+<p><code> if (m@^\s*$@) {</code><br /><code>   $prev_head = &quot;&quot;;</code><br /><code>   $bg_color = $bg_color1;</code><br /><code>   my $color_style = '';</code><br /><code>   if ($colorize_p) {</code><br /><code>     $color_style = &quot; STYLE=\&quot;background:$bg_color\&quot;&quot;;</code><br /><code>   }</code><br /><code>   return &quot;</code></p>
+<TR>
+<TD COLSPAN=2$color_style>
+<p><br /></p>
+</TD>
+</TR>
+<p>\n&quot;;</p>
+<p><code> }</code></p>
+<p><code> my ($head, $body) = m@^([^\t]+)[\t]+(.*)$@s;</code><br /><code> my $stamp = undef;</code></p>
+<p><code> if (!defined($head)) {</code></p>
+<p><code>   # it's best if the head and body are separated by a tab; but if we can't</code><br /><code>   # get that, try for it separated by spaces.</code></p>
+<ol>
+<li>if (m@^(&lt;[^&gt; \t\n]+&gt;) (.*)$@s) {</li>
+</ol>
+<p><code>   if (m@^(&lt;[\@\+ ]?[^&gt; \t\n]+&gt;) (.*)$@s) {</code><br /><code>     $head = $1;</code><br /><code>     $body = $2;</code><br /><code>   } elsif (m@^(\* [^&gt; \t\n]+) (.*)$@s) {</code><br /><code>     $head = $1;</code><br /><code>     $body = $2;</code><br /><code>   } elsif (m@^(</code><br /><span class="math">$$*[^$$</span><br /><code>]+\]) (.*)$@s) {</code><br /><code>     $head = $1;</code><br /><code>     $body = $2;</code><br /><code>   } elsif (m@^([^</code><br /><span class="math"></span><br /><code>&lt;&gt; \t\n:]+:) (.*)$@s) {</code><br /><code>     $head = $1;</code><br /><code>     $body = $2;</code><br /><code>   } elsif (m@^(&gt;) (.*)$@s) {</code><br /><code>     $head = $1;</code><br /><code>     $body = $2;</code><br /><code>   } elsif (m@^(\*+ *[^</code><br /><span class="math"></span><br /><code>&lt;&gt; \t\n:]+) (.*)$@s) {</code><br /><code>     $head = $1;</code><br /><code>     $body = $2;</code><br /><code>   } else {</code><br /><code>     $head = &quot;&quot;;</code><br /><code>     $body = $_;</code><br /><code>     print STDERR &quot;$progname: unparsable line $input_lines: $_\n&quot; if $verbose;</code><br /><code>   }</code><br /><code> }</code></p>
+<p><code> # If there's a timestamp at the end of the line, put it in column 3.</code><br /><code> # Otherwise, there is no column 3.</code><br /><code> if ($body =~</code><br /><code>     m@^(.*?)\s*[({]?\s*(\d\d?:\d\d(:\d\d)?( ?[AP]M)?)\s*[)}]?\s*$@i) {</code><br /><code>   $body = $1;</code><br /><code>   $stamp = $2;</code></p>
+<p><code>   if ($strip_timestamps) {</code><br /><code>     $stamp = '';</code><br /><code>   } elsif ($strip_seconds) {</code><br /><code>     $stamp =~ s@^(\d?\d:\d\d):\d\d$@$1@;</code><br /><code>   }</code></p>
+<p><code>   if ($stamp eq $prev_stamp) {</code><br /><code>     $stamp = undef;</code><br /><code>   } else {</code><br /><code>     $prev_stamp = $stamp;</code><br /><code>   }</code><br /><code> }</code></p>
+<p><code> if ($strip_noise &amp;&amp; $head =~ m@^(\[|\*\*\*)@) {</code><br /><code>   print STDERR &quot;$progname: deleting noise line $input_lines: $head\n&quot;</code><br /><code>       if $verbose;</code><br /><code>   return &quot;&quot;;</code><br /><code> }</code></p>
+<p><code> $head = convert_line_body ($head);</code><br /><code> $body = convert_line_body ($body);</code></p>
+<p><code> my $continuation = 1;</code><br /><code> my $color_changed_p = 0;</code></p>
+<p><code> if ($head ne $prev_head) {</code><br /><code>   $prev_head = $head;</code><br /><code>   $continuation = 0;</code><br /><code>   $color_changed_p = 1;</code><br /><code>   if ($bg_color eq $bg_color1) {</code><br /><code>     $bg_color = $bg_color2;</code><br /><code>   } else {</code><br /><code>     $bg_color = $bg_color1;</code><br /><code>   }</code><br /><code> }</code></p>
+<p><code> $head .= &quot; &quot;;</code></p>
+<p><code> if ($head =~ m@^(\[|\*\*\*)@ ||</code><br /><code>     $head =~ m@</code><span class="math">$\s*\d\d\d+\s*$</span><code>@) {</code><br /><code>   $head = &quot;</code><em><code>$head</code></em><code>&quot;;</code><br /><code>   $body = &quot;</code><em><code>$body</code></em><code>&quot;;</code></p>
+<p><code> } elsif ($continuation) {</code><br /><code>   $head = (&quot;&quot;);</code><br /><code> } else {</code><br /><code>   $head = &quot;</code><strong><code>$head</code></strong><code>&quot;;</code><br /><code> }</code></p>
+<p><code> # Specify the foreground color in the table cells too, in case this</code><br /><code> # html gets pasted somwehere with conflicting document colors.</code><br /><code> #</code><br /><code> my $color_style = '';</code></p>
+<p><code> if ($separators_p &amp;&amp; $color_changed_p &amp;&amp; $output_lines != 0) {</code><br /><code>   $color_style = $margin_style;</code><br /><code> } elsif ($colorize_p) {</code><br /><code>   $color_style = (&quot; STYLE=\&quot;color:$fg_color&quot; . </code><br /><code>                   ($bg_color eq $bg_color1 </code><br /><code>                    ? ''</code><br /><code>                    : &quot;; background:$bg_color&quot;) .</code><br /><code>                   &quot;\&quot;&quot;);</code><br /><code> }</code></p>
+<p><code> my $result = &quot;|-\n&quot; .</code><br /><code>              &quot;| $head\n&quot; .</code><br /><code>              &quot;| $body\n&quot;;</code></p>
+<p><code> if ($stamp) {</code><br /><code>   $result .= &quot;| $stamp\n&quot;;</code><br /><code> }</code></p>
+<p><code> if ($line_tick++ &gt; $chunk_size) {</code><br /><code>   $line_tick = 0;</code></p>
+<p><code>   $color_style = '';</code><br /><code>   if ($bg_color ne $bg_color1) {</code><br /><code>     if ($separators_p) {</code><br /><code>       $color_style = $margin_style;</code><br /><code>       } elsif ($colorize_p) {</code><br /><code>         $color_style = &quot; STYLE=\&quot;background:$bg_color1\&quot;&quot;;</code><br /><code>       }</code><br /><code>   }</code><br /><code> }</code></p>
+<p><code> $result =~ s@</code></p>
+<TD VALIGN=TOP NOWRAP>
+</TD>
+<p>@</p>
+<TD>
+</TD>
+<p>@g; # simplify...</p>
+<p><code> $result =~ s@ NOWRAP(&gt;[^\s]+?</code></p>
+</TD>
+<p>)@$1@g; # if no spaces, don't need nowrap</p>
+<p><code> $output_lines++;</code></p>
+<p><code> return $result;</code></p>
+<p>}</p>
+<p>sub convert_color($) {</p>
+<p><code> my ($str) = @_;</code></p>
+<p><code> $str =~ s/\e\[.*?[a-zA-Z]//g;</code></p>
+<p><code> if ($str =~ /(</code><br /><code>)/i) {</code><br /><code>   $str =~ s//\cO$1/g;</code><br /><code> } else {</code><br /><code>   $str .= &quot;\cO&quot;;</code><br /><code> }</code></p>
+<p><code> $str =~ s/\cV(.*?)\cV/\cC0,1$1\cO/g;</code><br /><code> $str =~ s/\cV/\cC0,1/;</code></p>
+<p><code> my @chars = (split(//, $str));</code><br /><code> my $ret = '';</code><br /><code> my ($CCfc, $CCbc, $CCnc);</code><br /><code> my $CCb  = 0;</code><br /><code> my $CCu  = 0;</code><br /><code> while (@chars) {</code><br /><code>   my $char = shift @chars;</code><br /><code>   if ($char eq &quot;\cB&quot;)    { $ret .= ($CCb ? '</code></b><code>' : '</code><b><code>'); $CCb = !$CCb; }</code><br /><code>   elsif ($char eq &quot;\c_&quot;) { $ret .= ($CCu ? '</code></u><code>' : '</code><u><code>'); $CCu = !$CCu; }</code><br /><code>   elsif ($char eq &quot;\cO&quot;) {</code><br /><code>     if ($CCb) { $CCb = 0; $ret .= '</code></b><code>'; }</code><br /><code>     if ($CCu) { $CCu = 0; $ret .= '</code></u><code>'; }</code><br /><code>     if ($CCnc) {</code><br /><code>       $CCbc= 0; $ret .= '</code></SPAN><code>' x $CCnc;</code><br /><code>       $CCfc= 0; $CCnc = 0; }</code><br /><code>   } elsif ($char eq &quot;\cC&quot;) {</code><br /><code>     my $CCcs = '';</code><br /><code>     while (($char = shift @chars) =~ /[\d,]/) {</code><br /><code>       $CCcs .= $char;</code><br /><code>     }</code></p>
+<p><code>     if ($char =~ /[^\d,]/) {</code><br /><code>       unshift @chars, $char;</code><br /><code>     }</code></p>
+<p><code>     if ($CCcs eq '') {</code><br /><code>       if ($CCbc) { $ret .= '</code></SPAN><code>'; $CCnc--; }</code><br /><code>       if ($CCfc) { $ret .= '</code></SPAN><code>'; $CCnc--; }</code><br /><code>       $CCbc = undef; $CCfc = undef;</code><br /><code>     } else {</code><br /><code>       my @k = split /,/, $CCcs;</code><br /><code>       if (defined($k[0]) &amp;&amp; $k[0] ne '') {</code><br /><code>         $CCfc = $k[0];</code><br /><code>         $ret .= &quot;</code><SPAN CLASS=fc$CCfc><code>&quot;;</code><br /><code>         $any_styles++;</code><br /><code>         $CCnc++;</code><br /><code>       }</code></p>
+<p><code>       if (defined($k[1]) &amp;&amp; $k[1] ne '') {</code><br /><code>         $CCbc = $k[1];</code><br /><code>         $ret .= &quot;</code><SPAN CLASS=bc$CCbc><code>&quot;;</code><br /><code>         $any_styles++;</code><br /><code>         $CCnc++;</code><br /><code>       }</code><br /><code>     }</code><br /><code>   }</code><br /><code>   else {</code><br /><code>     $ret .= $char;</code><br /><code>   }</code><br /><code> }</code><br /><code> return $ret;</code></p>
+<p>}</p>
+<p>my $buffered_line = undef; sub convert($) {</p>
+<p><code> my($line) = @_;</code></p>
+<p><code> if ($line =~ m/^[A-Za-z]/ &amp;&amp;</code><br /><code>     $line !~ m/^[^ \t\r\n:]+: /) {</code><br /><code>   $buffered_line = '' unless defined ($buffered_line);</code><br /><code>   $buffered_line .= $line;</code><br /><code>   return &quot;&quot;;</code><br /><code> } else {</code><br /><code>   my $ret = (defined ($buffered_line)</code><br /><code>              ? convert_line ($buffered_line)</code><br /><code>              : &quot;&quot;);</code><br /><code>   $buffered_line = $line;</code><br /><code>   return $ret;</code><br /><code> }</code></p>
+<p>}</p>
+<ol>
+<li>convert everything in the given string.</li>
+</ol>
+<p>sub convert_body($) {</p>
+<p><code> my ($body) = @_;</code></p>
+<p><code> my $color_style = '';</code><br /><code> if ($colorize_p) {</code><br /><code>   $color_style = &quot; STYLE=\&quot;background:$bg_color\&quot;&quot;;</code><br /><code> }</code><br /><code> my $output = &quot;{|border=\&quot;0\&quot; cellpadding=\&quot;5\&quot; cellspacing=\&quot;0\&quot; align=\&quot;center\&quot;\n&quot;;</code></p>
+<p><code> $input_lines = 0;</code><br /><code> foreach (split (&quot;\n&quot;, $body)) {</code><br /><code>   $input_lines++;</code><br /><code>   $output .= convert ($_);</code><br /><code> }</code><br /><code> $output .= convert (&quot;&quot;);</code><br /><code> $output .= &quot;|-\n|}&quot;;</code></p>
+<p><code> my $ss = ($any_styles ? $stylesheet : &quot;&quot;);</code><br /><code> $_ = $doc_head;</code><br /><code> s/%%STYLESHEET%%/$ss/;</code><br /><code> $output = $_ . $output;</code><br /><code> return $output;</code></p>
+<p>}</p>
+<ol>
+<li>This is the main loop when we seem to have been invoked as a CGI script.</li>
+<li></li>
+</ol>
+<p>sub do_cgi() {</p>
+<p><code> error (400, &quot;malformed URL&quot;) if ($ENV{PATH_INFO} || $ENV{QUERY_STRING});</code></p>
+<p><code> if ($ENV{REQUEST_METHOD} eq 'GET') {</code><br /><code>   #</code><br /><code>   # GET means this is the top-level invocation: just display the HTML</code><br /><code>   # for the form in which the user can paste an IRC log.</code><br /><code>   #</code><br /><code>   print STDOUT &quot;Content-Type: text/html\n\n&quot;;</code><br /><code> </code><br /><code>   print STDOUT</code><br /><code>    (&quot;</code></p>
+<HTML>
+<p>\n&quot; .</p>
+<p><code>     &quot; </code></p>
+<HEAD>
+<p>\n&quot; .</p>
+<p><code>     &quot;  </code></p>
+<TITLE>
+<p>$progname</p>
+</TITLE>
+<p>\n&quot; .</p>
+<p><code>     &quot; </code></p>
+</HEAD>
+<p>\n&quot; .</p>
+<p><code>     &quot; </code></p>
+<BODY>
+<p>\n&quot; .</p>
+<p><code>     &quot;  </code></p>
+<FORM METHOD=POST>
+<p>\n&quot; .</p>
+<p><code>     &quot;   </code></p>
+<TABLE>
+<p>\n&quot; .</p>
+<p><code>     &quot;    </code></p>
+<TR>
+<p>\n&quot; .</p>
+<p><code>     &quot;     </code></p>
+<TD COLSPAN=2 VALIGN=TOP ALIGN=CENTER>
+<p>\n&quot; .</p>
+<p><code>     &quot;      </code></p>
+<DIV ALIGN=CENTER>
+<p>\n&quot; .</p>
+<p><code>     &quot;       </code><B><SPAN STYLE='font-size:larger'><code>Chat log to HTML Converter</code><br /></SPAN><code>\n&quot; .</code><br /><code>     &quot;        by </code><A HREF=\"http://www.jwz.org/\"><code>&quot; .</code><br /><code>              &quot;Jamie Zawinski</code></A><br /><code>\n&quot; .</code><br /><code>     &quot;        Version </code><A HREF=\"http://www.jwz.org/hacks/irc2html.pl\"><code>&quot; .</code><br /><code>     &quot;$version</code></A><code>\n&quot; .</code><br /><code>     &quot;      </code></SPAN><code>\n&quot; .</code><br /><code>     &quot;      Paste your IRC/AIM log here:</code></B><br /><code>\n&quot; .</code><br /><code>     &quot;      </code></p>
+<TEXTAREA NAME=\"body\" ROWS=10 COLS=60 WRAP=OFF>
+</TEXTAREA>
+<p>\n&quot; .</p>
+<p><code>     &quot;     </code></p>
+</TD>
+<p>\n&quot; .</p>
+<p><code>     &quot;    </code></p>
+</TR>
+<p>\n&quot; .</p>
+<p><code>     &quot;    </code></p>
+<TR>
+<p>\n&quot; .</p>
+<p><code>     &quot;     </code></p>
+<TD VALIGN=TOP ALIGN=LEFT NOWRAP>
+<p>\n&quot; .</p>
+<p><code>     &quot;      </code><INPUT NAME=\"strip_status\" TYPE=CHECKBOX><code>&quot; .</code><br /><code>            &quot; Strip Status Lines</code><br /><code>\n&quot; .</code><br /><code>     &quot;      </code><INPUT NAME=\"strip_timestamps\" TYPE=CHECKBOX><code>&quot; .</code><br /><code>            &quot; Strip Timestamps</code><br /><code>\n&quot; .</code><br /><code>     &quot;      </code><INPUT NAME=\"colorize\" TYPE=CHECKBOX CHECKED><code> Colorize\n&quot; .</code><br /><code>     &quot;     </code></p>
+</TD>
+<p>\n&quot; .</p>
+<p><code>     &quot;     </code></p>
+<TD VALIGN=MIDDLE ALIGN=RIGHT NOWRAP>
+<p>\n&quot; .</p>
+<p><code>     &quot;      </code><INPUT TYPE=SUBMIT VALUE=\"Generate HTML\"><code>\n&quot; .</code><br /><code>     &quot;            \n&quot; .</code><br /><code>     &quot;      </code><INPUT TYPE=RESET VALUE=\"Clear\"><code>\n&quot; .</code><br /><code>     &quot;     </code></p>
+</TD>
+<p>\n&quot; .</p>
+<p><code>     &quot;    </code></p>
+</TR>
+<p>\n&quot; .</p>
+<p><code>     &quot;   </code></p>
+</TABLE>
+<p>\n&quot; .</p>
+<p><code>     &quot;  </code></p>
+</FORM>
+<p>\n&quot; .</p>
+<p><code>     &quot; </code></p>
+</BODY>
+<p>\n&quot; .</p>
+<p><code>     &quot;</code></p>
+</HTML>
+<p>\n&quot;);</p>
+<p><code> } elsif ($ENV{REQUEST_METHOD} eq 'POST') {</code><br /><code>   #</code><br /><code>   # POST means that the form has been submitted; read the log text and</code><br /><code>   # print out the corresponding HTML.</code><br /><code>   #</code><br /><code>   my $args = '';</code><br /><code>   while (&lt;&gt;) { $args .= $_; }</code><br /><code>   </code><br /><code>   $colorize_p = 0;   # for cgi, must default to 0</code></p>
+<p><code>   my $body = '';</code><br /><code>   foreach (split ('&amp;', $args)) {</code><br /><code>     my ($key, $val) = m/^(.*?)=(.*)$/s;</code><br /><code>     if    ($key eq 'body')  { $body .= $val; }</code><br /><code>     elsif ($key eq 'strip_status') { $strip_noise = ($val eq 'on'); }</code><br /><code>     elsif ($key eq 'strip_timestamps') { $strip_timestamps = ($val eq 'on');}</code><br /><code>     elsif ($key eq 'colorize') { $colorize_p = ($val eq 'on'); }</code><br /><code>     else { error (400, &quot;unknown option $key&quot;); }</code><br /><code>   }</code></p>
+<p><code>   $separators_p = !$colorize_p;</code></p>
+<ol>
+<li>$colorize_p = 1;####</li>
+</ol>
+<p><code>   $body =~ s/\+/ /g;                           # spaces are encoded</code><br /><code>   $body =~ s/%([\dA-F]{2})/chr(hex($1))/gexi;  # de-hexilate</code><br /><code>   $body =~ s@\r\n@\n@sg;                       # CRLF -&gt; LF</code><br /><code>   $body =~ s@\r@\n@sg;                         # CR -&gt; LF</code></p>
+<p><code>   print STDOUT &quot;Content-Type: text/html\n\n&quot;;</code><br /><code>   print STDOUT convert_body ($body);</code><br /><code> } else {</code><br /><code>   error (400, &quot;$ENV{REQUEST_METHOD} not supported&quot;);</code><br /><code> }</code></p>
+<p>}</p>
+<p>sub error($$) {</p>
+<p><code> my ($http_status, $err) = @_;</code></p>
+<p><code> if (defined($ENV{REQUEST_URI})) {</code><br /><code>   print &quot;Status: $http_status\n&quot;;</code><br /><code>   print &quot;Content-Type: text/html\n&quot;;</code><br /><code>   print &quot;\n</code></p>
+<TITLE>
+<p>Error</p>
+</TITLE>
+<p>\n&quot;;</p>
+<p><code>   print &quot;</code></p>
+<H1>
+<p>$http_status</p>
+</H1>
+<p>\n&quot;;</p>
+<p><code>   $err =~ s/&amp;/&amp;/g;</code><br /><code>   $err =~ s/</code> <code>\n&quot;;</code><br /><code>   exit (0);</code></p>
+<p><code> } else {</code><br /><code>   print STDERR &quot;$progname: $err\n&quot;;</code><br /><code>   exit 1;</code><br /><code> }</code></p>
+<p>}</p>
+<p>sub usage() {</p>
+<p><code> print STDERR &quot;usage: $progname [--verbose] [--strip] [--no-color]\n&quot; .</code><br /><code>              &quot;                 [input-chat-log] [output-html-file]\n&quot;;</code><br /><code> exit 1;</code></p>
+<p>}</p>
+<p>sub main() {</p>
+<p><code> my $in  = undef;</code><br /><code> my $out = undef;</code></p>
+<p><code> if (defined ($ENV{REQUEST_URI})) {</code><br /><code>   return do_cgi();</code><br /><code> }</code></p>
+<p><code> while ($_ = $ARGV[0]) {</code><br /><code>   shift @ARGV;</code><br /><code>   if ($_ eq &quot;--verbose&quot;) { $verbose++; }</code><br /><code>   elsif ($_ eq &quot;--strip&quot;) { $strip_noise++; }</code><br /><code>   elsif ($_ eq &quot;--no-time&quot;) { $strip_timestamps++; }</code><br /><code>   elsif ($_ eq &quot;--no-color&quot;) { $colorize_p = 0; $separators_p = 1; }</code><br /><code>   elsif (m/^-v+$/) { $verbose += length($_)-1; }</code><br /><code>   elsif (m/^-./) { usage; }</code><br /><code>   elsif (!defined($in)) { $in = $_; }</code><br /><code>   elsif (!defined($out)) { $out = $_; }</code><br /><code>   else { usage; }</code><br /><code> }</code></p>
+<p><code> $in  = &quot;-&quot; unless $in;</code><br /><code> $out = &quot;-&quot; unless $out;</code></p>
+<p><code> local *IN;</code><br /><code> local *OUT;</code><br /><code> open (IN, &quot;&lt;$in&quot;)   || die &quot;$progname: unable to read $in: $!\n&quot;;</code><br /><code> open (OUT, &quot;&gt;$out&quot;) || die &quot;$progname: unable to write $out: $!\n&quot;;</code></p>
+<p><code> $in  = &quot;stdin&quot;  if $in  eq &quot;-&quot;;</code><br /><code> $out = &quot;stdout&quot; if $out eq &quot;-&quot;;</code><br /><code> if ($verbose) {</code><br /><code>   print STDERR &quot;$progname: converting $in to $out...\n&quot;;</code><br /><code> }</code></p>
+<p><code> my $body = '';</code><br /><code> $body .= $_ while (</code><IN><code>);</code><br /><code> print OUT convert_body ($body);</code><br /><code> close OUT;</code><br /><code> close IN;</code></p>
+<p><code> if ($verbose) {</code><br /><code>   print STDERR &quot;$progname: wrote $out ($output_lines lines).\n&quot;;</code><br /><code> }</code></p>
+<p>}</p>
+<p>main(); exit 0; </perl></p>
+</body>
+</html>

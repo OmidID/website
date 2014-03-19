@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="mono-for-ubuntu">Mono for Ubuntu</h1>
+<h2 id="official-packages">Official Packages</h2>
+<p>The following official versions are available in the standard Ubuntu repositories:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Ubuntu Hardy (8.04 LTS):</p></td>
+<td style="text-align: left;"><p>1.2.6</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Ubuntu Lucid (10.04 LTS):</p></td>
+<td style="text-align: left;"><p>2.4 branch snapshot</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Ubuntu Natty (11.04):</p></td>
+<td style="text-align: left;"><p>2.6.7</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Ubuntu Oneiric (11.10):</p></td>
+<td style="text-align: left;"><p>2.10.5</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Ubuntu Precise (12.04 LTS):</p></td>
+<td style="text-align: left;"><p>2.10.8.1</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Ubuntu Quantal (12.10):</p></td>
+<td style="text-align: left;"><p>2.10.8.1</p></td>
+</tr>
+</tbody>
+</table>
+<p>Dependencies are automatically tracked for applications in the archive such as Tomboy, Gbrainy and F-Spot. Ubuntu comes with these three applications by default, and therefore <strong>comes with Mono installed by default</strong> on releases prior to 12.04. On 12.04 or later, install <strong>mono-complete</strong> for a full install of the whole of Mono.</p>
+<p>To compile your own software, install <strong>mono-devel</strong> on Lucid (10.04 LTS) or newer.</p>
+<p>To compile your own software, install <strong>mono-2.0-devel</strong> on Hardy (8.04 LTS).</p>
+<h2 id="backport-packages">Backport Packages</h2>
+<p>Mono is considered a &quot;core framework&quot; in Ubuntu, meaning it has many applications depending upon it (roughly 40 applications). Due to this, the chance of one of those applications breaking due to unexpected changes in their underlying framework is considered too high to risk an update.</p>
+<p>As a result, Mono cannot officially be backported in Ubuntu.</p>
+<h2 id="unofficial-packages">Unofficial Packages</h2>
+<h3 id="ubuntu-hardy-8.04-lts">Ubuntu Hardy (8.04 LTS)</h3>
+<p>Users of Ubuntu 8.04 LTS (Hardy Heron) can install <strong>2.4 branch snapshot</strong> by using Synaptic from the <a href="http://badgerports.org">badgerports</a> repository. badgerports is an unofficial community project from one of the Debian/Ubuntu Mono developers to ship latest Ubuntu packages for Ubuntu LTS users. Please visit the URL below for full information on enabling these packages:</p>
+<ul>
+<li><a href="http://badgerports.org/hardy.html">http://badgerports.org/hardy.html</a></li>
+</ul>
+<h3 id="ubuntu-lucid-10.04-lts">Ubuntu Lucid (10.04 LTS)</h3>
+<p>Users of Ubuntu 10.04 LTS (Lucid Lynx) can install <strong>2.10.8.1</strong> by using Synaptic from the <a href="http://badgerports.org">badgerports</a> repository. badgerports is an unofficial community project from one of the Debian/Ubuntu Mono developers to ship latest Ubuntu packages for Ubuntu LTS users. Please visit the URL below for full information on enabling these packages:</p>
+<ul>
+<li><a href="http://badgerports.org/">http://badgerports.org/</a></li>
+</ul>
+<h2 id="further-links">Further Links</h2>
+<ul>
+<li>Mono in Ubuntu is maintained by members of the Debian Mono team - you should consider using their resources as shown below</li>
+<li>The Debian Mono team can be contacted via IRC: <a href="irc://irc.oftc.net/#debian-cli">1</a> - for a web-based IRC client, try <a href="http://www.mibbit.com/networks/oftc/debian-cli.html">Mibbit</a></li>
+<li>The Debian Mono team can be contacted via their mailing list, <a href="http://lists.alioth.debian.org/mailman/listinfo/pkg-mono-devel">pkg-mono-devel@lists.alioth.debian.org</a> - general questions relating to Mono on Debian should go to the end-user mailing list <a href="http://lists.debian.org/debian-cli/">debian-cli@lists.debian.org</a></li>
+<li>The Debian Mono team has a website on <a href="http://pkg-mono.alioth.debian.org/">Alioth</a></li>
+</ul>
+</body>
+</html>

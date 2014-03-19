@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p><strong>NOTE: I make lots of assumptions about things I do not fully understand (C stuff). Please help me figure out what we need and what we don't need. :) - jpobst</strong></p>
+<p>One of my goals for Mono 2.8 is to have a completely new .msi (the Windows standard) based installer for Windows.</p>
+<p>Currently, our Windows installer is not .msi, and is bloated with all kinds of things that don't really make sense to ship on Windows.</p>
+<h2 id="proposed-changes">Proposed Changes</h2>
+<h3 id="use-msvc-instead-of-gcc-to-compile-native-code">Use MSVC instead of gcc to compile native code</h3>
+<p>This will require vcproj files for all the native libraries/executables. This will also require redistributing the C runtimes from MS. We can either require admin privileges and install them into the machine side-by-side cache, or install them privately to mono.</p>
+<p><a href="http://msdn.microsoft.com/en-us/library/ms235291(VS.80).aspx">http://msdn.microsoft.com/en-us/library/ms235291(VS.80).aspx</a></p>
+<h3 id="use-eglib-instead-of-glib">Use eglib instead of glib</h3>
+<p>This is the first step to not requiring cygwin. Also, the code produced by VC++ is likely better tuned for running on Windows.</p>
+<h3 id="do-not-ship-the-1.0-profile">Do not ship the 1.0 profile</h3>
+<p>This is simply a Mono 2.8 change. The 1.0/1.1 profile is no longer supported/shipped after Mono 2.6.</p>
+<h3 id="do-not-ship-gtk">Do not ship Gtk#</h3>
+<p>We should modify our &quot;Gtk# installer for .Net&quot; to also install to the Mono GAC instead of shipping a second copy with Mono.</p>
+<p>Note: There needs to be some work done with regards to ensuring Gtk# picks up our version of Gtk+ instead of the one installed with Pidgin, Inkscape, Miro, etc. Currently, the first one in PATH is used.</p>
+<h3 id="strip-out-things-that-not-many-people-use">Strip out things that not many people use</h3>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>IKVM</p></td>
+<td style="text-align: left;"><p>Available <a href="http://www.ikvm.net/">here</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Boo</p></td>
+<td style="text-align: left;"><p>Available <a href="http://boo.codehaus.org/">here</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>NUnit</p></td>
+<td style="text-align: left;"><p>Available <a href="http://www.nunit.org/index.php">here</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>IPCE</p></td>
+<td style="text-align: left;"><p>Available <a href="http://www.codeplex.com/IronPython">here</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>NAnt</p></td>
+<td style="text-align: left;"><p>Available <a href="http://nant.sourceforge.net/">here</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>embedding stuff</p></td>
+<td style="text-align: left;"><p>I'm not sure what is embedding stuff, and what is just leftovers from the build process. I am thinking stuff like .h, .def, .lib, .a, .la, etc..</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>class library documentation</p></td>
+<td style="text-align: left;"><p>I don't think monodoc has ever worked on Windows? Developers can use the online documentation. Note that MD for Windows also ships with this documentation for use in MD.</p></td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-gnu-ish-stuff-do-we-still-need-to-include">What GNU-ish(?) stuff do we still need to include?</h3>
+<p>I don't know a lot about this, but I guess we need either eglib or custom versions of:</p>
+<ul>
+<li>pkg-config</li>
+<li>gettext?</li>
+</ul>
+<h3 id="conclusion">Conclusion</h3>
+<p>With these changes, I think we can get a learner, meaner installer that is .msi-based. My current estimation is we can get the installer under 30 MB. Currently, it is 75-80 MB.</p>
+</body>
+</html>

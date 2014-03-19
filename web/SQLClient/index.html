@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="info">Info</h2>
+<ul>
+<li>ADO.NET Provider for Microsoft SQL Server 7/2000/2005/2008 databases</li>
+</ul>
+<ul>
+<li>Exists in namespace System.Data.SqlClient and assembly System.Data</li>
+</ul>
+<ul>
+<li>Used the <a href="http://www.freetds.org/">FreeTDS</a> and <a href="http://jtds.sourceforge.net/">jTDS</a> projects as resources.</li>
+</ul>
+<ul>
+<li>Does not require a client library because it is fully managed.</li>
+</ul>
+<ul>
+<li>Requires the assembly Mono.Data.Tds.dll which implements the TDS protocol in C#</li>
+</ul>
+<ul>
+<li>Uses TDS Protocol Version 7.0</li>
+</ul>
+<h2 id="current-status">Current Status</h2>
+<ul>
+<li>Connect to Microsoft SQL Server 7, 2000, 2005, and 2008 databases via SQL Server authentication and NT Authentication. However, if you want to use NT Authentication, you must trully be on an NT/2000/2003 Domain.</li>
+</ul>
+<ul>
+<li>Connection pooling works.</li>
+</ul>
+<ul>
+<li>Stored Procedures work.</li>
+</ul>
+<ul>
+<li>Named pipes are not supported. However, if you knew jCIFS or Samba, you probably could implement this functionality for SqlClient.</li>
+</ul>
+<ul>
+<li>Parameters work.</li>
+</ul>
+<ul>
+<li>Prepare works.</li>
+</ul>
+<ul>
+<li>SQL commands can be executed via ExecuteNonQuery() of a SqlCommand.</li>
+</ul>
+<ul>
+<li>SQL aggregates can be executed and a single row and single column result can be retrieved via ExecuteScalar() of a SqlCommand</li>
+</ul>
+<ul>
+<li>SQL queries can be executed via ExecuteReader() and results can be retrieved via SqlDataReader.</li>
+</ul>
+<ul>
+<li>a DataTable with schema info about a result can be gotten via GetSchemaTable() in a SqlDataReader</li>
+</ul>
+<ul>
+<li>XML can be read via ExecuteXmlReader in a SqlCommand.</li>
+</ul>
+<ul>
+<li>Data can be filled in a DataTable in a DataSet via a SqlDataAdapter</li>
+</ul>
+<ul>
+<li>Works in the SQL# command-line and Gtk# GUI version</li>
+</ul>
+<h2 id="action-plan">Action Plan</h2>
+<ul>
+<li>Needs more testing and fixing bugs</li>
+</ul>
+<ul>
+<li>Start work on TDS Protocol Version 8.0 support</li>
+</ul>
+<ul>
+<li>Add support for the .NET Framework 2.0</li>
+</ul>
+<ul>
+<li>Add support for ADO.NET 2.0</li>
+</ul>
+<ul>
+<li>Add support for Microsoft SQL Server 2005</li>
+</ul>
+<ul>
+<li>Add support for distributed transactions</li>
+</ul>
+<ul>
+<li>Add support for Named Pipes</li>
+</ul>
+<ul>
+<li>Better support for Integrated Security (NTLM Authentication)</li>
+</ul>
+<h2 id="testing">Testing</h2>
+<p><b>Prerequisites</b></p>
+<ul>
+<li>Have a working mono and mcs installed. Recommend at least Mono 1.1.5 since there have been lots of bug fixes.</li>
+</ul>
+<ul>
+<li>Have access to a Microsoft SQL Server database or either download it: <a href="http://www.microsoft.com/sql/default.mspx">Microsoft SQL Server</a></li>
+</ul>
+<p>There is a trial version which allows you to use it for 120 days. There is also MSDE and <a href="http://msdn.microsoft.com/vstudio/express/sql/download/">SQL Server 2005 Express</a> which are free downloads. MSDE (Desktop version of SQL Server) will not be supported on the Windows Vista operating system - use SQL Server 2005 Express instead. If you get SQL Server 2005 Express, also get the SQL Server Management Studio Express.</p>
+<ul>
+<li><b>IMPORTANT:</b> If using Microsoft SQL Server 2000, make sure you are using at least Service Pack 3 for Microsoft SQL Server 2000. If using MSDE 2000, make sure you have the special Service Pack 3 for MSDE 2000. Currently, the latest service pack is SP4. You can get it from <a href="http://www.microsoft.com/technet/prodtechnol/sql/2000/downloads/default.mspx">here</a></li>
+</ul>
+<ul>
+<li>For those that only have MSDE installed. You can change the authentication mode from Windows Only Authentication to SQL Server and Windows Authentications (also knows as Mixed-mode authentication) via the <a href="http://support.microsoft.com/default.aspx?scid=kb;en-us;Q322336&amp;sd=tech#4">registry</a>. It is the LoginMode you need to change. By default, MSDE is installed with Windows Only Authentication. If you want SqlClient to work with MSDE via SQL Server authentication, you will need to change the setting. Otherwise, you wil have to use NT Authentication.</li>
+</ul>
+<ul>
+<li>If using MSDE, you might need to create a new user with password. Give this user access to various databases in this MSDE instance. Also, for each database, give this new user at least SELECT access to the various tables you want to retrieve data from.</li>
+</ul>
+<ul>
+<li>If you have Enterprise Manager, you can easily change the authentication mode for both MSDE and Microsoft SQL Server. To change the authentication mode in Enterprise Mananger, select the instance, right-click on it, and select properites. The SQL Server properties dialog for that instance will pop up. Choose the Security tab. Change the Authentication from Windows Only to SQL Server and Windows. If the instance of your database does not show up in Enterprise Manager, Register first by selecting the Action menu and choosing New SQL Server Registration.</li>
+</ul>
+<ul>
+<li>By default, SQL Server 2005 Express has TCP/IP disabled. So, you have to go into SQL Server Configuration Manager and enable TCP/IP for each instance you wish to connect via TCP/IP. But, you also must make sure the TCP/IP Protocol is one of the allowed client protocols. You may need to make sure your firewall allows mono.exe to do networking. And allow the SQL Server Monitor UDP Port 1434 in your firewall. If this UDP port is not enabled, then SqlClient running on Linux will not be able to get the TCP port to connect to based on the instance name SQLEXPRESS. SQL Server 2005 Network Configuration - Protocols for - SQLEXPRESS - enable TCP/IP. And SQL Server Native Client - Client Protocols - enable TCP/IP.</li>
+</ul>
+<ul>
+<li>If you want to use Integrated Security (aka NT Authentication aka Trusted Connection aka Domain Login), you will need to specify the Windows NT/2000/2003 Domain User ID and Password. This is because Mono is not integrated with Windows nor SQL Server.</li>
+</ul>
+<p><b>Connection string format</b></p>
+<ul>
+<li>Has a connection string format for SQL Server Authentication:</li>
+</ul>
+<pre><code>Server=hostname;Database=databaseName;User ID=sqlServerUserid;Password=sqlServerPassword</code></pre>
+<ul>
+<li>Has a connection string format for NT Authentication:</li>
+</ul>
+<pre><code>Server=hostname;Database=databaseName;User ID=windowsDomain\windowsUserid;Password=windowsPassword;Integrated Security=SSPI</code></pre>
+<ul>
+<li>Connection String Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Parameter Definition</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+<th style="text-align: left;"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>Server or Data Source</p></td>
+<td style="text-align: left;"><p>hostname of the SQL Server</p></td>
+<td style="text-align: left;"><p>Server=MYHOST</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Database or Initial Catalog</p></td>
+<td style="text-align: left;"><p>name of the database</p></td>
+<td style="text-align: left;"><p>Database=pubs</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>User ID or UID</p></td>
+<td style="text-align: left;"><p>name of SQL Server user. If using integrated security, it is the name of the domain, backslash, and the name of the domain user</p></td>
+<td style="text-align: left;"><p>User ID=sa or UID=MYDOMAIN\SomeDomainUser</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Password or PWD</p></td>
+<td style="text-align: left;"><p>password for SQL Server user. If using integrated security, is the password of the domain user</p></td>
+<td style="text-align: left;"><p>Password=mypass12</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Integrated Security</p></td>
+<td style="text-align: left;"><p>use NT Authentication using a Windows domain user id and password</p></td>
+<td style="text-align: left;"><p>Integrated Security=SSPI</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Min Pool Size</p></td>
+<td style="text-align: left;"><p>Specifies the minimum number of connections in the connection pool. Default is 0.</p></td>
+<td style="text-align: left;"><p>Min Pool Size=0</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Max Pool Size</p></td>
+<td style="text-align: left;"><p>Specifies the maximum number of connections in the connection pool. Default is 100.</p></td>
+<td style="text-align: left;"><p>Max Pool Size=100</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Pooling</p></td>
+<td style="text-align: left;"><p>Specifies whether or not to use connection pooling. Valid values are TRUE or YES to use connection pooling or FALSE or NOT to not use connection pooling. Default is TRUE.</p></td>
+<td style="text-align: left;"><p>Pooling=true</p></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The Server connection string parameter can be used in three different ways:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Server Definition</p></th>
+<th style="text-align: left;"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>hostname</p></td>
+<td style="text-align: left;"><p>Server=MYHOST</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>hostname,port</p></td>
+<td style="text-align: left;"><p>Server=MYHOST,1433</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>hostname\instance</p></td>
+<td style="text-align: left;"><p>Server=MYHOST\NETSDK</p></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>C# Example using SQL Server Authentication:</li>
+</ul>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+ using System;
+ using System.Data;
+ using System.Data.SqlClient;
+
+ public class Test
+ {
+    public static void Main(string[] args)
+    {
+       string connectionString =
+          &quot;Server=MyServer;&quot; +
+          &quot;Database=pubs;&quot; +
+          &quot;User ID=MySqlServerUserId;&quot; +
+          &quot;Password=MySqlServerPassword;&quot;;
+       IDbConnection dbcon;
+       using (dbcon = new SqlConnection(connectionString)) {
+           dbcon.Open();
+           using (IDbCommand dbcmd = dbcon.CreateCommand()) {
+               string sql =
+                   &quot;SELECT fname, lname &quot; +
+                   &quot;FROM employee&quot;;
+               dbcmd.CommandText = sql;
+               using (IDataReader reader = dbcmd.ExecuteReader()) {
+                   while(reader.Read()) {
+                       string FirstName = (string) reader[&quot;fname&quot;];
+                       string LastName = (string) reader[&quot;lname&quot;];
+                       Console.WriteLine(&quot;Name: &quot; +
+                            FirstName + &quot; &quot; + LastName);
+                   }
+               }
+           }
+       }
+    }
+ } 
+&lt;/code&gt;</code></pre>
+</div>
+<ul>
+<li>C# Example using NT Authentication (Integrated Security)</li>
+</ul>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+ using System;
+ using System.Data;
+ using System.Data.SqlClient;
+
+ public class Test
+ {
+    public static void Main(string[] args)
+    {
+       string connectionString =
+          &quot;Server=MyServer;&quot; +
+          &quot;Database=pubs;&quot; +
+          &quot;User ID=MyWindowsDomain\\MyWindowsUserid;&quot; +
+          &quot;Password=MyWindowsPassword;&quot; +
+          &quot;Integrated Security=SSPI&quot;;
+       IDbConnection dbcon;
+       using (dbcon = new SqlConnection(connectionString)) {
+           dbcon.Open();
+           using (IDbCommand dbcmd = dbcon.CreateCommand()) {
+               string sql =
+                   &quot;SELECT fname, lname &quot; +
+                   &quot;FROM employee&quot;;
+               dbcmd.CommandText = sql;
+               using (IDataReader reader = dbcmd.ExecuteReader()) {
+                   while(reader.Read()) {
+                       string FirstName = (string) reader[&quot;fname&quot;];
+                       string LastName = (string) reader[&quot;lname&quot;];
+                       Console.WriteLine(&quot;Name: &quot; +
+                            FirstName + &quot; &quot; + LastName);
+                   }
+               }
+          }
+       }
+    }
+ }
+&lt;/code&gt;</code></pre>
+</div>
+<ul>
+<li>C# Example using Command Builder and Data Adapter to easily update the database based on inserts, updates, or deletes in a DataTable</li>
+</ul>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+using System;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+
+namespace TestSqlClientAdapter {
+    public class Test {
+        static SqlConnection con;
+        static SqlTransaction trans;
+
+        public static void Main (string[] args) 
+        {
+            Console.WriteLine(&quot;Apapter Test Begin...&quot;);
+            using (con = new SqlConnection(
+                            &quot;server=localhost;&quot; + 
+                            &quot;database=pubs;&quot; +
+                            &quot;user id=sa;&quot; +
+                            &quot;password=mypass&quot;)) {
+                con.Open();
+            
+                Setup();
+
+                trans = con.BeginTransaction();
+                Insert();
+                trans.Commit();
+
+                trans = con.BeginTransaction();
+                Update();
+                trans.Commit();
+
+                trans = con.BeginTransaction();
+                Delete();
+                trans.Commit();
+
+            }
+            Console.WriteLine(&quot;Done.&quot;);
+        }
+
+        static void Setup() 
+        {
+            using (SqlCommand cmd = con.CreateCommand()) {
+                cmd.Transaction = trans;
+                cmd.CommandText = 
+                                  &quot;DROP TABLE MONO_TEST_ADAPTER1&quot;;
+
+                try { cmd.ExecuteNonQuery(); 
+                } catch(SqlException e) { }
+
+                cmd.CommandText = 
+                    &quot;CREATE TABLE MONO_TEST_ADAPTER1 (&quot; +
+                    &quot; num_value int primary key,&quot; +
+                    &quot; txt_value varchar(64))&quot;;
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        static void Insert() 
+        {
+            Console.WriteLine(&quot;Insert...&quot;);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(
+                                &quot;SELECT * FROM MONO_TEST_ADAPTER1&quot;, con);
+            adapter.MissingSchemaAction  = MissingSchemaAction.AddWithKey;
+            adapter.SelectCommand.Transaction = trans;
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            
+            DataSet ds = new DataSet();
+            adapter.Fill(ds,&quot;MONO_TEST_ADAPTER1&quot;);
+            
+            DataRow row = ds.Tables[&quot;MONO_TEST_ADAPTER1&quot;].NewRow();
+            row[&quot;num_value&quot;] = 3;
+            row[&quot;txt_value&quot;] = &quot;Value inserted&quot;;
+
+            ds.Tables[&quot;MONO_TEST_ADAPTER1&quot;].Rows.Add(row);
+
+            adapter.Update(ds, &quot;MONO_TEST_ADAPTER1&quot;);
+
+            row = null;
+            builder = null;
+            adapter = null;
+            ds = null;
+            
+            ReadData(con, &quot;SELECT * FROM MONO_TEST_ADAPTER1&quot;);
+        }
+
+        static void Update() 
+        {
+            Console.WriteLine(&quot;Update...&quot;);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(
+                                &quot;SELECT * FROM MONO_TEST_ADAPTER1&quot;, con);
+            adapter.SelectCommand.Transaction = trans;
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            
+            DataSet ds = new DataSet();
+            adapter.Fill(ds,&quot;MONO_TEST_ADAPTER1&quot;);
+            
+            DataRow row = ds.Tables[&quot;MONO_TEST_ADAPTER1&quot;].Rows[0];
+            row[&quot;txt_value&quot;] = &quot;Value updated&quot;;
+
+            adapter.Update(ds, &quot;MONO_TEST_ADAPTER1&quot;);
+
+            row = null;
+            builder = null;
+            adapter = null;
+            ds = null;
+
+            ReadData(con, &quot;SELECT * FROM MONO_TEST_ADAPTER1&quot;);
+
+        }
+
+        static void Delete() 
+        {
+            Console.WriteLine(&quot;Delete...&quot;);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(
+                                &quot;SELECT * FROM MONO_TEST_ADAPTER1&quot;, con);
+            adapter.SelectCommand.Transaction = trans;
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+            
+            DataSet ds = new DataSet();
+            adapter.Fill(ds,&quot;MONO_TEST_ADAPTER1&quot;);
+            
+            ds.Tables[&quot;MONO_TEST_ADAPTER1&quot;].Rows[0].Delete();
+
+            adapter.Update(ds, &quot;MONO_TEST_ADAPTER1&quot;);
+
+            builder = null;
+            adapter = null;
+            ds = null;
+
+            ReadData(con, &quot;SELECT * FROM MONO_TEST_ADAPTER1&quot;);
+
+        }
+
+        private static void ReadData(IDbConnection con, string sql) 
+        {
+            using (IDbCommand cmd = con.CreateCommand()) {
+                cmd.Transaction = trans;
+                cmd.CommandText = sql;
+                using (IDataReader reader = cmd.ExecuteReader()) {
+                    int rows = 0;
+                    while(reader.Read()) {
+                        Console.WriteLine(&quot;Value 0: {0}&quot;, reader[0]);
+                        Console.WriteLine(&quot;Value 0: {0}&quot;, reader[1]);
+                        rows++;
+                    }
+                    Console.WriteLine(&quot;Rows retrieved: {0}&quot;, rows);
+                }
+            }
+        }
+    }
+ }
+&lt;/code&gt;</code></pre>
+</div>
+<ul>
+<li>Building C# Example:</li>
+</ul>
+<ul>
+<li>Save the example to a file, such as, TestExample.cs</li>
+</ul>
+<ul>
+<li>Build on Linux:</li>
+</ul>
+<pre><code>mcs TestExample.cs -r:System.Data.dll</code></pre>
+<ul>
+<li>Running the Example:</li>
+</ul>
+<pre><code> mono TestExample.exe </code></pre>
+<p><a href="http://localhost:4000/Category:Developer Resource" title="wikilink">Category:Developer Resource</a> <a href="http://localhost:4000/Category:ADO.NET" title="wikilink">Category:ADO.NET</a></p>
+</body>
+</html>

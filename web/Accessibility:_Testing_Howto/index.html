@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="winforms">WinForms</h1>
+<p>The purpose of this Strongwind example is to familiarize the reader with the specific testing practices of the UIA Mono Accessibility team.</p>
+<p>This tutorial demonstrates the writing of tests for a Gtk application. In practice, of course, we write our tests for WinForms applications. Using a Gtk application in this tutorial allow us to demonstrate testing techniques effectively, without having to worry about the early stage of the WinForms providers implementation at the time this tutorial was written.</p>
+<h2 id="strongwind">Strongwind</h2>
+<h3 id="introduction">Introduction</h3>
+<p>This tutorial will <em>not</em> have in-depth explanations about the Strongwind-specific parts of the code in our test. This information is covered in <a href="http://medsphere.org/projects/strongwind/getting_started.html">Getting Started with Strongwind</a> and <a href="http://localhost:4000/Accessibility:_Test_Strongwind_Basics" title="wikilink"> Strongwind Basics</a>. In this tutorial, our focus will be on how our Mono accessibility tests and environment are unique.</p>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li><a href="http://www.gnome.org">GNOME</a></li>
+<li><a href="http://www.python.org">Python</a> (&gt;=2.5, &lt;3.0)</li>
+<li>Enable &quot;Assistive Technologies&quot; from the GNOME Control Center</li>
+<li>pyatspi (packaged with <a href="http://ftp.gnome.org/pub/GNOME/sources/at-spi">AT-SPI</a>)</li>
+<li><a href="http://live.gnome.org/Accerciser">Accerciser</a> (1.4.0 or later)</li>
+<li><a href="http://medsphere.org/projects/strongwind">Strongwind</a> (installing from SVN trunk is highly recommended)</li>
+<li><a href="http://www.codeplex.com/Wiki/View.aspx?ProjectName=IronPython">IronPython</a> (the package name in openSUSE is IPCE). Our sample applications are written in IronPython, so it must be installed for them to run successfully.</li>
+<li><a href="Accessibility:_Getting_Started_With_Development#http://localhost:4000/Getting_the_Code" title="wikilink"> uia2atk code</a>. The QA-related code is in the test directory. There are short README files in the test directory and each of its subdirectories. Read these README files if you are confused about the files and directories you are seeing. The code can also be checked out anonymously (using subversion) by running <em>svn co <a href="svn://anonsvn.mono-project.com/source/trunk/uia2atk">svn://anonsvn.mono-project.com/source/trunk/uia2atk</a></em>.</li>
+</ul>
+<h3 id="strongwind-introduction">Strongwind Introduction</h3>
+<p>This tutorial assumes the reader already has at least a basic understanding of Strongwind and can comfortably write non-trivial tests using it. If you are already familiar with writing Strongwind tests, please skip this introduction. Otherwise, a brief introduction to is needed before we can begin.</p>
+<p>First of all, read <a href="http://medsphere.org/projects/strongwind/getting_started.html">Getting Started with Strongwind</a> to get a basic idea of what it's all about. Also notice there are several Gtk tests in uia2atk/test/testers that can be used as additional examples.</p>
+<p>Next, read the <a href="http://localhost:4000/Accessibility:_Test_Strongwind_Basics" title="wikilink"> Strongwind Basics</a> page.</p>
+<p>After reading these two documents, you will be ready to proceed with this tutorial.</p>
+<h3 id="strongwind-test-harness">Strongwind Test Harness</h3>
+<p>We have developed a test harness for our Strongwind test harness. The purpose of the test harness is to facilitate the execution and logging of multiple Strongwind tests on multiple machines. Using the Strongwind test harness we are able to execute one command that runs all of our tests--either on your local machine or on all of our test machines simultaneously--and stores all of the logs to their proper locations.</p>
+<p>The test harness files are located in uia2atk/test/harness; here is a list of the files with their descriptions:</p>
+<ul>
+<li><em>tests.py</em>: A list of &quot;enabled tests,&quot; that is, tests that should be executed when running <em>remote_run.py</em> or <em>local_run.py</em>.</li>
+<li><em>machines.py</em>: A dictionary of machines on which the enabled tests should be run. This file also contains the directory where the tests reside on the machines in <em>machines.py</em>, directory where logs should be stored on the machines in <em>machines.py</em>, and the username for the machines in <em>machines.py</em>.</li>
+<li><em>remote_run.py</em>: Run the enabled tests on the machines specified in <em>machines.py</em>.</li>
+<li><em>local_run.py</em>: Run the enabled tests on the local machine.</li>
+</ul>
+<p>Here is a brief overview of how tests are executed using our Strongwind test harness:</p>
+<h4 id="local_run.py">local_run.py</h4>
+<p>When using <em>local_run.py</em> to execute tests, the following occurs:</p>
+<ol>
+<li>The list of enabled tests is retrieved from <em>tests.py</em></li>
+<li>If a test is specified in <em>tests.py</em>, but it cannot be found on the machine, a warning is issued and that test will not be run.</li>
+<li>Each test from <em>tests.py</em> is execute in order</li>
+<li>Logs are stored in uia2atk/test/logs unless otherwise specified (by using the [-l|--log=] option.</li>
+</ol>
+<p>Information is also printed to the terminal at each step unless the [-q|--quiet] option is used.</p>
+<h4 id="remote_run.py">remote_run.py</h4>
+<p>When using <em>remote_run.py</em> to execute tests, the following occurs:</p>
+<ol>
+<li>The list of test machines is retrieved from <em>machines.py</em></li>
+<li>If a machine is specified in <em>machines.py</em>, but it cannot be pinged successfully, a warning is issues and the test(s) will not run on that machine.</li>
+<li><em>remote_run.py</em> is executed via SSH on each available machine from <em>machines.py</em>. There are three <strong>important</strong> things to remember:
+<ol>
+<li><em>remote_run.py</em>'s default log directory is overridden and logs are stored in LOG_DIR as defined by <em>machines.py</em>.</li>
+<li>The user used to perform the SSH operation is defined by USERNAME in <em>machines.py</em></li>
+<li><em>remote_run.py</em> looks for the <em>test</em> directory (i.e., uia2atk/test) in TEST_DIR as defined by <em>machines.py</em></li>
+</ol></li>
+</ol>
+<p>Information is also printed to the terminal unless the [-q|--quiet] option is used.</p>
+<p>The information normally displayed to the terminal by local_run.py is dumped in /tmp/uiaqa unless otherwise specified using the [-l|--log] option.</p>
+<h4 id="official-tests">&quot;Official Tests&quot;</h4>
+<p>Currently, the &quot;official tests&quot; are run on the &quot;official&quot; test machines, which are located at Novell in Provo. These are the machines that are found in the <em>machines.py</em> in our source code and are only available internally to Novell employees.</p>
+<p>We encourage anyone to help us write tests! If you want to submit a test to be added to the official tests and you have not received permission from a <a href="http://localhost:4000/Accessibility:_Team" title="wikilink">QA hacker</a> to check patches into our Subversion repository, please e-mail our mailing list (mono-a11y@forge.novell.com) and attach a patch with the following:</p>
+<ul>
+<li>Sample application modifications (recommended) or new sample application. Not applicable if you are writing a test for an already existing application that does not need modified. <em>NOTE:</em> If you are modifying a sample application, make sure it doesn't break any of the existing tests.</li>
+<li>New or modified Application wrapper. Not applicable if you are writing a test for an already existing application wrapper that does not need modified.</li>
+<li>Test script</li>
+<li>Your new test added to <em>tests.py</em></li>
+</ul>
+<p>Please only submit one test per e-mail, and begin the subject line with [QA PATCH].</p>
+<h4 id="official-test-machine-configuration">Official Test Machine Configuration</h4>
+<p>The official tests are run on the official test machines in the official lab :), which is located at Novell in Provo. Thus, this information is probably only useful to Novell employees.</p>
+<p>The test machines are actually virtual machines (running on VMware Workstation) and are hosted on the physical machines in Provo. Here is a list of the test machines and the physical machines on which they are hosted:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Platform</p></th>
+<th style="text-align: left;"><p>Address</p></th>
+<th style="text-align: left;"><p>VMware Host</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>openSUSE 11 32-bit</p></td>
+<td style="text-align: left;"><p>suse32v0.sled.lab.novell.com</p></td>
+<td style="text-align: left;"><p>d755a.sled.lab.novell.com</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>openSUSE 11 64-bit</p></td>
+<td style="text-align: left;"><p>suse64v0.sled.lab.novell.com</p></td>
+<td style="text-align: left;"><p>d755b.sled.lab.novell.com</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Ubuntu 8.04 32-bit</p></td>
+<td style="text-align: left;"><p>ubuntu32v0.sled.lab.novell.com</p></td>
+<td style="text-align: left;"><p>d755c.sled.lab.novell.com</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Ubuntu 8.04 64-bit</p></td>
+<td style="text-align: left;"><p>ubuntu32v0.sled.lab.novell.com</p></td>
+<td style="text-align: left;"><p>d755d.sled.lab.novell.com</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p>Fedora 9 32-bit</p></td>
+<td style="text-align: left;"><p>fedora32v0.sled.lab.novell.com</p></td>
+<td style="text-align: left;"><p>d755e.sled.lab.novell.com</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>Fedora 9 64-bit</p></td>
+<td style="text-align: left;"><p>fedora64v0.sled.lab.novell.com</p></td>
+<td style="text-align: left;"><p>d755f.sled.lab.novell.com</p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<p>All of the test machines have a VNC server installed. The host machines have <a href="http://www.nomachine.com">NX Server</a> installed, which can be connected to using <a href="http://www.nomachine.com/download.php">NX Client</a>; VMware could be running in the background. Running <em>vmware</em> will open the backgrounded session. Both the test machines and the VMware hosts have a user <em>a11y</em>. For more login details contact a <a href="http://localhost:4000/Accessibility:_Team" title="wikilink">QA hacker</a>.</p>
+<p>Each official test machine has a <em>tests</em> directory and a <em>logs</em> directory. <em>TEST_DIR</em> in <em>machines.py</em> is set to the <em>tests</em> directory and <em>LOG_DIR</em> in <em>machines.py</em> is set to the <em>logs</em> directory.</p>
+<p>These directories are, in truth, mounted directories on uiaqa.sled.lab.novell.com.</p>
+<table>
+<caption><strong>uiaqa.sled.lab.novell.com</strong></caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><p>Directory</p></th>
+<th style="text-align: left;"><p>CIFS Share Path</p></th>
+<th style="text-align: left;"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><em>/var/qa/code/test</em></p></td>
+<td style="text-align: left;"><p><em>//uiaqa.sled.lab.novell.com/test</em></p></td>
+<td style="text-align: left;"><p>The uia2atk test code is checked out at this location</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>''/var/qa/logs</p></td>
+<td style="text-align: left;"><p><em>//uiaqa.sled.lab.novell.com/logs</em></p></td>
+<td style="text-align: left;"><p>QA logs, which can be accessed from <a href="http://uiaqa.sled.lab.novell.com/logs/">http://uiaqa.sled.lab.novell.com/logs/</a></p></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<p><em>//uiaqa.sled.lab.novell.com/test</em> is mounted by <em>TEST_DIR</em> and <em>//uiaqa.sled.lab.novell.com/logs</em> is mounted by <em>LOG_DIR</em>. As the above table states, the test code (<em>uia2atk/test</em>) is checked out at <em>/var/qa/code/test</em>. This means that the test code can be updated on all test machines by simply running <em>svn up</em> at <em>/var/qa/code/test</em> on <em>uiaqa.sled.lab.novell.com</em>. The QA logs for our project are stored in <em>/var/qa/logs,</em> which is also pointed to by <a href="http://uiaqa.sled.lab.novell.com/logs">http://uiaqa.sled.lab.novell.com/logs</a>. This is where all the &quot;official&quot; logs are stored when our tests are run on the official test machines.</p>
+<h4 id="qa-architecture-diagram">QA Architecture Diagram</h4>
+<p>This diagram summarizes how WinForms testing is performed using Strongwind and the UI Automation test harness.</p>
+<figure>
+<img src="http://localhost:4000/files/Qa_arch.png" title="http://localhost:4000/files/Qa_arch.png" alt="http://localhost:4000/files/Qa_arch.png" /><figcaption>http://localhost:4000/files/Qa_arch.png</figcaption>
+</figure>
+<h3 id="example-sample-application">Example Sample Application</h3>
+<p>Our team does not test a specific application. Instead, our developers are writing code to make sure that Mono WinForms applications are accessible. This means that we can writer our testing against whatever application(s) we wish. The approach we take is to create small and simple &quot;sample applications.&quot; Our sample applications can be found in our code repository in the <em>test/samples</em> directory.</p>
+<p>At this point you should <a href="Accessibility:_Getting_Started_With_Development#http://localhost:4000/Getting_the_Code" title="wikilink">check out the uia2atk code</a> if you haven't already.</p>
+<p>After you have checked out the uia2atk code, you can find several sample applications in uia2atk/test/samples. For this example, we will use uia2atk/test/samples/gtk/gtktutorial.py.</p>
+<p>Take a moment to run the gtktutorial and familiarize yourself with the it; start to think of how you could write its application wrapper. You will notice that the main window (or frame) has two buttons. The first button opens a tree view window with several parents and children. The second button opens a window with check boxes and a quit button, just like the application from the <a href="http://localhost:4000/Accessibility:_Test_Strongwind_Basics" title="wikilink"> Strongwind Basics</a> tutorial.</p>
+<h3 id="example-application-wrapper">Example Application Wrapper</h3>
+<p>As usual, we will begin by writing the application wrapper for our testable application. In this case our testable application will be <em>gtktutorial.py</em>. We will begin by writing our __init.py__ file which describes how to open the testable application and then returns an object of it. After completing the __init__.py piece of the application wrapper we will code the second piece (gtktutorialframe.py), which describes how we can interact with the widgets of the testable application.</p>
+<h4 id="init__.py">__init__.py</h4>
+<p>This __init__.py file is very similar to previous ones we have created, and it has the same function: launch the testable application and return an object of it. We begin just like we have in other <em>__init__.py</em> examples:</p>
+<div class="python">
+<pre><code>&lt;code&gt;
+from strongwind import *
+
+from os.path import exists
+from sys import path
+
+def launchTreeView(exe=None):
+    &quot;&quot;&quot;Launch gtktreeview with accessibility enabled and return a TreeView
+    object.  Log an error and return None if something goes wrong&quot;&quot;&quot;
+&lt;/code&gt;</code></pre>
+</div>
+<p>There is one part, however, that is unique to our UIA QA team. This code is shown below. The purpose of this portion of code is the same as in other examples: make sure we can find the sample application and that it exists. The difference is that now we find the sample application based on where the test file is being run.</p>
+<p>path[0] is using sys.path[0], which is &quot;the directory containing the script that was used to invoke the Python interpreter.&quot;</p>
+<p>So if we execute a test from /home/a11y/uia2atk/test/testers, we know to look for the sample app in ../samples (i.e., /home/a11y/uia2atk/test/samples).</p>
+<div class="python">
+<pre><code>&lt;code&gt;
+    if exe is None:
+        # make sure we can find the sample application
+        harness_dir = path[0]
+        i = harness_dir.rfind(&quot;/&quot;)
+        uiaqa_path = harness_dir[:i]
+        exe = &#39;%s/samples/gtktreeview.py&#39; % uiaqa_path
+        if not exists(exe):
+          raise IOError, &quot;Could not find file %s&quot; % exe
+&lt;/code&gt;</code></pre>
+</div>
+<p>The remainder of the <em>__init__.py</em> code is the same as always:</p>
+<div class="python">
+<pre><code>&lt;code&gt;
+    args = [exe]
+
+    (app, subproc) = cache.launchApplication(args=args)
+
+    treeview = GtkTreeView(app, subproc)
+    cache.addApplication(treeview)
+
+    treeview.gtkTreeViewFrame.app = treeview
+
+    return treeview
+
+# class to represent the application
+class GtkTreeView(accessibles.Application):
+    def __init__(self, accessible, subproc=None):
+        &#39;Get a reference to the Tree View window&#39;
+        super(GtkTreeView, self).__init__(accessible, subproc)
+        self.findFrame(re.compile(&#39;^Tree View&#39;), logName=&#39;Gtk Tree View&#39;)
+&lt;/code&gt;</code></pre>
+</div>
+<h4 id="gtktutorialframe.py">gtktutorialframe.py</h4>
+<p>The second portion of the application wrapper (<em>gtktutoriaframe.py</em>) is no different than previous examples. The code below is aggressively documented:</p>
+<div class="python">
+<pre><code>&lt;code&gt;
+import sys
+import os
+
+from strongwind import *
+from gtktreeview import *
+
+
+# class to represent the main window.
+class GtkTreeViewFrame(accessibles.Frame):
+
+    # constants
+    # the available widgets on the window
+    COLUMN_ZERO = &quot;Column 0&quot;
+    PARENT_ONE = &quot;parent 0&quot;
+    PARENT_TWO = &quot;parent 1&quot;
+    PARENT_TREE = &quot;parent 2&quot;
+    PARENT_FOUR = &quot;parent 3&quot;
+
+    # the ordering of table cell names we expect when we call the
+    # findAllTableCells method
+    ASCENDING = (&#39;parent 0&#39;, &#39;parent 1&#39;, &#39;parent 2&#39;, &#39;parent 3&#39;,
+                 &#39;child 0 of parent 0&#39;, &#39;child 1 of parent 0&#39;,
+                 &#39;child 2 of parent 0&#39;, &#39;child 0 of parent 1&#39;,
+                 &#39;child 1 of parent 1&#39;, &#39;child 2 of parent 1&#39;,
+                 &#39;child 0 of parent 2&#39;, &#39;child 1 of parent 2&#39;,
+                 &#39;child 2 of parent 2&#39;, &#39;child 0 of parent 3&#39;,
+                 &#39;child 1 of parent 3&#39;, &#39;child 2 of parent 3&#39;)
+    DESCENDING = (&#39;parent 3&#39;, &#39;parent 2&#39;, &#39;parent 1&#39;, &#39;parent 0&#39;,
+                  &#39;child 2 of parent 3&#39;, &#39;child 1 of parent 3&#39;,
+                  &#39;child 0 of parent 3&#39;, &#39;child 2 of parent 2&#39;,
+                  &#39;child 1 of parent 2&#39;, &#39;child 0 of parent 2&#39;,
+                  &#39;child 2 of parent 1&#39;, &#39;child 1 of parent 1&#39;,
+                  &#39;child 0 of parent 1&#39;, &#39;child 2 of parent 0&#39;,
+                  &#39;child 1 of parent 0&#39;, &#39;child 0 of parent 0&#39;)
+
+    # Use the constructor to find some of the accessibles we will be testing
+    # and store an object for each accessible in a variable that can be used
+    # from the test script.
+    def __init__(self, accessible):
+        super(GtkTreeViewFrame, self).__init__(accessible)
+        self.column0 = self.findTableColumnHeader(self.COLUMN_ZERO)
+        self.parent0 = self.findTableCell(self.PARENT_ONE)
+        self.parent1 = self.findTableCell(self.PARENT_TWO)
+        self.parent2 = self.findTableCell(self.PARENT_TREE)
+        self.parent3 = self.findTableCell(self.PARENT_FOUR)
+
+    # expand accessible by performing an &quot;expand or contract&quot; action.
+    # this method will also contract the accessible if used out of order
+    def expand(self, parent):
+        procedurelogger.action(&#39;expand %s.&#39; % parent)
+        parent.expandOrContract()
+
+    # contract accessible by performing an &quot;expand or contract&quot; action.
+    # this method will also expand the accessible if used out of order
+    def contract(self, parent):
+        procedurelogger.action(&#39;contract %s.&#39; % parent)
+        parent.expandOrContract()
+
+    # perform a click action for TableColumnHeader
+    def tchClick (self, thc):
+        procedurelogger.action(&#39;click %s.&#39; % thc)
+        thc.click()
+
+    # assert that the accessible has the &quot;contracted&quot; state after performing
+    # the &quot;expand or contract&quot; action.  states can be found on the &quot;status&quot; list
+    # on the &quot;interface viewer&quot; tab in Accerciser.
+    def assertContracted(self, accessible):
+        &#39;Raise exception if accessible does not match the given result&#39;   
+        procedurelogger.expectedResult(&#39;%s is %s.&#39; % (accessible, &quot;contracted&quot;))
+        def resultMatches():
+            return not accessible.expanded
+        
+        assert retryUntilTrue(resultMatches)
+
+    # assert that the accessible has the &quot;expanded&quot; state after performing
+    # the &quot;expand or contract&quot; action.
+    def assertExpanded(self, accessible):
+        &#39;Raise exception if accessible does not match the given result&#39;   
+        procedurelogger.expectedResult(&#39;%s is %s.&#39; % (accessible, &quot;expanded&quot;))
+        def resultMatches():
+            return accessible.expanded
+        
+        assert retryUntilTrue(resultMatches)
+
+    # assert that the sorting of the TreeView is ascending by comparing the 
+    # order in which the table cells are found to the order we expect them
+    # to be in (self.ASCENDING).
+    def assertAscending(self):
+        &#39;Raise exception if the sorting of the tree view is not ascending&#39;   
+        procedurelogger.expectedResult(&#39;TreeView sorting is ascending&#39;)
+        self.table_cells = self.findAllTableCells(None, checkShowing=False)
+        tcs = [table_cell.name for table_cell in  self.table_cells]
+
+        def resultMatches():
+            self.table_cells = self.findAllTableCells(None, checkShowing=False)
+            return tuple(tcs) == self.ASCENDING
+
+        assert retryUntilTrue(resultMatches)
+
+    # assert that the sorting of the TreeView is descending by comparing the 
+    # order in which the table cells are found to the order we expect them
+    # to be in (self.DESCENDING).
+    def assertDescending(self):
+        &#39;Raise exception if the sorting of the tree view is not descending&#39;   
+        procedurelogger.expectedResult(&#39;TreeView sorting is descending&#39;)
+        self.table_cells = self.findAllTableCells(None, checkShowing=False)
+        tcs = [table_cell.name for table_cell in  self.table_cells]
+
+        def resultMatches():
+            self.table_cells = self.findAllTableCells(None, checkShowing=False)
+            return tuple(tcs) == self.DESCENDING
+
+        assert retryUntilTrue(resultMatches)
+&lt;/code&gt;</code></pre>
+</div>
+<h3 id="example-test-script">Example Test Script</h3>
+<p>The test script is also no different than previous examples. The code below is aggressively documented and should be fairly easy to follow:</p>
+<div class="python">
+<pre><code>&lt;code&gt;
+from strongwind import *
+from gtktreeview import *
+from sys import argv
+from os import path
+
+app_path = None 
+try:
+  app_path = argv[1]
+except IndexError:
+  pass #expected
+
+# open the treeview sample application
+try:
+  app = launchTreeView(app_path)
+except IOError, msg:
+  print &quot;ERROR:  %s&quot; % msg
+  exit(2)
+
+# make sure we got the app back
+if app is None:
+  exit(4)
+
+# just an alias to make things shorter
+tvFrame = app.gtkTreeViewFrame
+
+#expand parent 0
+tvFrame.expand(tvFrame.parent0)
+sleep(config.SHORT_DELAY)
+tvFrame.assertExpanded(tvFrame.parent0)
+
+#contract parent0
+tvFrame.contract(tvFrame.parent0)
+sleep(config.SHORT_DELAY)
+tvFrame.assertContracted(tvFrame.parent0)
+
+#expand parent 1
+tvFrame.expand(tvFrame.parent1)
+sleep(config.SHORT_DELAY)
+tvFrame.assertExpanded(tvFrame.parent1)
+
+#contract parent1
+tvFrame.contract(tvFrame.parent1)
+sleep(config.SHORT_DELAY)
+tvFrame.assertContracted(tvFrame.parent1)
+
+#expand parent 2
+tvFrame.expand(tvFrame.parent2)
+sleep(config.SHORT_DELAY)
+tvFrame.assertExpanded(tvFrame.parent2)
+
+#contract parent2
+tvFrame.contract(tvFrame.parent2)
+sleep(config.SHORT_DELAY)
+tvFrame.assertContracted(tvFrame.parent2)
+
+#expand parent 3
+tvFrame.expand(tvFrame.parent3)
+sleep(config.SHORT_DELAY)
+tvFrame.assertExpanded(tvFrame.parent3)
+
+#contract parent3
+tvFrame.contract(tvFrame.parent3)
+sleep(config.SHORT_DELAY)
+tvFrame.assertContracted(tvFrame.parent3)
+
+# we should also make sure that clicking on the table header column reorders
+# the tree view
+
+# evidently, in Gtk the first click just enables ordering
+tvFrame.tchClick(tvFrame.column0)
+sleep(config.SHORT_DELAY)
+# the treeview should still be ascending at this point
+tvFrame.assertAscending()
+
+# next time we click the sorting should change to descending
+tvFrame.tchClick(tvFrame.column0)
+sleep(config.SHORT_DELAY)
+tvFrame.assertDescending()
+
+# and now the sorting should go back to ascending
+tvFrame.tchClick(tvFrame.column0)
+sleep(config.SHORT_DELAY)
+tvFrame.assertAscending()
+
+print &quot;INFO:  Log written to: %s&quot; % config.OUTPUT_DIR
+
+# close the app using Strongwind&#39;s altF4 method (from accessibles.py).
+# this is the standard way of closing an application that doesn&#39;t have a
+# clickable &quot;quit&quot; option., 
+tvFrame.altF4(tvFrame)
+&lt;/code&gt;</code></pre>
+</div>
+<h2 id="orca">Orca</h2>
+<h3 id="requirements-1">Requirements</h3>
+<p>It is recommended that you use a Virtual Machine (VM) for testing. You should take VM snapshots before and after you have it set up for testing Orca so you can easily revert if something goes wrong later.</p>
+<ul>
+<li><a href="http://www.gnome.org">GNOME</a></li>
+<li><a href="http://www.python.org">Python</a></li>
+<li>Enable &quot;Assistive Technologies&quot; from the GNOME Control Center</li>
+<li>pyatspi (packaged with <a href="http://ftp.gnome.org/pub/GNOME/sources/at-spi">AT-SPI</a>)</li>
+<li><a href="Accessibility:_Getting_Started_With_Development#http://localhost:4000/Getting_the_Code" title="wikilink"> uia2atk code</a>. The QA-related code is in the test directory. There are short README files in the test directory and each of its subdirectories. Read these README files if you are confused about the files and directories you are seeing. The code can also be checked out anonymously (using subversion) by running <em>svn co <a href="svn://anonsvn.mono-project.com/source/trunk/uia2atk">svn://anonsvn.mono-project.com/source/trunk/uia2atk</a></em>.</li>
+<li>Install intltool &gt;=0.40.0 (http://ftp.acc.umu.se/pub/GNOME/sources/intltool/0.40/intltool-0.40.3.tar.gz).</li>
+<li>Install Orca revision 4277 (version 2.24.00???) from source (svn co -r 4277 <a href="http://svn.gnome.org/svn/orca/trunk">http://svn.gnome.org/svn/orca/trunk</a> orca) so you can follow along with the examples. We must check out the code fron svn because the test code is in the svn trunk but it not in the tarballs or source packages. Additionally, we want to make sure we use the same revision on all test machines so we do not get varying test results.</li>
+<li>Set <em>orca.debug.debugLevel = orca.debug.LEVEL_INFO</em> in your ~/.orca/user-settings.py file. This is explained in <a href="http://live.gnome.org/Orca/RegressionTesting/WritingTests">Writing Orca Tests</a>, which is mentioned below and should be read prior to writing tests for Orca.</li>
+<li>Install <a href="http://live.gnome.org/Accerciser">Accerciser</a> from source. <a href="http://bgmerrell.blogspot.com/2008/07/buildling-accerciser-from-source-on.html">Here</a> are some instructions to do this easily.</li>
+<li>Install Macaroon by running <em>configure</em>, <em>make</em>, and <em>make install</em> in <em>accerciser/macaroon</em>.</li>
+<li>Add the <em>uia2atk/test/samples/winforms</em> (explained later) directory to PATH. You can do this by running <em>export PATH=/home/a11y/code/uia2atk/test/samples/winforms:$PATH</em>. Add it to your profile script (e.g., /etc/profile.local in openSUSE) and log out for universal and permanent affect.</li>
+</ul>
+<h3 id="testing">Testing</h3>
+<p>Orca already has its own test harness that the Orca team uses to perform regression tests on Orca itself. We will use their harness to execute tests on our own sample WinForms applications to ensure that they are accessible. The documents linked below will help you get familiar with Orca testing. Read them first.</p>
+<ul>
+<li><a href="http://live.gnome.org/Orca/RegressionTesting">Orca Regression Testing</a></li>
+<li><a href="http://live.gnome.org/Orca/RegressionTesting/WritingTests">Writing Orca Tests</a></li>
+</ul>
+<p>In the <em>uia2atk/test</em> directory we have created a directory named <em>keystrokes</em>. This is where the Orca test scripts for our WinForms sample applications will reside.</p>
+<p>It is fairly simple to use Orca's test harness to execute our test scripts. Logs are stored in a directory whose name is of the form YY-MM-DD_HH:MM:SS (e.g., 2006-11-29_20:21:41)</p>
+<p>The code below will execute all our test scripts inside the the <em>uia2atk/test/keystrokes/gtk</em> directory. To execute all our WinForms test scripts, that path <em>uia2atk/test/keystrokes/winforms</em> would be used instead.</p>
+<p>Results (as explained in the <a href="http://live.gnome.org/Orca/RegressionTesting">Orca Regression Testing</a> document) will be stored in the current/working directory unless otherwise specific with the -r option. <bash> cd /home/a11y/code/orca/test/harness; ./runall.sh \ -k /home/a11y/code/uia2atk/test/keystrokes/gtk &gt; runall.out 2&gt;&amp;1 </bash></p>
+<p><strong>Important:</strong> Each directory name inside of the <em>uia2atk/test/keystrokes/gtk</em> and <em>uia2atk/test/keystrokes/winforms</em> directory is used to execute the application to be tested. Because of this, each directory in the <em>uia2atk/test/keystrokes/gtk</em> and <em>uia2atk/test/keystrokes/winforms</em> directories should have the same name as the sample application that will be tested. Thus, the keystroke test scripts for that sample application are then stored in the directory that has the same name as the sample application that will be tested by that test script. This is required because Orca runs each application to be tested by issuing the name of each directory in <em>uia2atk/test/keystrokes/gtk</em> or <em>uia2atk/test/keystrokes/winforms</em> as a command. That is, the <strong><em>directory</em></strong> <em>uia2atk/test/keystrokes/gtk/gtktutorial.py</em> means that Orca will executed the command <em>gtktutorial.py</em> when the runall.sh is used and the <em>uia2atk/test/keystrokes/gtk</em> is passed as the keystrokes directory argument (-k). This is why we needed to add <em>uia2atk/test/samples</em> to PATH (as discussed in the Requirements section).</p>
+<p>Additionally, the following code can be used to execute a single Orca tests. Logs are stored in the current/working directory. <bash> cd /home/a11y/code/orca/test/harness; ./runone.sh \ /home/a11y/code/uia2atk/test/keystrokes/gtk/gtktutorial/gtktutorial_example_1.py \ /home/a11y/code/uia2atk/test/samples/gtk/gtktutorial.py 0 &gt; runone.out 2&gt;&amp;1 </bash></p>
+<p>For the sake of completeness, it should be noted that Orca's runone.sh script does not require that each directory in the <em>uia2atk/test/keystrokes/gtk</em> <em>uia2atk/test/keystrokes/winforms</em> directory have the same name as the sample application that will be tested. This is because the application to be tested is specified explicitly. However, we should always give each directory in <em>uia2atk/test/keystrokes/gtk</em> and <em>uia2atk/test/keystrokes/winforms</em> the name of the sample application to be tested, so runall.sh always runs successfully.</p>
+<p>In the above commands, the test output, which is what we are interested to see test results, is redirected using the &quot;&gt;&quot; character. This is optional. On the official test machines we redirect the test output to the appropriate directory, so it can be viewed easily after the test has been run.</p>
+<p>As explained in the <a href="http://live.gnome.org/Orca/RegressionTesting">Orca Regression Testing</a> document, the 0 that follows gtktutorial.py means that Orca is not running at the time the test is run. Therefore, using the above command, Orca will be started and the test will run. Replacing the 0 with a 1 will execute the test if Orca is already running, however, there are some Orca peculiarities (related to settings) that make this approach more difficult. Using 0 should be fine for all of our tests.</p>
+<h3 id="test-writing">Test Writing</h3>
+<p>Gtk applications are already accessible in Linux. Our approach to testing WinForms via Orca will be to:</p>
+<ol>
+<li>Create a Gtk application</li>
+<li>Create a WinForms application that mirrors the Gtk application. That is, create a WinForms application that uses the same controls (or at least controls that are very similar and have the same accessible roles), text, title, etc., as the Gtk application</li>
+<li>Create a keystrokes test (e.g., uia2atk/test/keystrokes/gtk/gtktutorial/gtktutorial_example_1.py) for the Gtk application.</li>
+<li>Use the keystrokes test to test the WinForms application to ensure that the WinForms application is accessible in the same way that the Gtk application is accessible.</li>
+</ol>
+<p>Two directories have been created for this purpose:</p>
+<p><strong>uia2atk/test/keystrokes/gtk:</strong> keystroke tests for Gtk applications<br /><strong>uia2atk/test/keystrokes/winforms:</strong> keystroke tests for WinForms applications that mirror the Gtk applications.</p>
+<p>Of course, when we run our tests, we will only run the WinForms keystroke tests. We are only saving the Gtk keystroke tests for references, comparison, and examples.</p>
+<h1 id="moonlight">Moonlight</h1>
+<h2 id="create-moonlight-sample">Create Moonlight Sample</h2>
+<p>We will use Microsoft Visual Studio Silverlight Tools to create test samples in C#, The steps are:</p>
+<ol>
+<li>New a Project with &quot;Silverlight&quot; type, select &quot;Silverlight Application&quot;, give project Name to be &quot;control's name + sample&quot; (ButtonSample as example).</li>
+<li>Select &quot;Add a new ASP.NET Web project to the solution to host Silverlight&quot;, click &quot;OK&quot; button, &quot;ButtonSample&quot; and &quot;ButtonSample.Web&quot; will be created, we will draw page in Page.xaml and write managed code in Page.xaml.cs.</li>
+<li>After build Solution, ButtonSample.xap will be created under Bin/Debug, run TestPage.html, Silverlight application is running on web browser <img src="http://localhost:4000/files/Silverlight_sample.jpg" title="fig:http://localhost:4000/files/Silverlight_sample.jpg" alt="http://localhost:4000/files/Silverlight_sample.jpg" /></li>
+</ol>
+<p>Example of create Canvas and Button sample:<br />Page.xaml</p>
+<div class="python">
+<pre><code>&lt;code&gt;
+
+&lt;UserControl x:Class=&quot;DiggSample.Page&quot;
+    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot; 
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot; 
+    Width=&quot;400&quot; Height=&quot;300&quot;&gt;
+    &lt;Canvas x:Name=&quot;Canvas1&quot; Width=&quot;300&quot; Height=&quot;300&quot;  Background=&quot;Blue&quot;&gt;
+        
+        &lt;Canvas x:Name=&quot;Canvas2&quot; Width=&quot;260&quot; Height=&quot;150&quot; Canvas.Left=&quot;20&quot;
+ Canvas.Top=&quot;20&quot; Background=&quot;Chartreuse&quot;&gt;
+            &lt;Button x:Name=&quot;Button1&quot; Content=&quot;Button 1&quot; Width=&quot;100&quot; Height=&quot;50&quot; 
+Canvas.Left =&quot;50&quot; Canvas.ZIndex=&quot;1&quot; Click=&quot;MyButton_Click&quot;&gt;
+            &lt;/Button&gt;
+            &lt;Button x:Name=&quot;Button2&quot; Content=&quot;Button 2&quot; Width=&quot;100&quot; Height=&quot;50&quot; 
+Canvas.Left =&quot;50&quot; Canvas.Top=&quot;100&quot;&gt;&lt;/Button&gt;
+        &lt;/Canvas&gt;
+        
+        &lt;Button x:Name=&quot;Button3&quot; Content=&quot;Button 3&quot; Width=&quot;100&quot; Height=&quot;50&quot;
+ Canvas.Left =&quot;70&quot; Canvas.Top=&quot;200&quot;&gt;&lt;/Button&gt;
+    &lt;/Canvas&gt;
+&lt;/UserControl&gt;
+
+&lt;/code&gt;</code></pre>
+</div>
+<p><br />Page.xaml.cs</p>
+<div class="python">
+<pre><code>&lt;code&gt;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
+
+namespace DiggSample
+{
+    public partial class Page : UserControl
+    {
+        public Page()
+        {
+            InitializeComponent();
+        }
+        //give click action to change Button1&#39;s content
+        void MyButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button1.Content = &quot;Pushed!&quot;;
+        }
+    }
+}
+
+&lt;/code&gt;</code></pre>
+</div>
+<p><br />More details plase see <a href="http://msdn.microsoft.com/en-us/library/cc838218%28VS.95%29.aspx">Creating Your First Silverlight Application</a></p>
+<h2 id="build-test-environment">Build Test Environment</h2>
+<h3 id="install-mono">Install Mono</h3>
+<ul>
+<li>SVN download Mono and Mcs from svn+ssh://<username>@mono-cvs.ximian.com/source/branches/mono-2-6/</li>
+<li>Build and install Mono</li>
+<li>SVN download Moon from <a href="svn://anonsvn.mono-project.com/source/trunk/moon">svn://anonsvn.mono-project.com/source/trunk/moon</a></li>
+</ul>
+<h3 id="mxap-to-compile-silverlight-samples">mxap to compile Silverlight samples</h3>
+<ul>
+<li>Build and install Moon</li>
+<li>Run &quot;mxap&quot; on the sample's folder, assign &quot;--application-name&quot; argument to the class's name, for example: &quot;mxap --application-name=ButtonSample&quot;, *.xap and *.html will be created</li>
+<li>You also can run 'make' and 'make clean' on the sample's folder to compile samples</li>
+</ul>
+<h3 id="manage-firefox">Manage Firefox</h3>
+<ul>
+<li>Download Firefox from <a href="http://151.155.248.179:8010/job/moonatkbridge_trunk_firefox/">http://151.155.248.179:8010/job/moonatkbridge_trunk_firefox/</a> that is 3.6 version</li>
+<li>Extract to /var/lib/hudson/workspace/</li>
+<li>Run &quot;./configure&quot; that will install firefox to /usr/local/</li>
+</ul>
+<h3 id="install-moonatkbridge-to-make-accessible">Install MoonAtkBridge to Make accessible</h3>
+<ul>
+<li>Install moonlight extension from <a href="http://151.155.248.179:8010/job/moonatkbridge_trunk_xpi/lastSuccessfulBuild/artifact/moon/plugin/install/novell-moonlight.xpi">http://151.155.248.179:8010/job/moonatkbridge_trunk_xpi/lastSuccessfulBuild/artifact/moon/plugin/install/novell-moonlight.xpi</a></li>
+<li>Install moonlight-a11y extension from <a href="http://151.155.248.179:8010/job/moonatkbridge_trunk_xpi/lastSuccessfulBuild/artifact/uia2atk/MoonAtkBridge/novell-moonlight-a11y.xpi">http://151.155.248.179:8010/job/moonatkbridge_trunk_xpi/lastSuccessfulBuild/artifact/uia2atk/MoonAtkBridge/novell-moonlight-a11y.xpi</a></li>
+<li>Run silverlight sample *.html by /usr/local/bin/firefox</li>
+<li>Run accerciser, on the left treeview, you may see Sliverlight elements under &quot;Sliverlight Control&quot; are accessibled</li>
+</ul>
+<h1 id="uiautomation-client-api">UIAutomation Client API</h1>
+<h2 id="white">White</h2>
+<h3 id="introduction-1">Introduction</h3>
+<p>White supports all rich client applications, It is .NET based and hence you wouldn't have use proprietary scripting language. You can use your favourite .NET language, IDE and tools for developing tests/automation programs. White provides consistent object oriented API for all kinds of applications. Also it hides all the complexity of Microsoft's UIAutomation library and windows messages.<br />White is a thin wrapper of UIAutomationClient API on Windows that is similar to Strongwind wrap pyatspi on Linux that will be posted to Linux. We will use it to write tests for ClientAPI testing against WinForms, Moonlight and Gtk+ applications.</p>
+<h3 id="example-of-start-white">Example of start White</h3>
+<div class="csharp">
+<pre><code>&lt;code&gt;
+using System;
+using System.Collections.Generic;
+using Core;
+using Core.UIItems.WindowItems;
+using Core.UIItems;
+using Core.Factory;
+using Core.UIItems.Finders;
+using System.Windows.Automation;
+using Nunit;
+
+namespace WindowsFormsApplication1
+{
+    static class Program
+    {
+        /// &lt;summary&gt;
+        /// The main entry point for the application.
+        /// &lt;/summary&gt;
+
+        [STAThread]
+        static void Main()
+        {
+            Application application = Application.Launch(&quot;calc.exe&quot;);
+            Window window = application.GetWindow(&quot;calculator&quot;, InitializeOption.NoCache);
+            Assert.IsNotNull(window);
+            Button button = window.Get&lt;Button&gt;(&quot;9&quot;);
+            button.Click();
+
+            List&lt;string&gt; btnNames = new List&lt;string&gt;();
+
+            for (int i = 0; i &lt; 20; i++)
+            {
+                SearchCriteria searchCriteria =
+                    SearchCriteria.ByControlType(ControlType.Button)
+                    .AndIndex(i);
+                IUIItem btn = window.Get(searchCriteria);
+                btnNames.Add(btn.Name);
+                Console.WriteLine(btn.Name);
+            }
+
+            application.Kill();
+        }
+    }
+}
+&lt;/code&gt;</code></pre>
+</div>
+<ul>
+<li>use &quot;Application.Launch(&quot;app&quot;)&quot; to run an application</li>
+<li>use &quot;Get<ControlType>(&quot;Name&quot;)&quot; to get element</li>
+<li>use &quot;SearchCriteria&quot; with some identification to get element</li>
+<li>use Nunit &quot;Assert&quot; to make sure the implementation is correct</li>
+<li>More deatils you can see <a href="http://white.codeplex.com/">White Project</a></li>
+<li>Here is a wide used guide from Ben Hall's blog <a href="http://blog.benhall.me.uk/2008/02/project-white-automated-ui-testing.html/">White:Automated UI Testing</a></li>
+</ul>
+<h2 id="uia-verify">UIA Verify</h2>
+<h3 id="introduction-2">Introduction</h3>
+<p>UIA Verify is a test automation framework that features the User Interface Automation Test Library (UIA Test Library) and Visual UI Automation Verify (Visual UIA Verify), the graphical user interface tool. The framework facilitates manual and automated testing of the Microsoft (R) User Interface (UI) Automation Provider implementation of a control or application. The majority of the UIA Verify functionality is provided through a dynamic link library (e.g., UIATestLibrary.dll) that contains the code for testing specific UI Automation functionality and supports logging of the test results.<br /> UIA verify is similar as Accerciser and UISpy that will be ported on Linux, UIA verify and UISpy can get automation properties and control patterns of controls base on UIAutomation Client API, but Accerciser base on AT-SPI API and it can't do this.<br /> We will use UIA Verify to verify Client API by runing its automation test suits on Linux and Windows to make sure the results are the same for each application(WinForms application for example).</p>
+<h3 id="automation-test-suit">Automation Test Suit</h3>
+<p>UIA Verify provides three part of test suits which are &quot;Automation Element Tests&quot;, &quot;Control Tests&quot;, &quot;Pattern Tests&quot;. Here is a simple user guide of using Automation test suit of UIA verify application:</p>
+<ul>
+<li>Download the lastest UIA verify from <a href="http://uiautomationverify.codeplex.com/SourceControl/ListDownloadableCommits.aspx">UI Automation Verify</a>, and extract the zip</li>
+<li>Run VisualUIAVerify.exe to get <img src="http://localhost:4000/files/UIAVerify01.jpg" title="fig:http://localhost:4000/files/UIAVerify01.jpg" alt="http://localhost:4000/files/UIAVerify01.jpg" /></li>
+<li>Expand and select element or control what you want to test from left side under &quot;Automation Elements Tree&quot;; Select &quot;Tests&quot; or expand it to select test suits what you want to run ; Then, click &quot;Run Selected Test(s)&quot; or &quot;Run Selected Test(s) On Selected Element and All Children Element(s)&quot; on toolbar under &quot;Texts&quot; to run tests <img src="http://localhost:4000/files/UIAVerify02.jpg" title="fig:http://localhost:4000/files/UIAVerify02.jpg" alt="http://localhost:4000/files/UIAVerify02.jpg" /></li>
+<li>After complete running the selected tests, test results is been showing under &quot;Test Results&quot; panel <img src="http://localhost:4000/files/UIAVerify03.jpg" title="fig:http://localhost:4000/files/UIAVerify03.jpg" alt="http://localhost:4000/files/UIAVerify03.jpg" /></li>
+</ul>
+<h2 id="uia-client-api-testing-how-to">UIA Client Api Testing How To</h2>
+<h3 id="what-is-the-ui-automaiton">What is the UI Automaiton?</h3>
+<p>Microsoft UI Automation is the new accessibility model for Microsoft Windows and is intended to address the needs of assistive technology products and automated testing tools. UI Automation offers many improvements over Microsoft Active Accessibility.</p>
+<figure>
+<img src="http://localhost:4000/files/Uia1.jpeg" title="http://localhost:4000/files/Uia1.jpeg" alt="http://localhost:4000/files/Uia1.jpeg" /><figcaption>http://localhost:4000/files/Uia1.jpeg</figcaption>
+</figure>
+<h3 id="what-is-the-uiaclient-used-for">What is the uiaclient used for?</h3>
+<p>In UI Automation, a core service lies between the server (provider) and the client, The core service makes calls to the interfaces implemented by providers, Client applications gain access to this core service by creating a CUIAutomation object. This object supports a set of client interfaces by which we can access the application by uia client, and test every control's pattern works well.</p>
+<figure>
+<img src="http://localhost:4000/files/Uia.GIF" title="http://localhost:4000/files/Uia.GIF" alt="http://localhost:4000/files/Uia.GIF" /><figcaption>http://localhost:4000/files/Uia.GIF</figcaption>
+</figure>
+<h3 id="requirements-2">Requirements</h3>
+<ul>
+<li><strong>C#</strong>: the client API was limited to managed code.</li>
+<li><strong>White assemblies</strong>: Bricks.dll Bricks.RuntimeFramework.dll Castle.Core.dll Castle.DynamicProxy2.dll log4net.dll nunit.framework.dll White.Core.dll Xstream.Core.dll. (these dlls from <a href="http://white.codeplex.com/Release/ProjectReleases.aspx?ReleaseId=16371">white-0.18-bin</a>)</li>
+<li><strong>UI Verify 1.0, UISpy v6.0</strong>: the managed ATs tools.</li>
+<li><strong>UIA Client code</strong>: git@github.com:raywang/UIAClientAPI.git.</li>
+<li><strong>Testable Application</strong>: the following application include all the patterns we want to test. You should locate the testable application (Keepass.exe ,DockPatternProvider.exe ,WindowAndTransformPatternProvider.exe )in the project's <strong>bin/debug/</strong> directory which also include the test script executable program, then if you run the executable program it will launch the testable application.</li>
+</ul>
+<h5 id="keepass.exe">Keepass.exe:</h5>
+<p><a href="http://dl.dropbox.com/u/3874045/KeePass-2.09.zip">http://dl.dropbox.com/u/3874045/KeePass-2.09.zip</a></p>
+<h5 id="dockpatternprovider.exe">DockPatternProvider.exe:</h5>
+<p>svn co <a href="svn://anonsvn.mono-project.com/source/trunk/uia2atk/test/samples/uiaclient/DockProviderTest.cs">svn://anonsvn.mono-project.com/source/trunk/uia2atk/test/samples/uiaclient/DockProviderTest.cs</a></p>
+<h5 id="windowandtransformpatternprovider.exe">WindowAndTransformPatternProvider.exe:</h5>
+<p>svn co <a href="svn://anonsvn.mono-project.com/source/trunk/uia2atk/test/samples/uiaclient/TransformProviderTest.cs">svn://anonsvn.mono-project.com/source/trunk/uia2atk/test/samples/uiaclient/TransformProviderTest.cs</a></p>
+<p>(you can use the C# compiler to make the .cs file to a binary.)</p>
+<p>Keepass.exe</p>
+<figure>
+<img src="http://localhost:4000/files/Keepass.png" title="http://localhost:4000/files/Keepass.png" alt="http://localhost:4000/files/Keepass.png" /><figcaption>http://localhost:4000/files/Keepass.png</figcaption>
+</figure>
+<p>DockPatternProvider.exe</p>
+<figure>
+<img src="http://localhost:4000/files/DockPatternProvider.png" title="http://localhost:4000/files/DockPatternProvider.png" alt="http://localhost:4000/files/DockPatternProvider.png" /><figcaption>http://localhost:4000/files/DockPatternProvider.png</figcaption>
+</figure>
+<p>WindowAndTransformPatternProvider.exe</p>
+<figure>
+<img src="http://localhost:4000/files/TransformPattern.png" title="http://localhost:4000/files/TransformPattern.png" alt="http://localhost:4000/files/TransformPattern.png" /><figcaption>http://localhost:4000/files/TransformPattern.png</figcaption>
+</figure>
+<h3 id="qa-architecture-diagram-1">QA Architecture Diagram</h3>
+<p>We need an application accessible the three applications through UI Automation client. Our application wrapper and test scripts 's framework is shown as follows: <img src="http://localhost:4000/files/Uiaclient1.png" title="fig:http://localhost:4000/files/Uiaclient1.png" alt="http://localhost:4000/files/Uiaclient1.png" /></p>
+<h3 id="example-application-wrapper-1">Example Application Wrapper</h3>
+<h4 id="testbase.cs">TestBase.cs</h4>
+<div class="c">
+<pre><code>&lt;code&gt;
+[TestFixture]
+public class TestBase
+&lt;/code&gt;</code></pre>
+</div>
+<p>it tells nunit this class include the test code, so this is the program's entry point for the Nunit .</p>
+<div class="c">
+<pre><code>&lt;code&gt;
+[SetUp]
+    public void Init ()
+    {
+        ProcedureLogger.Init ();
+        LaunchSample ();
+        Thread.Sleep (Config.Instance.MediumDelay);
+        OnSetup ();
+    }
+&lt;/code&gt;</code></pre>
+</div>
+<p>[SetUp]:Every test method will share a group of test objects,we will extract their initialized codes into a Setup method and reuse it in all tests. Init (): do some initiation things and launch sample.</p>
+<div class="c">
+<pre><code>&lt;code&gt;
+    [TearDown]
+    public void Quit ()
+    {
+        OnQuit ();
+    }
+        protected virtual void OnQuit ()
+    {
+            procedureLogger.Action (&quot;Close the application.&quot;);
+        procedureLogger.Save ();
+    }
+&lt;/code&gt;</code></pre>
+</div>
+<p>[TearDown]:When the test method is done, it will clean up the resource. OnQuit (): save the screen shot to a xml file.</p>
+<div class="c">
+<pre><code>&lt;code&gt;
+        public Window GetWindow (String title)
+    {
+        var ae = AutomationElement.RootElement.FindFirst(TreeScope.Children, new PropertyCondition (AutomationElementIdentifiers.NameProperty, title));
+        return new Window (ae);
+    }
+&lt;/code&gt;</code></pre>
+</div>
+<p>GetWindow (String title): we find the testwindow by the RootElement(Desktop).</p>
+<div class="c">
+<pre><code>&lt;code&gt;
+        protected void Run (System.Action action)
+    {
+        try {
+            action ();
+        } catch (Exception ex) {
+            HandleException (ex);
+            throw;
+        }
+    }
+        public void HandleException (Exception ex)
+    {
+        procedureLogger.Action (&quot;Error: &quot; + ex.ToString());
+        procedureLogger.ExpectedResult (&quot;A Exception has been thrown.&quot;);
+        procedureLogger.Save ();
+    }
+&lt;/code&gt;</code></pre>
+</div>
+<p>Run (System.Action action): the Run action is used to run the appointed test method.</p>
+<h4 id="config.cs">Config.cs</h4>
+<p>get the default configuration from config.xml</p>
+<h4 id="config.xml">Config.xml</h4>
+<p>the default configuration saved in a xml file</p>
+<div class="python">
+<pre><code>&lt;code&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;Config xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+  &lt;KeePassPath&gt;keePass-2.09\\KeePass.exe&lt;/KeePassPath&gt;
+  &lt;DockPatternProviderPath&gt;DockPatternProvider.exe&lt;/DockPatternProviderPath&gt;
+  &lt;WindowAndTransformPatternProviderPath&gt;WindowAndTransformPatternProvider.exe&lt;/WindowAndTransformPatternProviderPath&gt;
+  &lt;RetryTimes&gt;20&lt;/RetryTimes&gt;
+  &lt;RetryInterval&gt;500&lt;/RetryInterval&gt;
+  &lt;TakeScreenShots&gt;true&lt;/TakeScreenShots&gt;
+  &lt;OutputDir&gt;&lt;/OutputDir&gt;
+  &lt;ShortDelay&gt;500&lt;/ShortDelay&gt;
+  &lt;MediumDelay&gt;4000&lt;/MediumDelay&gt;
+  &lt;LongDelay&gt;10000&lt;/LongDelay&gt;
+&lt;/Config&gt;
+&lt;/code&gt;</code></pre>
+</div>
+<h4 id="element.cs">Element.cs</h4>
+<p>find all controls by ControlType &amp; name &amp; automationId , To promote a AutomationElement to a certain instance of a class, in order to get more specific methods.=</p>
+<div class="c">
+<pre><code>&lt;code&gt;
+        //Find a Element by type.  
+        public Element FindByType (ControlType type)
+    {
+        var cond = new PropertyCondition (AutomationElementIdentifiers.ControlTypeProperty, type);
+        AutomationElement control = element.FindFirst (TreeScope.Descendants, cond);
+        if (control == null)
+            return null;
+        else
+            return Promote (control);
+    }
+
+        //Find a Element by name.
+        protected Element Find (ControlType type, string name)
+    {
+        return Find (type, name, string.Empty);
+    }
+
+        //Find a Element by automationId.
+        protected Element Find (ControlType type, string name, string automationId)
+    {
+        AndCondition cond;
+
+        if (automationId == string.Empty) {
+            cond = new AndCondition (new PropertyCondition (AutomationElementIdentifiers.ControlTypeProperty, type),
+                   new PropertyCondition (AutomationElementIdentifiers.NameProperty, name));
+            } else if (name == string.Empty) {
+            cond = new AndCondition (new PropertyCondition (AutomationElementIdentifiers.ControlTypeProperty, type),
+            new PropertyCondition (AutomationElementIdentifiers.AutomationIdProperty, automationId));
+            } else {
+            cond = new AndCondition (new PropertyCondition (AutomationElementIdentifiers.ControlTypeProperty, type),
+                   new PropertyCondition (AutomationElementIdentifiers.NameProperty, name),
+                   new PropertyCondition (AutomationElementIdentifiers.AutomationIdProperty, automationId));
+            }
+
+        for (int i = 0; i &lt; Config.Instance.RetryTimes; i++) {
+            AutomationElement control = element.FindFirst (TreeScope.Descendants, cond);
+            if (control != null)
+                return Promote (control);
+
+            Thread.Sleep (Config.Instance.RetryInterval);
+            }
+     
+        //FindAll Element method
+        protected T [] FindAll&lt;T&gt; (ControlType type) where T : Element
+    {
+        for (int i = 0; i &lt; Config.Instance.RetryTimes; i++) {
+            var cond = new PropertyCondition (AutomationElementIdentifiers.ControlTypeProperty, type);
+            AutomationElementCollection controls = element.FindAll (TreeScope.Descendants, cond);
+            if (controls != null)
+                return Promote&lt;T&gt; (controls);
+
+            Thread.Sleep (Config.Instance.RetryInterval);
+        }
+        return null;
+    }
+
+        //Find the control by the control&#39;s type and its name
+        public Window FindWindow (string name)
+    {
+        return (Window) Find (ControlType.Window, name);
+    }
+
+       //To promote a AutomationElement to a certain instance of a class, in order to get more specific methods.
+       protected Element Promote (AutomationElement elm)
+    {
+        if (elm.Current.ControlType == ControlType.Window)
+            return new Window (elm);
+        else if (elm.Current.ControlType == ControlType.Button)
+            return new Button (elm);
+        }
+&lt;/code&gt;</code></pre>
+</div>
+<div class="c">
+<pre><code>&lt;code&gt;
+//add a Finder property you can find the AutomationElement by it.
+        public Finder ByAutomationId (string automationId)
+    {
+        conditions.Add (new PropertyCondition (AutomationElementIdentifiers.AutomationIdProperty, automationId));
+        return this;
+    }
+&lt;/code&gt;</code></pre>
+</div>
+<p>the usage of find mehtod:</p>
+<div class="c">
+<pre><code>&lt;code&gt;
+var itemViewList = newPassDialog.Find&lt;MyList&gt; (&quot;Items View&quot;);
+var masterPasswdEdit = createMasterKeyWindow.Finder.ByName(&quot;Repeat password:&quot;).ByAutomationId(&quot;m_tbPassword&quot;).Find&lt;Edit&gt; ();
+&lt;/code&gt;</code></pre>
+</div>
+<h4 id="scrollbar.cs">ScrollBar.cs</h4>
+<p>there are many control, take ScrollBar for example The ScrollBar class wrap its RangeValuePattern's SetValue method and IsReadOnly property.</p>
+<div class="c">
+<pre><code>&lt;code&gt;
+        public class ScrollBar : Element
+    {
+        public ScrollBar (AutomationElement elm)
+            : base (elm)
+        {
+        }
+
+        //the RangeValuePattern&#39;s method
+        public void SetValue (double value)
+        {
+            RangeValuePattern rp = (RangeValuePattern) element.GetCurrentPattern (RangeValuePattern.Pattern);
+            rp.SetValue (value);
+        }
+
+        //the RangeValuePattern&#39;s property
+        public bool IsReadOnly{
+            get { return (bool) element.GetCurrentPropertyValue (RangeValuePattern.IsReadOnlyProperty); }
+        }
+         } 
+&lt;/code&gt;</code></pre>
+</div>
+<h4 id="procedurelogger.cs">ProcedureLogger.cs</h4>
+<p>ouput the info to screen and write it into a xml file</p>
+<h4 id="utils.cs">Utils.cs</h4>
+<p>Takes a screenshot of the current action.</p>
+<h3 id="example-test-script-1">Example Test script</h3>
+<h4 id="keepass.cs">Keepass.cs</h4>
+<p>derive from the Testbase class</p>
+<div class="c">
+<pre><code>&lt;code&gt;
+[TestFixture]
+    public class KeePassTests : TestBase
+    {
+        Window window = null;
+
+        protected override void LaunchSample ()
+        {
+            string sample = Path.Combine (System.AppDomain.CurrentDomain.BaseDirectory, Config.Instance.KeePassPath);
+            procedureLogger.Action (&quot;Launch &quot; + sample);
+
+            try {
+                Process.Start (sample);
+                procedureLogger.ExpectedResult (&quot;The KeePass window appears.&quot;);
+            } catch (Exception e) {
+                Console.WriteLine (e.Message);
+                Process.GetCurrentProcess ().Kill ();
+            }
+        }
+
+        protected override void OnSetup ()
+        {
+            base.OnSetup ();
+            window = GetWindow(&quot;KeePass Password Safe&quot;);
+        }
+
+        protected override void OnQuit ()
+        {
+            base.OnQuit ();
+            int pid = (int) window.AutomationElement.GetCurrentPropertyValue (AutomationElementIdentifiers.ProcessIdProperty);
+            Process.GetProcessById (pid).Kill ();
+        }
+
+        //TestCase101 Init Sample, create a new account
+        [Test]
+        public void RunTestCase101 ()
+        {
+            Run (TestCase101);
+        }
+
+        private void TestCase101 ()
+        {
+            //101.1 Click the &quot;New...&quot; button on the toolbar.
+            var toolBar = window.Find&lt;ToolBar&gt; ();
+            toolBar.Find&lt;Button&gt; (&quot;New...&quot;).Click (false);
+            procedureLogger.ExpectedResult (&quot;The \&quot;Create New Password Database\&quot; dialog opens.&quot;);
+            Thread.Sleep(Config.Instance.ShortDelay);
+
+            //101.2 Enter &quot;TestCase101&quot; in the &quot;File Name&quot; combo box of the dailog.
+            var newPassDialog = window.Find&lt;Window&gt; (&quot;Create New Password Database&quot;);
+            var fileNameEdit = newPassDialog.Find&lt;Edit&gt; (&quot;File name:&quot;);
+            fileNameEdit.SetValue (&quot;TestCase101&quot;);
+            Thread.Sleep (Config.Instance.ShortDelay);
+            procedureLogger.ExpectedResult (&quot;\&quot;TestCase101\&quot; entered in the \&quot;File Name\&quot; box.&quot;);
+            Assert.AreEqual (fileNameEdit.Value, &quot;TestCase101&quot;);
+            Thread.Sleep(Config.Instance.ShortDelay);
+
+            //101.3 Change the view of list to &quot;Extra Large Icons&quot;
+            var itemViewList = newPassDialog.Find&lt;MyList&gt; (&quot;Items View&quot;);
+            if (itemViewList.GetSupportedViews ().Contains&lt;int&gt; (0))
+                itemViewList.SetCurrentView (0);
+            Thread.Sleep (Config.Instance.ShortDelay);
+            procedureLogger.ExpectedResult (&quot;The current view of the dialog is \&quot;Extra Large Icons\&quot;&quot;);
+            Assert.AreEqual (itemViewList.GetViewName(itemViewList.CurrentView), &quot;Extra Large Icons&quot;);
+            Thread.Sleep (Config.Instance.ShortDelay);
+
+            ...........................
+        }
+
+        //TestCase102 Organize the group
+        [Test]
+        public void RunTestCase102 ()
+        {
+            Run (TestCase102);
+        }
+
+                private void TestCase102 ()
+        {
+                     ...........
+                }
+    }
+&lt;/code&gt;</code></pre>
+</div>
+<h3 id="output">OUTPUT</h3>
+<p>The default output directory is bin/debug, but you can Set the output path &quot;D:/temp/ &quot; (for example) in &quot;Project --&gt;XXXXX Properties&quot; , the project 's output is as follows:</p>
+<figure>
+<img src="http://localhost:4000/files/Output1.png" title="http://localhost:4000/files/Output1.png" alt="http://localhost:4000/files/Output1.png" /><figcaption>http://localhost:4000/files/Output1.png</figcaption>
+</figure>
+<p>If you open the procedures.xml file you can see the test output shown as html page <img src="http://localhost:4000/files/Output2.png" title="fig:http://localhost:4000/files/Output2.png" alt="http://localhost:4000/files/Output2.png" /></p>
+<h1 id="logging-bugs">Logging Bugs</h1>
+<h2 id="general-guidelines">General Guidelines</h2>
+<ul>
+<li>Remember to log bugs for our product under the &quot;Mono&quot; classification and &quot;UI Automation&quot; product.</li>
+<li>Set the priority after logging the bug. Use your best estimate, it can be changed later.</li>
+<li>Do a quick search for duplicates before logging your bug if someone else has worked on the control you are testing.</li>
+<li>Remember to add a comment with a bug reference (see below) where the bug occurs in your test.</li>
+</ul>
+<h2 id="bug-references">Bug References</h2>
+<p>Bug references are a very important way to keep track of bugs that we find while writing our automated tests. A bug reference is simply a comment in our test, where the bug occurs, that has the format BUG[0-9][0-9][0-9][0-9][0-9][0-9]. If the bug affect the test to run successfully, remenber to comment that test case out. For example, here is a code snipped showing a valid bug reference together with test code that finds a bug:</p>
+<div class="python">
+<pre><code>&lt;code&gt;
+mtbFrame.phone_text.deleteText()
+sleep(config.SHORT_DELAY)
+# two deletes should not crash the application BUG465467
+#mtbFrame.phone_text.deleteText()
+#sleep(config.SHORT_DELAY)
+&lt;/code&gt;</code></pre>
+</div>
+<p>The purpose of bug references is to allow us to easily find our tests that were affected by the bug. We do this by simply grepping for the bug reference when verifying and closing bugs after that bug has been fixed. This is useful because when the bug has been fixed, we are able to verify that our test runs successfully and uncomment the test case and correct any deficiencies or problems in our tests that existed because of the bug.</p>
+<h1 id="official-test-machine-setup">Official Test Machine Setup</h1>
+<p>Here are some things that should be done to prepare the official Novell test machines for use. These machines should all be virtual machines. We currently use VMware Workstation 6 to host the VMs. This is only required for the machines in a test lab, not your own personal test machine(s).</p>
+<ul>
+<li>Turn off the screensaver (using gnome-control-center)</li>
+<li>Auto login for 'a11y' user</li>
+<li>Add 'a11y' user to the 'wheel' group</li>
+<li>Enable use of sudo without a password (see /etc/sudoers)</li>
+<li>Mount uiaqa.sled.lab.novell.com's &quot;logs&quot; and &quot;tests&quot; directories at boot time (see /etc/fstab on a previous test VM) as described in the Strongwind test harness section above</li>
+<li>Mount uiaqa.sled.lab.novell.com's &quot;strongwind&quot; directory at boot time. (see /etc/fstab on a previous test VM.) This allows us to keep the Strongwind code up-to-date in a single location instead of having to constantly 'svn up' on the test machines. NOTE: We still need to install Strongwind on the test machines after the code is updated.</li>
+<li>Install Orca specified in the Orca testing requirements above</li>
+<li>Install Iron Python (IPCE)</li>
+<li>Configure static IP and DNS</li>
+<li>Allow passwordless SSH from qa@uiaqa.sled.lab.novell.com (see /home/a11y/.ssh/authorized_keys on a previous test VM)</li>
+<li>Disable all automatic updates and automatic update notifications (this can be done from the control panel)</li>
+<li>Append &quot;xhost +&quot; to the /home/a11y/.profile file.</li>
+<li>Install a printer (so the print-related controls tests will run properly)</li>
+<li>Disable Firefox's &quot;resume from crash&quot; feature. This can be done my browsing to <a href="about:config">about:config</a> and setting the value of browser.sessionstore.resume_from_crash to false.</li>
+<li><em>add more...</em></li>
+</ul>
+<p>After preparing the machine, take a single snapshot. Name the snapshot after the hostname of the machine (e.g., suse32v0).</p>
+<h1 id="csharp-introduction">Csharp Introduction</h1>
+<p>We will use C# to write our samples and tests in Moonlight and ClientAPI test, so What we need to do the first is to study C#.</p>
+<p>Here is a link of a <a href="http://www.ecma-international.org/activities/Languages/Introduction%20to%20Csharp.pdf">C# Introduction PDF</a>, please download and study it if you need.</p>
+</body>
+</html>

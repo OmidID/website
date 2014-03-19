@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="winforms-control-list">WinForms Control List</h2>
+<p>Read the following page for more information about Windows Forms providers implementation:</p>
+<ul>
+<li><a href="http://localhost:4000/Accessibility:_Winforms_Implementation" title="wikilink"> Windows Forms Implementation</a></li>
+<li><a href="http://localhost:4000/Accessibility:_Provider_Functional_Specification" title="wikilink"> Provider Functional Specification</a></li>
+<li><a href="http://armstrong-clan.net/dump/Strip.png">Class diagram of *Strip* classes in System.Windows.Forms</a></li>
+</ul>
+<table>
+<col style="width: 18%" /><col style="width: 18%" /><col style="width: 18%" /><col style="width: 18%" /><col style="width: 25%" /><thead>
+<tr class="header">
+<th style="text-align: left;"><p>Control</p></th>
+<th style="text-align: left;"><p>Status (of Provider)</p></th>
+<th style="text-align: left;"><p>ControlTypes</p></th>
+<th style="text-align: left;"><p>Provider</p></th>
+<th style="text-align: left;"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.Button.aspx">Button</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Button</p></td>
+<td style="text-align: left;"><p>ButtonProvider</p></td>
+<td style="text-align: left;"><p>Stuck on AcceleratorKeyProperty</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.CheckBox.aspx">CheckBox</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>CheckBox</p></td>
+<td style="text-align: left;"><p>CheckBoxProvider</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.CheckedListBox.aspx">CheckedListBox</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>List</p></td>
+<td style="text-align: left;"><p>ListBoxProvider</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ColorDialog.aspx">ColorDialog</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Window</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ColumnHeader.aspx">ColumnHeader</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Header</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ComboBox.aspx">ComboBox</a></p></td>
+<td style="text-align: left;"><p>95% (Mario)</p></td>
+<td style="text-align: left;"><p>ComboBox</p></td>
+<td style="text-align: left;"><p>ComboBoxProvider</p></td>
+<td style="text-align: left;"><p>Navigation: ScrollBar in internal ListBox.</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ContainerControl.aspx">ContainerControl</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ContextMenu.aspx">ContextMenu</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ContextMenuStrip.aspx">ContextMenuStrip</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.DataGrid.aspx">DataGrid</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/ms743581.aspx">DataGrid</a> or Table</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.DataGridBoolColumn.aspx">DataGridBoolColumn</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Custom</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.DataGridTextBoxColumn.aspx">DataGridTextBoxColumn</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Custom</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.DataGridView.aspx">DataGridView</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Table</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.DateTimePicker.aspx">DateTimePicker</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Pane+</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.DomainUpDown.aspx">DomainUpDown</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Spinner</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ErrorProvider.aspx">ErrorProvider</a></p></td>
+<td style="text-align: left;"><p>In Progress 95% (Mario)</p></td>
+<td style="text-align: left;"><p>Pane</p></td>
+<td style="text-align: left;"><p>ErrorProvider</p></td>
+<td style="text-align: left;"><p>Stuck on AccessKeyProperty. Missing Tests</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.FileDialog.aspx">FileDialog</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Window</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.FlowLayoutPanel.aspx">FlowLayoutPanel</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Pane</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.FontDialog.aspx">FontDialog</a></p></td>
+<td style="text-align: left;"><p>In Progress (Neville)</p></td>
+<td style="text-align: left;"><p>Window</p></td>
+<td style="text-align: left;"><p>FontDialogProvider</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.Form.aspx">Form</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Window</p></td>
+<td style="text-align: left;"><p>WindowProvider</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.GroupBox.aspx">GroupBox</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Group</p></td>
+<td style="text-align: left;"><p>GroupProvider</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.HelpProvider.aspx">HelpProvider</a></p></td>
+<td style="text-align: left;"><p>In Progress 95% (Mario)</p></td>
+<td style="text-align: left;"><p>ToolTip</p></td>
+<td style="text-align: left;"><p>HelpProvider</p></td>
+<td style="text-align: left;"><p>Missing Provider Events</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.HScrollBar.aspx">HScrollBar</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>ScrollBar or Pane</p></td>
+<td style="text-align: left;"><p>ScrollBarProvider</p></td>
+<td style="text-align: left;"><p>ScrollBar Control Type was implemented. Pane is used when the ScrollBar isn't contained in a Scrollable control. Missing Provider Events</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.Label.aspx">Label</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Text</p></td>
+<td style="text-align: left;"><p>LabelProvider</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.LinkLabel.aspx">LinkLabel</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>HyperLink</p></td>
+<td style="text-align: left;"><p>LinkLabelProvider</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p>ListBox.ListItem and ComboBox.ListItem</p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>ListItem</p></td>
+<td style="text-align: left;"><p>ListItemProvider</p></td>
+<td style="text-align: left;"><p>Stuck on IsOffscreenProperty, BoundingRectangleProperty, ClickablePointProperty, ItemTypeProperty</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ListBox.aspx">ListBox</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>List</p></td>
+<td style="text-align: left;"><p>ListBoxProvider</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ListView.aspx">ListView</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>List</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.MainMenu.aspx">MainMenu</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.MaskedTextBox.aspx">MaskedTextBox</a></p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Edit</p></td>
+<td style="text-align: left;"><p>TextBoxProvider</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.MenuItem.aspx">MenuItem</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.MenuStrip.aspx">MenuStrip</a></p></td>
+<td style="text-align: left;"><p>In Progress (Sandy)</p></td>
+<td style="text-align: left;"><p>MenuBar</p></td>
+<td style="text-align: left;"><p>MenuStripProvider</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.MonthCalendar.aspx">MonthCalendar</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Pane?</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.NotifyIcon.aspx">NotifyIcon</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Button</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.NumericUpDown.aspx">NumericUpDown</a></p></td>
+<td style="text-align: left;"><p>95% (Sandy)</p></td>
+<td style="text-align: left;"><p>Spinner</p></td>
+<td style="text-align: left;"><p>NumericUpDownProvider</p></td>
+<td style="text-align: left;"><p>Still testing</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.Panel.aspx">Panel</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Pane</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.OpenFileDialog.aspx">OpenFileDialog</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Window</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.PageSetupDialog.aspx">PageSetupDialog</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Window</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.PictureBox.aspx">PictureBox</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Pane</p></td>
+<td style="text-align: left;"><p>PictureBoxProvider</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.PrintPreviewControl.aspx">PrintPreviewControl</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Pane+</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.PrintPreviewDialog.aspx">PrintPreviewDialog</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Window</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ProgressBar.aspx">ProgressBar</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>ProgressBar</p></td>
+<td style="text-align: left;"><p>ProgressBarProvider</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.PropertyGrid.aspx">PropertyGrid</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Pane+</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.RadioButton.aspx">RadioButton</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>RadioButton</p></td>
+<td style="text-align: left;"><p>RadioButtonProvider</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.RichTextBox.aspx">RichTextBox</a></p></td>
+<td style="text-align: left;"><p>50%</p></td>
+<td style="text-align: left;"><p>Document</p></td>
+<td style="text-align: left;"><p>TextBoxProvider</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.SaveFileDialog.aspx">SaveFileDialog</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Window</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ScrollableControl.aspx">ScrollableControl</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>?</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ScrollBar.aspx">ScrollBar</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>ScrollBar or Pane</p></td>
+<td style="text-align: left;"><p>ScrollBarProvider</p></td>
+<td style="text-align: left;"><p>ScrollBar Control Type was implemented. Pane is used when the ScrollBar isn't contained in a Scrollable control. Missing Provider Events</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.SplitContainer.aspx">SplitContainer</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Pane</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.Splitter.aspx">Splitter</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Pane</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.StatusBar.aspx">StatusBar</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>StatusBar</p></td>
+<td style="text-align: left;"><p>StatusBarProvider</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.StatusBarPanel.aspx">StatusBarPanel</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>Edit</p></td>
+<td style="text-align: left;"><p>StatusBarProvider.StatusBarPanelProvider</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.StatusStrip.aspx">StatusStrip</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>StatusBar</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.TabControl.aspx">TabControl</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Tab</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.TableLayoutPanel.aspx">TableLayoutPanel</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Pane</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.TabPage.aspx">TabPage</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>TabItem</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.TextBox.aspx">TextBox</a></p></td>
+<td style="text-align: left;"><p>85%</p></td>
+<td style="text-align: left;"><p>Edit or Document</p></td>
+<td style="text-align: left;"><p>TextBoxProvider</p></td>
+<td style="text-align: left;"><p>Missing: Document Control Pattern, full implementation of Edit Control Pattern.</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ThreadExceptionDialog.aspx">ThreadExceptionDialog</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Window</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolBar.aspx">ToolBar</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>ToolBar</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolBarButton.aspx">ToolBarButton</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Button</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolStrip.aspx">ToolStrip</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>ToolBar</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolStripMenuItem.aspx">ToolStripMenuItem</a></p></td>
+<td style="text-align: left;"><p>In Progress (Sandy)</p></td>
+<td style="text-align: left;"><p>MenuItem</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolStripComboBox.aspx">ToolStripComboBox</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>ComboBox</p></td>
+<td style="text-align: left;"><p>ComboBoxProvider?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolStripDropDownButton.aspx">ToolStripDropDownButton</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>MenuItem</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolStripLabel.aspx">ToolStripLabel</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Text</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolStripProgressBar.aspx">ToolStripProgressBar</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>ProgressBar</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolStripSeparator.aspx">ToolStripSeparator</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Separator</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolStripSplitButton.aspx">ToolStripSplitButton</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Button, Menu</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolStripTextBox.aspx">ToolStripTextBox</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Edit</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.ToolTip.aspx">ToolTip</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>ToolTip</p></td>
+<td style="text-align: left;"><p>ToolTipProvider</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.TrackBar.aspx">TrackBar</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Slider</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.TreeView.aspx">TreeView</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Tree</p></td>
+<td style="text-align: left;"><p>?</p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.VScrollBar.aspx">VScrollBar</a></p></td>
+<td style="text-align: left;"><p>Done</p></td>
+<td style="text-align: left;"><p>ScrollBar or Pane</p></td>
+<td style="text-align: left;"><p>ScrollBarProvider</p></td>
+<td style="text-align: left;"><p>ScrollBar Control Type was implemented. Pane is used when the ScrollBar isn't contained in a Scrollable control. Missing Provider Events</p></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><p><a href="http://msdn.microsoft.com/en-us/library/system.windows.forms.WebBrowser.aspx">WebBrowser</a></p></td>
+<td style="text-align: left;"><p>Not Started</p></td>
+<td style="text-align: left;"><p>Pane+++</p></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+</tr>
+</tbody>
+</table>
+<p>C</p>
+</body>
+</html>
